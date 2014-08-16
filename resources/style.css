@@ -1,0 +1,254 @@
+* {
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+
+#menu {
+    position: relative;
+    display: block;
+    float: left;
+    /*top: 200px;
+    left: 25px;*/
+    top: 230px;
+    margin-left: 10px;
+
+    width: 200px;
+}
+
+#menu-content {
+    background-color: rgba(245,245,245,0.95);
+    border-radius: 15px;
+    display:none;
+
+}
+
+.menu-item {
+    color: black;
+    padding: 15px;
+    margin: 0px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu-heading {
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-size: 12px;
+    text-align: left;
+
+}
+
+.menu-title {
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-size: 20px;
+    text-align: left;
+
+}
+
+#title {
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-style: italic;
+    position: relative;
+    float: right;
+    width: 250px;
+    top: 80px;
+    margin-right: 10px;
+    overflow: none;
+    display:none;
+}
+
+#title h5 {
+    font-size: 16px;
+    margin: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#title h4 {
+    font-size: 24px;
+    margin: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#title-content {
+    padding: 10px;
+    color: black;
+    background-color: rgba(245, 245, 245, 0.85);
+    border-radius: 20px;
+}
+
+img.legend {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+img.story {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#im {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#introduction {
+    background-color: rgba(245, 245, 245, 1);
+    height: 300px;
+
+}
+
+#blurb {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.close {
+    font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-size: 20px;
+    position: fixed;
+    /*margin-right:10px;
+    margin-top: 5px;
+    margin-left: -35px;*/
+    top: 95px;
+    right: 30px;
+    /*float: right;*/
+    background-color: rgba(245, 245, 245, 0.95);
+    width: 25px;
+    border-radius: 10px;
+    z-index: 1;
+    text-align: center;
+    vertical-align: center;
+    cursor: pointer;
+}
+
+img.poi {
+      /*this is what kills the image widht, it does not have a width before the asset is loaded*/
+    width: auto;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    display:block;
+}
+
+#opening {
+    /*width: auto;*/
+    position: relative;
+    top: 80px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    background-color: rgba(245, 245, 245, 0.85);
+    opacity: .9;
+    padding: 40px;
+    font-size: 1.1em;
+    border-radius: 20px;
+}
+
+#main {
+    position: relative;
+    width: 100%;
+}
+
+#opening-close {
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 270px;
+
+}
+
+/*STORY*/
+
+.story-button {
+    cursor: pointer;
+    /*color: blue;*/
+    font-size: 1.1em;
+}
+
+#story-more-button {
+    text-align: right;
+}
+
+#story-close-button {
+    text-align: left;
+    margin: 10px;
+}
+
+#story {
+    position:absolute;
+    width: 50%;
+    height: 100%;
+    display:none;
+    right: 0px;
+    top: 0px;
+    overflow: hidden;
+    /*background:black;*/
+    background-color: rgba(245, 245, 245, 0.85);
+    border-radius: 20px;
+}
+
+#story-content {
+    overflow-y: auto;
+    position: absolute;
+    padding: 10px;
+    margin: 10px;
+    top: 30px;
+    bottom: 0px;
+}
+
+#banner {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 380px;
+    height: 55px;
+
+    vertical-align: middle;
+    box-shadow: 5px 5px 5px rgba(136, 136, 136, 0.5);
+    background-color: rgba(245, 245, 245, 0.85);
+    display: none;
+}
+
+#banner img {
+    float:left;
+    margin: 5px;
+    display:block;
+    width: 45px;
+    height: 45px;
+}
+
+#banner-title {
+    /*vertical-align: middle;*/
+    font-size: 15px;
+}
+
+#banner-subtitle {
+    font-size: 25px;
+}
+
+div.leaflet-top {
+    top: 60px;
+}

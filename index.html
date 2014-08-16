@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+    <head>
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
+        <link rel="stylesheet" href="resources/style.css" />
+        <link href='resources/MarkerCluster.css' rel='stylesheet' />
+
+
+        <!--Leaflet -->
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+        <script src="plugins/leaflet-providers.js"></script>
+        <script src="plugins/leaflet-label.js"></script>
+        <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+
+        <link href='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+        <link rel="stylesheet" href="plugins/leaflet-label.css" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+<body>
+
+    <div id="main">
+        <div id="map"></div>
+        <div id="menu">
+            <!--<span id="close-menu" class="close">X</span>-->
+            <div id="menu-content">
+                <div id="hoofdstuk 1" class="menu-item">
+                    <div class="menu-heading">Hoofdstuk 1</div>
+                    <div class="menu-title">Vertrek</div>
+                </div>
+                <div id="hoofdstuk 2" class="menu-item">
+                    <div class="menu-heading">Hoofdstuk 2</div>
+                    <div class="menu-title">Vulkanisme</div>
+                </div>
+                <div id="hoofdstuk 3" class="menu-item">
+                    <div class="menu-heading">Hoofdstuk 3</div>
+                    <div class="menu-title">Plaattektoniek</div>
+                </div>
+            </div>
+        </div>
+        <div id="title">
+            <!-- TOOD make relative to parent div not absolute as it is now-->
+            <span id="close-title" class="close">X</span>
+            <div id="title-content">
+
+                <div id="blurb">
+                    fdfsfdLores ipsum Lores ipsum Lores ipsum Lores ipsum
+                    Lores ipsum Lores ipsum Lores ipsum Lores ipsumIntroverhaal ...
+                </div>
+
+                <div id="story-more-button" class="story-button">Lees meer...</div>
+
+                <div id="legend">
+                    <strong>Legenda</strong>
+                    <br />
+                    <br />
+                    <img class="legend" src="resources/images/icons/measurements_red.png"> - metingen
+                    <br />
+                    <img class="legend" src="resources/images/icons/science.png"> - anektode
+                    <br />
+                    <img class="legend" src="resources/images/icons/photo.png   "> - foto
+                </div>
+
+                <br />
+
+                <div id="sponsors">
+                    <strong>Sponsoren</strong>
+                    <ul>
+                        <li>TU Delft</li>
+                        <li>...</li>
+                        <li>...</li>
+                    </ul>
+                </div>
+
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <div id="opening">
+        <h3>Vening Meinesz - Gravity Expeditions at Sea</h3>
+
+        <img style="float:right; margin:4px; width: 300px;" src="http://static.ndkv.nl/vm/resources/images/vm_instrument.jpg">
+        <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p>
+        <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p>
+
+        <div id="opening-close">Start het avontuur!</div>
+
+
+        <!-- <iframe style="display:block; margin-left: auto; margin-right: auto; width:420px;" height="315" src="http://www.youtube.com/embed/eOqalX5FJ2c" frameborder="0"></iframe> -->
+
+    </div>
+    <div id="story">
+        <div id="story-close-button" class="story-button">Sluit verhaal...</div>
+
+        <div id="story-content"></div>
+    </div>
+
+    <div id="banner">
+        <img src="resources/images/vm_icon.jpg" />
+        <div id="banner-title">Vening Meinesz</div>
+        <div id="banner-subtitle">Gravity Expeditions at Sea</div>
+    </div>
+</body>
+</html>
