@@ -185,10 +185,16 @@ window.onload = function () {
 
         //description text in right panel
         var intro_story = {
-            "hoofdstuk 1": "<h3>Hoofdstuk 1</h3> <h4>Vertrek</h4> Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
+            "hoofdstuk 1": "Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
             "hoofdstuk 2": "Intro text hoofdstuk 2",
             "hoofdstuk 3": "Intro text hoofdstuk 3"
         };
+
+		var banner_title = {
+			"hoofdstuk 1": "Hoofdstuk 1 <br /> Vertrek",
+			"hoofdstuk 2": "Hoofdstuk 2 <br /> Vulkanisme",
+			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek"
+		}
 
         var zoomTo = zoom_coordinates[id];
         map.fitBounds(L.latLngBounds(zoomTo.southWest, zoomTo.northEast), {animate: true, pan: {duration: 1.0}});
@@ -208,6 +214,7 @@ window.onload = function () {
         }
 
         $("#blurb").html(intro_story[id]);
+		$("#banner-chapter").html(banner_title[id]);
     }
 
     function Chapter(chapter) {

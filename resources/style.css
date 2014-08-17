@@ -56,8 +56,8 @@
     font-style: italic;
     position: relative;
     float: right;
-    width: 250px;
-    top: 80px;
+    width: 300px;
+    top: 135px;
     margin-right: 10px;
     overflow: none;
     display:none;
@@ -128,7 +128,7 @@ img.story {
     /*margin-right:10px;
     margin-top: 5px;
     margin-left: -35px;*/
-    top: 95px;
+    top: 150px;
     right: 30px;
     /*float: right;*/
     background-color: rgba(245, 245, 245, 0.95);
@@ -194,7 +194,9 @@ img.poi {
 
 #story-close-button {
     text-align: left;
-    margin: 10px;
+    margin-top: 65px;
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
 
 #story {
@@ -207,7 +209,7 @@ img.poi {
     overflow: hidden;
     /*background:black;*/
     background-color: rgba(245, 245, 245, 0.85);
-    border-radius: 20px;
+    /*border-radius: 20px;*/
 }
 
 #story-content {
@@ -215,7 +217,7 @@ img.poi {
     position: absolute;
     padding: 10px;
     margin: 10px;
-    top: 30px;
+    top: 80px;
     bottom: 0px;
 }
 
@@ -223,7 +225,8 @@ img.poi {
     position: fixed;
     left: 0px;
     top: 0px;
-    width: 380px;
+    /*width: 380px;*/
+    width: 100%;
     height: 55px;
 
     vertical-align: middle;
@@ -243,10 +246,26 @@ img.poi {
 #banner-title {
     /*vertical-align: middle;*/
     font-size: 15px;
+    /*float: left;
+    display: block;*/
 }
 
 #banner-subtitle {
-    font-size: 25px;
+    font-size: 20px;
+    /*float: left;
+    display: block;*/
+}
+
+#banner-logo {
+    display:block;
+    float: left;
+}
+
+.banner-chapter {
+    display:block;
+    float: right;
+    margin-right: 50px;
+    font-size: 20px;
 }
 
 div.leaflet-top {
