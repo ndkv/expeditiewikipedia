@@ -6,8 +6,8 @@ window.onload = function () {
     //maps
     //
 	//var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
-    //var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
-    var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
+    var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+    //var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
 
     var wms_url = "http://188.226.136.81:80/mapproxy/service/";
 
@@ -94,6 +94,8 @@ window.onload = function () {
 			$("#title").fadeIn();
 			$("#menu-content").fadeIn();
 			$("#banner").fadeIn();
+			changeChapter("hoofdstuk 1");
+			$("#video").remove();
 		});
 	});
 
