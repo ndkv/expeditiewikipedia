@@ -202,14 +202,16 @@ img.poi {
 #story {
     position:absolute;
     width: 50%;
-    height: 100%;
-    display:none;
+    height: 0%;
+    /*height: 0%;*/
+    /*display:none;*/
     right: 0px;
     top: 0px;
     overflow: hidden;
     /*background:black;*/
     background-color: rgba(245, 245, 245, 0.85);
     /*border-radius: 20px;*/
+    /*opacity: 0;*/
 }
 
 #story-content {
@@ -235,7 +237,7 @@ img.poi {
     display: none;
 }
 
-#banner img {
+#ff {
     float:left;
     margin: 5px;
     display:block;
@@ -264,10 +266,18 @@ img.poi {
 .banner-chapter {
     display:block;
     float: right;
-    margin-right: 50px;
+    margin-right: 30px;
     font-size: 20px;
 }
 
 div.leaflet-top {
     top: 60px;
+}
+
+#banner-menu {
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    margin-top: 10px;
 }

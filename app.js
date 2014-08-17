@@ -90,12 +90,18 @@ window.onload = function () {
 
 
 	$('#opening-close').click(function() {
-		$(this).parent().fadeOut(function () {
-			$("#title").fadeIn();
-			$("#menu-content").fadeIn();
-			$("#banner").fadeIn();
-			changeChapter("hoofdstuk 1");
-			$("#video").remove();
+		var that = $(this).parent();
+		that.anima3d({
+			opacity: 0
+		}, 300, 'linear', {complete:
+			function () {
+				$("#title").fadeIn();
+				$("#menu-content").fadeIn();
+				$("#banner").fadeIn();
+				//changeChapter("hoofdstuk 1");
+				$("#video").remove();
+				that.remove();
+			}
 		});
 	});
 
@@ -138,13 +144,29 @@ window.onload = function () {
     }
 
 
-	var story = String("test");
+	//var story = String("test");
+	var storyOpen = false;
 
 	$('.story-button').click(function() {
+		console.log("acting");
 		//$('#story').css("display", "block");
 
 		$('#story-content').html(chapters[current].getStory());
-		$('#story').slideToggle();
+		//$('#story').slideToggle();
+
+		var height;
+		if (storyOpen) {
+			height = "0%";
+		} else {
+			height = "100%";
+		};
+
+		storyOpen = !storyOpen;
+
+		$('#story').anima3d({
+			height: height
+		}, 1000, 'linear');
+
 		closeX();
 		$('#close-title').fadeToggle();
 	});
