@@ -77,6 +77,11 @@ window.onload = function () {
     //
     //event handlers
     //
+
+    $('#banner-menu').click(function() {
+        $('#menu').slideToggle();
+    })
+
     map.on('click', function(event) {
         console.log(map.getBounds()._northEast.lat + ", " + map.getBounds()._northEast.lng);
         console.log(map.getBounds()._southWest.lat + ", " + map.getBounds()._southWest.lng);
@@ -86,6 +91,8 @@ window.onload = function () {
     $(".menu-item").click(function(event) {
         console.log(this.id);
         changeChapter(this.id);
+        //TODO: menu in a variable
+        $('#menu').slideToggle();
     });
 
 
@@ -93,7 +100,7 @@ window.onload = function () {
 		var that = $(this).parent();
 		that.anima3d({
 			opacity: 0
-		}, 300, 'linear', {complete:
+		}, 500, 'linear', {complete:
 			function () {
 				$("#title").fadeIn();
 				$("#menu-content").fadeIn();
@@ -165,7 +172,7 @@ window.onload = function () {
 
 		$('#story').anima3d({
 			height: height
-		}, 1000, 'linear');
+		}, 800, 'linear');
 
 		closeX();
 		$('#close-title').fadeToggle();
@@ -187,6 +194,8 @@ window.onload = function () {
             console.log(value);
             chapters[value] = new Chapter(value);
         });
+
+        changeChapter(current);
     });
 
     //
