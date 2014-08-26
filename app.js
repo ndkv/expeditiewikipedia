@@ -1,4 +1,6 @@
 window.onload = function () {
+    $(".fancybox").fancybox(); 
+
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
 	map.setView([0.0, 55.0], 3);
 
