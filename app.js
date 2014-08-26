@@ -89,7 +89,7 @@ window.onload = function () {
     });
 
     $(".menu-item").click(function(event) {
-        console.log(this.id);
+        // console.log(this.id);
         changeChapter(this.id);
         //TODO: menu in a variable
         $('#menu').slideToggle();
@@ -105,7 +105,7 @@ window.onload = function () {
 				$("#title").fadeIn();
 				$("#menu-content").fadeIn();
 				$("#banner").fadeIn();
-				//changeChapter("hoofdstuk 1");
+				changeChapter("hoofdstuk 1");
 				$("#video").remove();
 				that.remove();
 			}
@@ -131,7 +131,7 @@ window.onload = function () {
 
 
     function closeX() {
-        console.log("testing");
+        //console.log("testing");
         //$(this).data('clicked',!$(this).data('clicked'));
 
         // if ($(this).data('clicked'))
@@ -155,7 +155,7 @@ window.onload = function () {
 	var storyOpen = false;
 
 	$('.story-button').click(function() {
-		console.log("acting");
+		//console.log("acting");
 		//$('#story').css("display", "block");
 
 		$('#story-content').html(chapters[current].getStory());
@@ -194,8 +194,6 @@ window.onload = function () {
             console.log(value);
             chapters[value] = new Chapter(value);
         });
-
-        changeChapter(current);
     });
 
     //
@@ -257,7 +255,7 @@ window.onload = function () {
 		var story;
 
 		$.get('data/'+ chapter +'/'+ chapter + '.htm', function(data) {
-			console.log('data/'+ chapter +'/'+ chapter + '.htm');
+			//console.log('data/'+ chapter +'/'+ chapter + '.htm');
 			story = data;
 		})
 
@@ -280,13 +278,13 @@ window.onload = function () {
     }
 
     function Route(chapter) {
-        console.log("creating new route...");
+        //console.log("creating new route...");
         var geom;
         var state = "hidden";
         this.id = chapter;
 
         $.getJSON('data/'+chapter+'/track.json', function(data) {
-           console.log(data.type);
+           //console.log(data.type);
            geom = L.geoJson(data, {
                style: {
                    "color": "#FFFFFF",
@@ -328,7 +326,7 @@ window.onload = function () {
 
         var icon_properties = {
             //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
-            iconUrl: 'resources/images/icons/measurements_red.png',
+            iconUrl: 'resources/images/icons/measurements.png',
             iconSize: [10, 10],
             opacity: 0.1
         };
@@ -374,7 +372,7 @@ window.onload = function () {
         var state = "hidden";
         var markersCluster = new L.MarkerClusterGroup();
 
-        console.log("firing Poi get");
+        //console.log("firing Poi get");
         $.getJSON('data/'+chapter+'/pois/pois.json', function(data) {
             $.each(data, function(index, value) {
                 var lon = value.lon;
