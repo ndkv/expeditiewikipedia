@@ -277,3 +277,12 @@ div.leaflet-top {
     margin-top: 10px;
     cursor: pointer;
 }
+
+blockquote {
+    font-style: italic;
+}
+
+.popup-content {
+    height: 300px;
+    overflow: auto;
+}
