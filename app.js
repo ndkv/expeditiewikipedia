@@ -3,7 +3,7 @@ window.onload = function () {
         helpers: {
             overlay: {
                 css: {
-                    'background': 'rgba(0, 0, 0, 0.7)',
+                    'background': 'rgba(0, 0, 0, 0.95)',
                     'z-index': '1001'
                 }
             }
@@ -395,8 +395,31 @@ window.onload = function () {
                     //add CSS centering code
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
                     var test = $.parseHTML(html);
-                    var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
+                    
+                    if (icon == "photo") {
+                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})});
+                        marker.on('click', function() {
+                            $.fancybox.open([
+                                {
+                                    href: 'data/'+ chapter +'/pois/images/'+ content.slice(6) + '.png'
+                                }],
+                                {
+                                    helpers: {
+                                        overlay: {
+                                            css: {
+                                                'background': 'rgba(0, 0, 0, 0.85)',
+                                                'z-index': '1001'
+                                            }
+                                    }
+                                }
+                                });
+                        }); 
+
+
+                    } else {
+                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
 //                    geoms.push(marker);
+                    }
                     markersCluster.addLayer(marker);
 
 

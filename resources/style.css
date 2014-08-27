@@ -286,3 +286,7 @@ blockquote {
     height: 300px;
     overflow: auto;
 }
+
+.fancybox-overlay {
+    z-index: 1001;
+}
