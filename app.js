@@ -8,6 +8,25 @@ window.onload = function () {
                 }
             }
         }
+    });
+
+    $(".various").fancybox({
+        maxWidth    : 708,
+        maxHeight   : 482,
+        fitToView   : false,
+        // width       : '70%',
+        // height      : '70%',
+        autoSize    : true,
+        closeClick  : false,
+        openEffect  : 'none',
+        closeEffect : 'none',
+        helpers: {
+            overlay: {
+                css : { 'background': 'rgba(0, 0, 0, 0.70)',
+                        'z-index': '1001'
+                      }
+                }
+        }
     }); 
 
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
@@ -16,9 +35,10 @@ window.onload = function () {
     //
     //maps
     //
-	//var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
-    var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
-    //var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
+	// var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
+    //var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+    //var osm = "";
+    var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
 
     var wms_url = "http://188.226.136.81:80/mapproxy/service/";
 
@@ -403,7 +423,10 @@ window.onload = function () {
                                 {
                                     href: 'data/'+ chapter +'/pois/images/'+ content.slice(6) + '.png'
                                 }],
-                                {
+                                {   
+                                    autoSize: true,
+                                    closeClick: true,
+                                    autoResize: true,
                                     helpers: {
                                         overlay: {
                                             css: {
@@ -414,8 +437,6 @@ window.onload = function () {
                                 }
                                 });
                         }); 
-
-
                     } else {
                         var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
 //                    geoms.push(marker);
