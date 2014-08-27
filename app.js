@@ -110,7 +110,8 @@ window.onload = function () {
     //
 
     $('#banner-menu').click(function() {
-        $('#menu').slideToggle();
+        //TODO turn int a variable
+        $('#menu').slideToggle(300);
     })
 
     map.on('click', function(event) {
@@ -123,7 +124,7 @@ window.onload = function () {
         // console.log(this.id);
         changeChapter(this.id);
         //TODO: menu in a variable
-        $('#menu').slideToggle();
+        $('#menu').slideToggle(300);
     });
 
 
@@ -203,7 +204,7 @@ window.onload = function () {
 
 		$('#story').anima3d({
 			height: height
-		}, 800, 'linear');
+		}, 500, 'linear');
 
 		closeX();
 		$('#close-title').fadeToggle();
