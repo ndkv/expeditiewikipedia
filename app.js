@@ -1,5 +1,14 @@
 window.onload = function () {
-    $(".fancybox").fancybox(); 
+    $(".fancybox").fancybox({
+        helpers: {
+            overlay: {
+                css: {
+                    'background': 'rgba(0, 0, 0, 0.7)',
+                    'z-index': '1001'
+                }
+            }
+        }
+    }); 
 
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
 	map.setView([0.0, 55.0], 3);
