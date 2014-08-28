@@ -62,8 +62,8 @@ window.onload = function () {
         transparent: true,
         opacity: opacity
     });
-    //historical_map2.addTo(map);
-    //historical_map2.bringToBack();
+    // historical_map2.addTo(map);
+    // historical_map2.bringToBack();
 
     var historical_map = L.tileLayer.wms(wms_url, {
 		layers: 'vening_light',
@@ -71,8 +71,8 @@ window.onload = function () {
 		transparent: true,
 		opacity: opacity
 	});
-	//historical_map.addTo(map);
-    //historical_map.bringToFront();
+	// historical_map.addTo(map);
+ //    historical_map.bringToFront();
 
     var route = L.tileLayer.wms(wms_url, {
         layers: 'vm-route',
@@ -115,6 +115,7 @@ window.onload = function () {
     })
 
     map.on('click', function(event) {
+        console.log("northEas...");
         console.log(map.getBounds()._northEast.lat + ", " + map.getBounds()._northEast.lng);
         console.log(map.getBounds()._southWest.lat + ", " + map.getBounds()._southWest.lng);
         console.log(event.latlng.lat + ", " + event.latlng.lng);
@@ -240,21 +241,25 @@ window.onload = function () {
         var zoom_coordinates = {
             "hoofdstuk 1": {northEast: L.latLng(54.29088164657006, 21.26953125), southWest: L.latLng(31.203404950917395, -27.3779296875) },
             "hoofdstuk 2": {northEast: L.latLng(35.06597313798418, 4.6142578125), southWest: L.latLng(19.932041306115536, -42.7587890625) },
-            "hoofdstuk 3": {northEast: L.latLng(15.855673509998681, -13.798828125), southWest: L.latLng(7.471410908357826, -37.4853515625) }
+            "hoofdstuk 3": {northEast: L.latLng(15.855673509998681, -13.798828125), southWest: L.latLng(7.471410908357826, -37.4853515625) },
+            "K18": {northEast: L.latLng(51.916479358958874, 4.5406150817871085), southWest: L.latLng(51.89021285195025, 4.442424774169922) }
         };
 
 
         //description text in right panel
+        //TODO put these in the config file
         var intro_story = {
             "hoofdstuk 1": "Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
             "hoofdstuk 2": "Intro text hoofdstuk 2",
-            "hoofdstuk 3": "Intro text hoofdstuk 3"
+            "hoofdstuk 3": "Intro text hoofdstuk 3",
+            "K18": "Intro tekst K18"
         };
 
 		var banner_title = {
 			"hoofdstuk 1": "Hoofdstuk 1 <br /> Vertrek",
 			"hoofdstuk 2": "Hoofdstuk 2 <br /> Vulkanisme",
-			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek"
+			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek",
+            "K18": "K18 <br /> De Onderzeer"
 		}
 
         var zoomTo = zoom_coordinates[id];
@@ -417,6 +422,7 @@ window.onload = function () {
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
                     var test = $.parseHTML(html);
                     
+                    //TODO: photos don't need html hence should be out of the .get function
                     if (icon == "photo") {
                         var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})});
                         marker.on('click', function() {
