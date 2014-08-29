@@ -259,7 +259,7 @@ window.onload = function () {
 			"hoofdstuk 1": "Hoofdstuk 1 <br /> Vertrek",
 			"hoofdstuk 2": "Hoofdstuk 2 <br /> Vulkanisme",
 			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek",
-            "k18": "K18 <br /> De Onderzeer"
+            "k18": "K XVIII <br /> De Onderzeeboot"
 		}
 
         var zoomTo = zoom_coordinates[id];
