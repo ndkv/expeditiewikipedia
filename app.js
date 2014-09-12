@@ -161,8 +161,6 @@ window.onload = function () {
 
 	});
 
-
-
     function closeX() {
         //console.log("testing");
         //$(this).data('clicked',!$(this).data('clicked'));
@@ -171,14 +169,14 @@ window.onload = function () {
 		if (hud)
             {
                 $("#title-content").fadeOut();
-                $("#menu-content").fadeOut();
+                //$("#menu-content").fadeOut();
 				hud = false;
             }
         else
             {
                 //hack
                 $("#title-content").fadeIn();
-                $("#menu-content").fadeIn();
+                //$("#menu-content").fadeIn();
 				hud = true;
             }
     }
@@ -191,7 +189,7 @@ window.onload = function () {
 		//console.log("acting");
 		//$('#story').css("display", "block");
 
-		$('#story-content').html(chapters[current].getStory());
+		//$('#story-content').html(chapters[current].getStory());
 		//$('#story').slideToggle();
 
 		var height;
@@ -238,6 +236,7 @@ window.onload = function () {
         //recenter map
 
         //bboxes of chapter views, activated on click in left menu
+        //TODO: remove unecessary precision
         var zoom_coordinates = {
             "hoofdstuk 1": {northEast: L.latLng(54.29088164657006, 21.26953125), southWest: L.latLng(31.203404950917395, -27.3779296875) },
             "hoofdstuk 2": {northEast: L.latLng(35.06597313798418, 4.6142578125), southWest: L.latLng(19.932041306115536, -42.7587890625) },
@@ -248,11 +247,12 @@ window.onload = function () {
 
         //description text in right panel
         //TODO put these in the config file
+        // AND use to construct menu also
         var intro_story = {
             "hoofdstuk 1": "Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
             "hoofdstuk 2": "Intro text hoofdstuk 2",
             "hoofdstuk 3": "Intro text hoofdstuk 3",
-            "k18": "Intro tekst K18"
+            "k18": "Intro hoofdstuk 4"
         };
 
 		var banner_title = {
@@ -279,8 +279,10 @@ window.onload = function () {
             map.removeLayer(snip);
         }
 
+        //load content
         $("#blurb").html(intro_story[id]);
 		$("#banner-chapter").html(banner_title[id]);
+        $('#story-content').html(chapters[current].getStory());
     }
 
     function Chapter(chapter) {

@@ -16,6 +16,7 @@
     right: 5px;
     top: 55px;
     width: 200px;
+    z-index: 1;
 }
 
 #menu-content {
@@ -242,6 +243,7 @@ img.poi {
     box-shadow: 5px 5px 5px rgba(136, 136, 136, 0.5);
     background-color: rgba(245, 245, 245, 0.85);
     display: none;
+    z-index: 2;
 }
 
 #ff {
