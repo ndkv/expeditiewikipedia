@@ -112,16 +112,33 @@ function setupMap() {
     return [map, layers];
 }
 
+function updateInterface() {
+        if (hud)
+            {
+                $("#title-content").fadeOut();
+            }
+        else
+            {
+                $("#title-content").fadeIn();
+            }
+
+        hud = !hud;
+}
+
 window.onload = function () {
     var hud = true,                 //keep track of visibility of navigation elements
         storyOpen = false,          //state of story pane
+        storyHeight,                //height of story panel
         chapters = {},              //holds individual Chapter objects
         currentChapterChapter = "hoofdstuk 1";    //currentChapterly selected chapter
 
     //UI elements
-    //var uiOpenStory = $("")
-
-    setFancybox();      //setup Fancybox image viewer
+    var uiToggleStory = $('.story-button'),
+        uiBannerMenu = $("#banner-menu"),
+        uiMenu = $("#menu");
+        uiMenuItem = $(".menu-item");
+ 
+    setFancybox();                  //setup Fancybox image viewer
 	var initMap = setupMap();
     var map = initMap[0],
         layers = initMap[1];
@@ -138,23 +155,23 @@ window.onload = function () {
     //
     //event handlers
     //
-    $('#banner-menu').click(function() {
+    uiBannerMenu.click(function() {
         //TODO turn int a variable
-        $('#menu').slideToggle(300);
+        uiMenu.slideToggle(300);
     })
 
     map.on('click', function(event) {
-        console.log("northEas...");
+        console.log("northEast...");
         console.log(map.getBounds()._northEast.lat + ", " + map.getBounds()._northEast.lng);
         console.log(map.getBounds()._southWest.lat + ", " + map.getBounds()._southWest.lng);
         console.log(event.latlng.lat + ", " + event.latlng.lng);
     });
 
-    $(".menu-item").click(function(event) {
+    uiMenuItem.click(function(event) {
         // console.log(this.id);
         changeChapter(this.id);
         //TODO: menu in a variable
-        $('#menu').slideToggle(300);
+        uiMenu.slideToggle(300);
     });
 
 	$('#opening-close').click(function() {
@@ -173,36 +190,16 @@ window.onload = function () {
 		});
 	});
 
-    function updateInterface() {
-		if (hud)
-            {
-                $("#title-content").fadeOut();
-            }
-        else
-            {
-                $("#title-content").fadeIn();
-            }
-
-        hud = !hud;
-    }
-
-	$('.story-button').click(function() {
-		var height;
-		if (storyOpen) {
-			height = "0%";
-		} else {
-			height = "100%";
-		};
-
+	uiToggleStory.click(function() {
+		storyHeight = storyOpen ? "0%" : "100%"
 		storyOpen = !storyOpen;
 
 		$('#story').anima3d({
-			height: height
+			height: storyHeight
 		}, 500, 'linear');
 
 		updateInterface();
 	});
-
 
     //
     // CONTENT
