@@ -1,4 +1,4 @@
-window.onload = function () {
+function setFancybox() {
     $(".fancybox").fancybox({
         helpers: {
             overlay: {
@@ -28,6 +28,16 @@ window.onload = function () {
                 }
         }
     }); 
+}
+
+window.onload = function () {
+    var hud = true,                 //keep track of visibility of navigation elements
+        storyOpen = false,          //state of story pane
+        chapters = {},              //holds individual Chapter objects
+        currentChapterChapter = "hoofdstuk 1";    //currentChapterly selected chapter
+
+
+    setFancybox();      //setup Fancybox image viewer
 
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
 	map.setView([0.0, 55.0], 3);
@@ -35,6 +45,7 @@ window.onload = function () {
     //
     //maps
     //
+
 	// var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
     var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
     //var osm = "";
@@ -128,7 +139,6 @@ window.onload = function () {
         $('#menu').slideToggle(300);
     });
 
-
 	$('#opening-close').click(function() {
 		var that = $(this).parent();
 		that.anima3d({
@@ -145,53 +155,20 @@ window.onload = function () {
 		});
 	});
 
-
-	var hud = true;
-    $('.close').click(function() {
-
-		if (hud) {
-			$(this).next().fadeIn();
-			$(this).text("i");
-		} else {
-			$(this).next().fadeOut();
-			$(this).text("X");
-		}
-
-		closeX();
-
-	});
-
-    function closeX() {
-        //console.log("testing");
-        //$(this).data('clicked',!$(this).data('clicked'));
-
-        // if ($(this).data('clicked'))
+    function updateInterface() {
 		if (hud)
             {
                 $("#title-content").fadeOut();
-                //$("#menu-content").fadeOut();
-				hud = false;
             }
         else
             {
-                //hack
                 $("#title-content").fadeIn();
-                //$("#menu-content").fadeIn();
-				hud = true;
             }
+
+        hud = !hud;
     }
 
-
-	//var story = String("test");
-	var storyOpen = false;
-
 	$('.story-button').click(function() {
-		//console.log("acting");
-		//$('#story').css("display", "block");
-
-		//$('#story-content').html(chapters[current].getStory());
-		//$('#story').slideToggle();
-
 		var height;
 		if (storyOpen) {
 			height = "0%";
@@ -205,8 +182,7 @@ window.onload = function () {
 			height: height
 		}, 500, 'linear');
 
-		closeX();
-		$('#close-title').fadeToggle();
+		updateInterface();
 	});
 
 
@@ -214,8 +190,6 @@ window.onload = function () {
     // CONTENT
     //
     //load and setup chapters
-    var chapters = {};
-    var current = "hoofdstuk 1";
 
 
     $.getJSON("config.json", function (data) {
@@ -264,14 +238,13 @@ window.onload = function () {
 
         var zoomTo = zoom_coordinates[id];
         map.fitBounds(L.latLngBounds(zoomTo.southWest, zoomTo.northEast), {animate: true, pan: {duration: 1.0}});
-        chapters[current].hide();
+        chapters[currentChapterChapter].hide();
         chapters[id].show();
-        current = id;
+        currentChapter = id;
 
-        //console.log(chapter)
         //extra assets
         //TODO should be located in a chapter's definition
-        if (current == "hoofdstuk 3") {
+        if (currentChapter == "hoofdstuk 3") {
             layers.addOverlay(snip);
             snip.addTo(map);
         } else {
@@ -279,11 +252,17 @@ window.onload = function () {
             map.removeLayer(snip);
         }
 
-        //load content
+        //load content into interface
         $("#blurb").html(intro_story[id]);
 		$("#banner-chapter").html(banner_title[id]);
-        $('#story-content').html(chapters[current].getStory());
+        $('#story-content').html(chapters[currentChapter].getStory());
     }
+
+    //
+    //Objects
+    //
+
+    //TODO put in requirejs
 
     function Chapter(chapter) {
         //console.log("creating new chapter");
@@ -358,12 +337,12 @@ window.onload = function () {
     }
 
     function Measurements(chapter) {
-        console.log("creating measurements");
         var icon = "";
         var geoms = [];
         var state = "hidden";
+        console.log("creating measurements");
 
-        var icon_properties = {
+        var iconProperties = {
             //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
             iconUrl: 'resources/images/icons/measurements.png',
             iconSize: [10, 10],
