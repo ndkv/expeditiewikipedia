@@ -30,23 +30,16 @@ function setFancybox() {
     }); 
 }
 
-window.onload = function () {
-    var hud = true,                 //keep track of visibility of navigation elements
-        storyOpen = false,          //state of story pane
-        chapters = {},              //holds individual Chapter objects
-        currentChapterChapter = "hoofdstuk 1";    //currentChapterly selected chapter
+function setupMap() {
 
-
-    setFancybox();      //setup Fancybox image viewer
-
-	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
-	map.setView([0.0, 55.0], 3);
+    var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
+    map.setView([0.0, 55.0], 3);
 
     //
     //maps
     //
 
-	// var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
+    // var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
     var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
     //var osm = "";
     //var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
@@ -61,11 +54,11 @@ window.onload = function () {
     //     tiled: true
     // });
 
-	var sat = L.tileLayer.provider('Esri.WorldImagery');
+    var sat = L.tileLayer.provider('Esri.WorldImagery');
     //var sat = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbfma7f/{z}/{x}/{y}.png");
     osm.addTo(map);
 
-	var opacity = 1.0;
+    var opacity = 1.0;
 
     var historical_map2 = L.tileLayer.wms(wms_url, {
         layers: 'indian',
@@ -77,12 +70,12 @@ window.onload = function () {
     // historical_map2.bringToBack();
 
     var historical_map = L.tileLayer.wms(wms_url, {
-		layers: 'vening_light',
-		format: 'image/png',
-		transparent: true,
-		opacity: opacity
-	});
-	// historical_map.addTo(map);
+        layers: 'vening_light',
+        format: 'image/png',
+        transparent: true,
+        opacity: opacity
+    });
+    // historical_map.addTo(map);
  //    historical_map.bringToFront();
 
     var route = L.tileLayer.wms(wms_url, {
@@ -94,32 +87,57 @@ window.onload = function () {
     route.addTo(map);
 
     var snip = L.tileLayer.wms(wms_url, {
-		layers: 'vening-snip',
-		format: 'image/png',
-		transparent: true,
-		opacity: opacity
-	});
+        layers: 'vening-snip',
+        format: 'image/png',
+        transparent: true,
+        opacity: opacity
+    });
     //snip.addTo(map);
 
-	var base_layers = {"Achtergrondkaart": osm, "Luchtfoto": sat};
-	var overlays = {
+    var base_layers = {"Achtergrondkaart": osm, "Luchtfoto": sat};
+    var overlays = {
         "Atlantische en Indische Oceaan": historical_map2,
         "Atlantische Oceaan": historical_map,
         //"De Snip + platen": snip,
         "route": route
-	};
+    };
 
     //
     //map controls
     //
 
-	var layers = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
-	layers.addTo(map);
+    var layers = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
+    layers.addTo(map);
+
+    return [map, layers];
+}
+
+window.onload = function () {
+    var hud = true,                 //keep track of visibility of navigation elements
+        storyOpen = false,          //state of story pane
+        chapters = {},              //holds individual Chapter objects
+        currentChapterChapter = "hoofdstuk 1";    //currentChapterly selected chapter
+
+    //UI elements
+    //var uiOpenStory = $("")
+
+    setFancybox();      //setup Fancybox image viewer
+	var initMap = setupMap();
+    var map = initMap[0],
+        layers = initMap[1];
+
+    //TODO remove this! Hack for chapter 3
+    var wms_url = "http://188.226.136.81:80/mapproxy/service/";
+    var snip = L.tileLayer.wms(wms_url, {
+        layers: 'vening-snip',
+        format: 'image/png',
+        transparent: true,
+        opacity: 1
+    });
 
     //
     //event handlers
     //
-
     $('#banner-menu').click(function() {
         //TODO turn int a variable
         $('#menu').slideToggle(300);
@@ -244,13 +262,16 @@ window.onload = function () {
 
         //extra assets
         //TODO should be located in a chapter's definition
-        if (currentChapter == "hoofdstuk 3") {
-            layers.addOverlay(snip);
-            snip.addTo(map);
-        } else {
-            layers.removeLayer(snip);
-            map.removeLayer(snip);
-        }
+        // HACK
+
+
+        // if (currentChapter == "hoofdstuk 3") {
+        //     layers.addOverlay(snip);
+        //     snip.addTo(map);
+        // } else {
+        //     layers.removeLayer(snip);
+        //     map.removeLayer(snip);
+        // }
 
         //load content into interface
         $("#blurb").html(intro_story[id]);
@@ -351,7 +372,7 @@ window.onload = function () {
 
         $.getJSON('data/'+chapter+'/measurements.json', function(data) {
             $.each(data, function(index, value) {
-                var marker = L.marker([value.lat, value.lon], {icon: L.icon(icon_properties)});
+                var marker = L.marker([value.lat, value.lon], {icon: L.icon(iconProperties)});
                 marker.bindLabel(value.date);
                 geoms.push(marker);
                 //changeState();
@@ -430,8 +451,6 @@ window.onload = function () {
 //                    geoms.push(marker);
                     }
                     markersCluster.addLayer(marker);
-
-
                 });
             });
         });
