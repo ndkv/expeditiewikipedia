@@ -133,23 +133,22 @@ function loadChart(measurements) {
 
         $.each(values, function(index, value) {
             var date = dates[index].split('-');
-            data.push([Date.UTC(date[0], date[1], date[2]), value])
+            //Substract 1 from month as UTC months start at 0
+            data.push([Date.UTC(date[0], date[1]-1, date[2]), value])
         });
 
 
         $('#chart').highcharts({
         title: {
-            text: 'Monthly Average Temperature',
+            text: 'Gravity and depth measurements',
             x: -20 //center
         },
-        subtitle: {
-            text: 'Source: WorldClimate.com',
-            x: -20
-        },
+        // subtitle: {
+        //     text: 'Source: WorldClimate.com',
+        //     x: -20
+        // },
         xAxis: {
             type: 'datetime'
-            // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            //     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },
         yAxis: {
             title: {
@@ -162,7 +161,7 @@ function loadChart(measurements) {
             }]
         },
         tooltip: {
-            valueSuffix: 'mgal'
+            valueSuffix: ' mgal'
         },
         legend: {
             layout: 'vertical',
@@ -341,7 +340,7 @@ window.onload = function () {
         $('#story-content').html(chapters[currentChapter].getStory());
 
         //initialize and load the chapter's chart
-        //loadChart(chapters[currentChapter].getMeasurements());
+        loadChart(chapters[currentChapter].getMeasurements());
     }
 
     //

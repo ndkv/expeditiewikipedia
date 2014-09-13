@@ -311,5 +311,6 @@ blockquote {
     height: 300px;
     width: 600px;
     bottom: 0px;
-    left:  50px;
+    /*left:  210px;*/
+    right: 0px;
 }
