@@ -304,3 +304,12 @@ blockquote {
 .fancybox-overlay {
     z-index: 1001;
 }
+
+#chart {
+    position: fixed;
+    display: block;
+    height: 300px;
+    width: 600px;
+    bottom: 0px;
+    left:  50px;
+}
