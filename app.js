@@ -125,11 +125,22 @@ function updateInterface() {
         hud = !hud;
 }
 
-function loadChart(measurements) {
+function loadChart(measurements, map) {
 
          var values = measurements.getValues(),
              dates = measurements.getDates(),
+             geometries = measurements.getGeometries(),
              data = [];
+
+        var iconProperties = {
+        //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
+        iconUrl: 'resources/images/icons/measurements.png',
+        iconSize: [20, 20],
+        opacity: 0.1
+        };
+        var tempMarker;
+
+
 
         $.each(values, function(index, value) {
             var date = dates[index].split('-');
@@ -141,7 +152,7 @@ function loadChart(measurements) {
         $('#chart').highcharts({
         title: {
             text: 'Gravity and depth measurements',
-            x: -20 //center
+            //x: -20 //center
         },
         // subtitle: {
         //     text: 'Source: WorldClimate.com',
@@ -153,21 +164,44 @@ function loadChart(measurements) {
         yAxis: {
             title: {
                 text: 'Free air anomaly [mgal]'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
+            }
+            // plotLines: [{
+            //     value: 0,
+            //     width: 1,
+            //     color: '#808080'
+            // }]
         },
         tooltip: {
+            enabled: true,
             valueSuffix: ' mgal'
         },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
+        // legend: {
+        //     layout: 'vertical',
+        //     align: 'right',
+        //     verticalAlign: 'middle',
+        //     borderWidth: 0
+        //},
+        plotOptions: {
+            series: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        mouseOver: function () {
+                            var index = this.index;
+                            var marker = geometries[index];
+                            var latLng = marker.getLatLng()
+
+                            //for some strange reason updating the iconSize of the existing marker fails
+                            //hence we create a new one and remove it afterwards
+                            tempMarker = L.marker([latLng.lat, latLng.lng], {icon: L.icon(iconProperties)})
+                            tempMarker.addTo(map);
+                        },
+                        mouseOut: function () {
+                            map.removeLayer(tempMarker);
+                        }
+                    }
+                }
+            }
         },
         series: [{
             name: 'Free air anomaly',
@@ -340,7 +374,7 @@ window.onload = function () {
         $('#story-content').html(chapters[currentChapter].getStory());
 
         //initialize and load the chapter's chart
-        loadChart(chapters[currentChapter].getMeasurements());
+        loadChart(chapters[currentChapter].getMeasurements(), map);
     }
 
     //
