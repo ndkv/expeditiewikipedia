@@ -1,12 +1,47 @@
-window.onload = function () {
-	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
-	map.setView([0.0, 55.0], 3);
+function setFancybox() {
+    $(".fancybox").fancybox({
+        helpers: {
+            overlay: {
+                css: {
+                    'background': 'rgba(0, 0, 0, 0.95)',
+                    'z-index': '1001'
+                }
+            }
+        }
+    });
+
+    $(".various").fancybox({
+        maxWidth    : 708,
+        maxHeight   : 482,
+        fitToView   : false,
+        // width       : '70%',
+        // height      : '70%',
+        autoSize    : true,
+        closeClick  : false,
+        openEffect  : 'none',
+        closeEffect : 'none',
+        helpers: {
+            overlay: {
+                css : { 'background': 'rgba(0, 0, 0, 0.70)',
+                        'z-index': '1001'
+                      }
+                }
+        }
+    }); 
+}
+
+function setupMap() {
+
+    var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: false});
+    map.setView([0.0, 55.0], 3);
 
     //
     //maps
     //
-	//var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
+
+    // var osm = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
     var osm = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+    //var osm = "";
     //var osm = L.tileLayer("http://188.226.136.81/mapproxy/tiles/vm-mapbox-basemap_EPSG3857/{z}/{x}/{y}.png");
 
     var wms_url = "http://188.226.136.81:80/mapproxy/service/";
@@ -19,11 +54,11 @@ window.onload = function () {
     //     tiled: true
     // });
 
-	var sat = L.tileLayer.provider('Esri.WorldImagery');
+    var sat = L.tileLayer.provider('Esri.WorldImagery');
     //var sat = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbfma7f/{z}/{x}/{y}.png");
     osm.addTo(map);
 
-	var opacity = 1.0;
+    var opacity = 1.0;
 
     var historical_map2 = L.tileLayer.wms(wms_url, {
         layers: 'indian',
@@ -31,17 +66,17 @@ window.onload = function () {
         transparent: true,
         opacity: opacity
     });
-    //historical_map2.addTo(map);
-    //historical_map2.bringToBack();
+    // historical_map2.addTo(map);
+    // historical_map2.bringToBack();
 
     var historical_map = L.tileLayer.wms(wms_url, {
-		layers: 'vening_light',
-		format: 'image/png',
-		transparent: true,
-		opacity: opacity
-	});
-	//historical_map.addTo(map);
-    //historical_map.bringToFront();
+        layers: 'vening_light',
+        format: 'image/png',
+        transparent: true,
+        opacity: opacity
+    });
+    // historical_map.addTo(map);
+ //    historical_map.bringToFront();
 
     var route = L.tileLayer.wms(wms_url, {
         layers: 'vm-route',
@@ -52,49 +87,92 @@ window.onload = function () {
     route.addTo(map);
 
     var snip = L.tileLayer.wms(wms_url, {
-		layers: 'vening-snip',
-		format: 'image/png',
-		transparent: true,
-		opacity: opacity
-	});
+        layers: 'vening-snip',
+        format: 'image/png',
+        transparent: true,
+        opacity: opacity
+    });
     //snip.addTo(map);
 
-	var base_layers = {"Achtergrondkaart": osm, "Luchtfoto": sat};
-	var overlays = {
+    var base_layers = {"Achtergrondkaart": osm, "Luchtfoto": sat};
+    var overlays = {
         "Atlantische en Indische Oceaan": historical_map2,
         "Atlantische Oceaan": historical_map,
         //"De Snip + platen": snip,
         "route": route
-	};
+    };
 
     //
     //map controls
     //
 
-	var layers = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
-	layers.addTo(map);
+    var layers = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
+    layers.addTo(map);
+
+    return [map, layers];
+}
+
+function updateInterface() {
+        if (hud)
+            {
+                $("#title-content").fadeOut();
+            }
+        else
+            {
+                $("#title-content").fadeIn();
+            }
+
+        hud = !hud;
+}
+
+window.onload = function () {
+    var hud = true,                 //keep track of visibility of navigation elements
+        storyOpen = false,          //state of story pane
+        storyHeight,                //height of story panel
+        chapters = {},              //holds individual Chapter objects
+        currentChapterChapter = "hoofdstuk 1";    //currentChapterly selected chapter
+
+    //UI elements
+    var uiToggleStory = $('.story-button'),
+        uiBannerMenu = $("#banner-menu"),
+        uiMenu = $("#menu");
+        uiMenuItem = $(".menu-item");
+ 
+    setFancybox();                  //setup Fancybox image viewer
+	var initMap = setupMap();
+    var map = initMap[0],
+        layers = initMap[1];
+
+    //TODO remove this! Hack for chapter 3
+    var wms_url = "http://188.226.136.81:80/mapproxy/service/";
+    var snip = L.tileLayer.wms(wms_url, {
+        layers: 'vening-snip',
+        format: 'image/png',
+        transparent: true,
+        opacity: 1
+    });
 
     //
     //event handlers
     //
-
-    $('#banner-menu').click(function() {
-        $('#menu').slideToggle();
+    uiBannerMenu.click(function() {
+        //TODO turn int a variable
+        uiMenu.slideToggle(300);
     })
 
     map.on('click', function(event) {
+        console.log("northEast...");
         console.log(map.getBounds()._northEast.lat + ", " + map.getBounds()._northEast.lng);
         console.log(map.getBounds()._southWest.lat + ", " + map.getBounds()._southWest.lng);
         console.log(event.latlng.lat + ", " + event.latlng.lng);
     });
 
-    $(".menu-item").click(function(event) {
-        console.log(this.id);
+    uiMenuItem.click(function(event) {
+        // console.log(this.id);
         changeChapter(this.id);
         //TODO: menu in a variable
-        $('#menu').slideToggle();
+        uiMenu.slideToggle(300);
     });
-
 
 	$('#opening-close').click(function() {
 		var that = $(this).parent();
@@ -105,86 +183,28 @@ window.onload = function () {
 				$("#title").fadeIn();
 				$("#menu-content").fadeIn();
 				$("#banner").fadeIn();
-				//changeChapter("hoofdstuk 1");
+				changeChapter("hoofdstuk 1");
 				$("#video").remove();
 				that.remove();
 			}
 		});
 	});
 
-
-	var hud = true;
-    $('.close').click(function() {
-
-		if (hud) {
-			$(this).next().fadeIn();
-			$(this).text("i");
-		} else {
-			$(this).next().fadeOut();
-			$(this).text("X");
-		}
-
-		closeX();
-
-	});
-
-
-
-    function closeX() {
-        console.log("testing");
-        //$(this).data('clicked',!$(this).data('clicked'));
-
-        // if ($(this).data('clicked'))
-		if (hud)
-            {
-                $("#title-content").fadeOut();
-                $("#menu-content").fadeOut();
-				hud = false;
-            }
-        else
-            {
-                //hack
-                $("#title-content").fadeIn();
-                $("#menu-content").fadeIn();
-				hud = true;
-            }
-    }
-
-
-	//var story = String("test");
-	var storyOpen = false;
-
-	$('.story-button').click(function() {
-		console.log("acting");
-		//$('#story').css("display", "block");
-
-		$('#story-content').html(chapters[current].getStory());
-		//$('#story').slideToggle();
-
-		var height;
-		if (storyOpen) {
-			height = "0%";
-		} else {
-			height = "100%";
-		};
-
+	uiToggleStory.click(function() {
+		storyHeight = storyOpen ? "0%" : "100%"
 		storyOpen = !storyOpen;
 
 		$('#story').anima3d({
-			height: height
-		}, 800, 'linear');
+			height: storyHeight
+		}, 500, 'linear');
 
-		closeX();
-		$('#close-title').fadeToggle();
+		updateInterface();
 	});
-
 
     //
     // CONTENT
     //
     //load and setup chapters
-    var chapters = {};
-    var current = "hoofdstuk 1";
 
 
     $.getJSON("config.json", function (data) {
@@ -194,8 +214,6 @@ window.onload = function () {
             console.log(value);
             chapters[value] = new Chapter(value);
         });
-
-        changeChapter(current);
     });
 
     //
@@ -207,46 +225,62 @@ window.onload = function () {
         //recenter map
 
         //bboxes of chapter views, activated on click in left menu
+        //TODO: remove unecessary precision
         var zoom_coordinates = {
             "hoofdstuk 1": {northEast: L.latLng(54.29088164657006, 21.26953125), southWest: L.latLng(31.203404950917395, -27.3779296875) },
             "hoofdstuk 2": {northEast: L.latLng(35.06597313798418, 4.6142578125), southWest: L.latLng(19.932041306115536, -42.7587890625) },
-            "hoofdstuk 3": {northEast: L.latLng(15.855673509998681, -13.798828125), southWest: L.latLng(7.471410908357826, -37.4853515625) }
+            "hoofdstuk 3": {northEast: L.latLng(15.855673509998681, -13.798828125), southWest: L.latLng(7.471410908357826, -37.4853515625) },
+            "k18": {northEast: L.latLng(51.916479358958874, 4.5406150817871085), southWest: L.latLng(51.89021285195025, 4.442424774169922) }
         };
 
 
         //description text in right panel
+        //TODO put these in the config file
+        // AND use to construct menu also
         var intro_story = {
             "hoofdstuk 1": "Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
             "hoofdstuk 2": "Intro text hoofdstuk 2",
-            "hoofdstuk 3": "Intro text hoofdstuk 3"
+            "hoofdstuk 3": "Intro text hoofdstuk 3",
+            "k18": "Intro hoofdstuk 4"
         };
 
 		var banner_title = {
 			"hoofdstuk 1": "Hoofdstuk 1 <br /> Vertrek",
 			"hoofdstuk 2": "Hoofdstuk 2 <br /> Vulkanisme",
-			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek"
+			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek",
+            "k18": "K XVIII <br /> De Onderzeeboot"
 		}
 
         var zoomTo = zoom_coordinates[id];
         map.fitBounds(L.latLngBounds(zoomTo.southWest, zoomTo.northEast), {animate: true, pan: {duration: 1.0}});
-        chapters[current].hide();
+        chapters[currentChapterChapter].hide();
         chapters[id].show();
-        current = id;
+        currentChapter = id;
 
-        //console.log(chapter)
         //extra assets
         //TODO should be located in a chapter's definition
-        if (current == "hoofdstuk 3") {
-            layers.addOverlay(snip);
-            snip.addTo(map);
-        } else {
-            layers.removeLayer(snip);
-            map.removeLayer(snip);
-        }
+        // HACK
 
+
+        // if (currentChapter == "hoofdstuk 3") {
+        //     layers.addOverlay(snip);
+        //     snip.addTo(map);
+        // } else {
+        //     layers.removeLayer(snip);
+        //     map.removeLayer(snip);
+        // }
+
+        //load content into interface
         $("#blurb").html(intro_story[id]);
 		$("#banner-chapter").html(banner_title[id]);
+        $('#story-content').html(chapters[currentChapter].getStory());
     }
+
+    //
+    //Objects
+    //
+
+    //TODO put in requirejs
 
     function Chapter(chapter) {
         //console.log("creating new chapter");
@@ -257,7 +291,7 @@ window.onload = function () {
 		var story;
 
 		$.get('data/'+ chapter +'/'+ chapter + '.htm', function(data) {
-			console.log('data/'+ chapter +'/'+ chapter + '.htm');
+			//console.log('data/'+ chapter +'/'+ chapter + '.htm');
 			story = data;
 		})
 
@@ -280,13 +314,13 @@ window.onload = function () {
     }
 
     function Route(chapter) {
-        console.log("creating new route...");
+        //console.log("creating new route...");
         var geom;
         var state = "hidden";
         this.id = chapter;
 
         $.getJSON('data/'+chapter+'/track.json', function(data) {
-           console.log(data.type);
+           //console.log(data.type);
            geom = L.geoJson(data, {
                style: {
                    "color": "#FFFFFF",
@@ -321,21 +355,21 @@ window.onload = function () {
     }
 
     function Measurements(chapter) {
-        console.log("creating measurements");
         var icon = "";
         var geoms = [];
         var state = "hidden";
+        console.log("creating measurements");
 
-        var icon_properties = {
+        var iconProperties = {
             //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
-            iconUrl: 'resources/images/icons/measurements_red.png',
+            iconUrl: 'resources/images/icons/measurements.png',
             iconSize: [10, 10],
             opacity: 0.1
         };
 
         $.getJSON('data/'+chapter+'/measurements.json', function(data) {
             $.each(data, function(index, value) {
-                var marker = L.marker([value.lat, value.lon], {icon: L.icon(icon_properties)});
+                var marker = L.marker([value.lat, value.lon], {icon: L.icon(iconProperties)});
                 marker.bindLabel(value.date);
                 geoms.push(marker);
                 //changeState();
@@ -374,7 +408,7 @@ window.onload = function () {
         var state = "hidden";
         var markersCluster = new L.MarkerClusterGroup();
 
-        console.log("firing Poi get");
+        //console.log("firing Poi get");
         $.getJSON('data/'+chapter+'/pois/pois.json', function(data) {
             $.each(data, function(index, value) {
                 var lon = value.lon;
@@ -386,11 +420,34 @@ window.onload = function () {
                     //add CSS centering code
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
                     var test = $.parseHTML(html);
-                    var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
+                    
+                    //TODO: photos don't need html hence should be out of the .get function
+                    if (icon == "photo") {
+                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})});
+                        marker.on('click', function() {
+                            $.fancybox.open([
+                                {
+                                    href: 'data/'+ chapter +'/pois/images/'+ content.slice(6) + '.png'
+                                }],
+                                {   
+                                    autoSize: true,
+                                    closeClick: true,
+                                    autoResize: true,
+                                    helpers: {
+                                        overlay: {
+                                            css: {
+                                                'background': 'rgba(0, 0, 0, 0.85)',
+                                                'z-index': '1001'
+                                            }
+                                    }
+                                }
+                                });
+                        }); 
+                    } else {
+                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
 //                    geoms.push(marker);
+                    }
                     markersCluster.addLayer(marker);
-
-
                 });
             });
         });
