@@ -130,7 +130,8 @@ function loadChart(measurements, map) {
          var values = measurements.getValues(),
              dates = measurements.getDates(),
              geometries = measurements.getGeometries(),
-             data = [];
+             data = [],
+             year, time, date;
 
         var iconProperties = {
         //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
@@ -143,9 +144,20 @@ function loadChart(measurements, map) {
 
 
         $.each(values, function(index, value) {
-            var date = dates[index].split('-');
-            //Substract 1 from month as UTC months start at 0
-            data.push([Date.UTC(date[0], date[1]-1, date[2]), value])
+            if (dates[index].length > 10) {
+                year = dates[index].split(' ')[0].split('-');
+                time = dates[index].split(' ')[1].split(':');
+
+                // var date = dates[index].split('-');
+                //Substract 1 from month as UTC months start at 0
+                date = Date.UTC(year[0], year[1]-1, year[2], time[0], time[1]);
+
+            } else {
+                year = dates[index].split('-');
+                date = Date.UTC(year[0], year[1]-1, year[2]);
+            }
+
+            data.push([date, value]);
         });
 
 
