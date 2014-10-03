@@ -85,6 +85,8 @@ function setupMap() {
         opacity: opacity
     });
     route.addTo(map);
+    route.bringToFront();
+    route.setZIndex(2);
 
     var snip = L.tileLayer.wms(wms_url, {
         layers: 'vening-snip',
@@ -99,17 +101,17 @@ function setupMap() {
         "Atlantische en Indische Oceaan": historical_map2,
         "Atlantische Oceaan": historical_map,
         //"De Snip + platen": snip,
-        "route": route
+        //"route": route
     };
 
     //
     //map controls
     //
 
-    var layers = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
-    layers.addTo(map);
+    var layerControl = L.control.layers(base_layers, overlays, {collapsed: true, position: 'topleft'});
+    //layers.addTo(map);
 
-    return [map, layers];
+    return [map, layerControl, overlays];
 }
 
 function updateInterface() {
@@ -247,11 +249,16 @@ window.onload = function () {
         uiBannerMenu = $("#banner-menu"),
         uiMenu = $("#menu");
         uiMenuItem = $(".menu-item");
+        uiHistoricalMaps = $("#historical-map"),
+        uiChart = $("#chart-control");
+
  
-    setFancybox();                  //setup Fancybox image viewer
+    setFancybox();
+    //initialize map
 	var initMap = setupMap();
     var map = initMap[0],
-        layers = initMap[1];
+        layerControl = initMap[1],
+        overlays = initMap[2];
 
     //TODO remove this! Hack for chapter 3
     var wms_url = "http://188.226.136.81:80/mapproxy/service/";
@@ -310,6 +317,25 @@ window.onload = function () {
 
 		updateInterface();
 	});
+
+    uiHistoricalMaps.click(function () {
+        console.log("alerting");
+        //TODO create a decent toggler function
+
+        $.each(overlays, function(index, layer) {
+            if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+            } else {
+                layer.addTo(map);
+                //layer.bringToBack();
+                layer.setZIndex(1);
+            }
+        });
+    });
+
+    uiChart.click(function() {
+        $("#chart").toggle();
+    })
 
     //
     // CONTENT

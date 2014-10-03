@@ -307,10 +307,21 @@ blockquote {
 
 #chart {
     position: fixed;
-    display: block;
+    display: none;
     height: 300px;
     width: 600px;
     bottom: 0px;
     /*left:  210px;*/
     right: 0px;
+}
+
+.controls-icon {
+    height: 40px;
+    width: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#controls {
+    padding: 15px;
 }
