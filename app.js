@@ -114,17 +114,22 @@ function setupMap() {
     return [map, layerControl, overlays];
 }
 
-function updateInterface() {
-        if (hud)
-            {
-                $("#title-content").fadeOut();
-            }
-        else
-            {
-                $("#title-content").fadeIn();
-            }
+function toggleStory() {
+    var story = $('#story');
+    var storyHeight = story.height();
+    var height;
 
-        hud = !hud;
+    if (storyHeight === 0) {
+        height = "100%";
+        // $("#title-content").fadeOut();
+    } else {
+        height = "0%";
+        // $("#title-content").fadeIn();
+    }
+
+    story.anima3d({
+        height: height
+    }, 500, 'linear');
 }
 
 function loadChart(measurements, map) {
@@ -238,10 +243,7 @@ function loadChart(measurements, map) {
 }
 
 window.onload = function () {
-    var hud = true,                 //keep track of visibility of navigation elements
-        storyOpen = false,          //state of story pane
-        storyHeight,                //height of story panel
-        chapters = {},              //holds individual Chapter objects
+    var chapters = {},              //holds individual Chapter objects
         currentChapter = "hoofdstuk 1";    //currentChapterly selected chapter
 
     //UI elements
@@ -307,16 +309,8 @@ window.onload = function () {
 		});
 	});
 
-	uiToggleStory.click(function() {
-		storyHeight = storyOpen ? "0%" : "100%"
-		storyOpen = !storyOpen;
-
-		$('#story').anima3d({
-			height: storyHeight
-		}, 500, 'linear');
-
-		updateInterface();
-	});
+	uiToggleStory.click(toggleStory);
+    $("#readmore-control").click(toggleStory);
 
     uiHistoricalMaps.click(function () {
         console.log("alerting");
