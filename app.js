@@ -328,7 +328,7 @@ window.onload = function () {
     });
 
     uiChart.click(function() {
-        $("#chart").toggle();
+        $("#chart").fadeToggle(300);
     })
 
     //
