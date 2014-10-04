@@ -53,7 +53,7 @@
     font-style: italic;
     position: relative;
     float: left;
-    width: 200px;
+/*    width: 200px;*/
     top: 140px;
     overflow: none;
     display:none;
@@ -342,6 +342,59 @@ blockquote {
     /*float: left;*/
 }
 
+#controls img {
+    margin-top: 10px;
+}
+
 #controls span:hover {
     border-bottom-style: solid;
+}
+
+
+@media (max-width: 700px) {
+    #title {
+        font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
+        font-style: italic;
+        position: relative;
+        float: left;
+        /*width: 80px;*/
+        top: 140px;
+        overflow: none;
+        /*display:none;   */
+    }
+
+    #legend span {
+        display: none;
+    }
+
+    #legend img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    #controls span {
+        display: block;
+    }
+
+    .controls-icon {
+        height: 25px;
+        width: 25px;
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    img.legend {
+        height: 25px;
+        width: 25px;
+        vertical-align: middle;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    #legend strong {
+        display: none;
+    }
 }
