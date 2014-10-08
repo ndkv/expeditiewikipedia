@@ -223,12 +223,12 @@ img.poi {
     /*opacity: 0;*/
 }
 
-#story-content {
+.story-content {
     overflow-y: auto;
     position: absolute;
-    padding: 10px;
-    margin: 10px;
-    top: 30px;
+/*    padding: 10px;
+    margin: 10px;*/
+    top: 80px;
     bottom: 0px;
 }
 
@@ -350,8 +350,38 @@ blockquote {
     border-bottom-style: solid;
 }
 
+#tabs {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left:0px;
+    right: 0px;
+}
 
-@media (max-width: 700px) {
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.ui-state-hover {
+    background-color: white;
+    color: white;
+}
+
+.ui-state-focus {
+    border-style: none;
+}
+
+@media (max-width: 900px) {
     #title {
         font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
         font-style: italic;

@@ -252,7 +252,8 @@ window.onload = function () {
         uiMenu = $("#menu");
         uiMenuItem = $(".menu-item");
         uiHistoricalMaps = $("#historical-map"),
-        uiChart = $("#chart-control");
+        uiChart = $("#chart-control"),
+        tabs = $("#tabs");
 
  
     setFancybox();
@@ -331,6 +332,8 @@ window.onload = function () {
         $("#chart").fadeToggle(300);
     })
 
+    tabs.tabs();
+
     //
     // CONTENT
     //
@@ -403,7 +406,8 @@ window.onload = function () {
         //load content into interface
         $("#blurb").html(intro_story[id]);
 		$("#banner-chapter").html(banner_title[id]);
-        $('#story-content').html(chapters[currentChapter].getStory());
+        $('#geschiedenis-content').html(chapters[currentChapter].getStory());
+        //$('#wetenschap-content').html(chapters[currentChapter].getStory());
 
         //initialize and load the chapter's chart
         loadChart(chapters[currentChapter].getMeasurements(), map);
