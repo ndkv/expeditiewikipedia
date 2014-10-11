@@ -1,3 +1,9 @@
+// $ = require('jquery-browserify');
+// jQuery = $;
+//require('./lib/jquery.fancybox.pack.js');
+//require('./js/lib/jquery-ui.js');
+//require('./js/lib/minimit-anima.min.js');
+
 function setFancybox() {
     $(".fancybox").fancybox({
         helpers: {
@@ -54,7 +60,7 @@ function setupMap() {
     //     tiled: true
     // });
 
-    var sat = L.tileLayer.provider('Esri.WorldImagery');
+    // var sat = L.tileLayer.provider('Esri.WorldImagery');
     //var sat = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbfma7f/{z}/{x}/{y}.png");
     osm.addTo(map);
 
@@ -96,7 +102,7 @@ function setupMap() {
     });
     //snip.addTo(map);
 
-    var base_layers = {"Achtergrondkaart": osm, "Luchtfoto": sat};
+    var base_layers = {"Achtergrondkaart": osm};//, "Luchtfoto": sat};
     var overlays = {
         "Atlantische en Indische Oceaan": historical_map2,
         "Atlantische Oceaan": historical_map,
@@ -132,125 +138,128 @@ function toggleStory() {
     }, 500, 'linear');
 }
 
-function loadChart(measurements, map) {
+// function loadChart(measurements, map) {
 
-         var values = measurements.getValues(),
-             dates = measurements.getDates(),
-             geometries = measurements.getGeometries(),
-             data = [],
-             year, time, date;
+//          var values = measurements.getValues(),
+//              dates = measurements.getDates(),
+//              geometries = measurements.getGeometries(),
+//              data = [],
+//              year, time, date;
 
-        var iconProperties = {
-        //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
-        iconUrl: 'resources/images/icons/measurements.png',
-        iconSize: [20, 20],
-        opacity: 0.1
-        };
-        var tempMarker;
-
-
-
-        $.each(values, function(index, value) {
-            if (dates[index].length > 10) {
-                year = dates[index].split(' ')[0].split('-');
-                time = dates[index].split(' ')[1].split(':');
-
-                // var date = dates[index].split('-');
-                //Substract 1 from month as UTC months start at 0
-                date = Date.UTC(year[0], year[1]-1, year[2], time[0], time[1]);
-
-            } else {
-                year = dates[index].split('-');
-                date = Date.UTC(year[0], year[1]-1, year[2]);
-            }
-
-            data.push([date, value]);
-        });
+//         var iconProperties = {
+//         //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
+//         iconUrl: 'resources/images/icons/measurements.png',
+//         iconSize: [20, 20],
+//         opacity: 0.1
+//         };
+//         var tempMarker;
 
 
-        $('#chart').highcharts({
-        title: {
-            text: 'Gravity and depth measurements',
-            //x: -20 //center
-        },
-        // subtitle: {
-        //     text: 'Source: WorldClimate.com',
-        //     x: -20
-        // },
-        xAxis: {
-            type: 'datetime'
-        },
-        yAxis: {
-            title: {
-                text: 'Free air anomaly [mgal]'
-            }
-            // plotLines: [{
-            //     value: 0,
-            //     width: 1,
-            //     color: '#808080'
-            // }]
-        },
-        tooltip: {
-            enabled: true,
-            valueSuffix: ' mgal'
-        },
-        // legend: {
-        //     layout: 'vertical',
-        //     align: 'right',
-        //     verticalAlign: 'middle',
-        //     borderWidth: 0
-        //},
-        plotOptions: {
-            series: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        mouseOver: function () {
-                            var index = this.index;
-                            var marker = geometries[index];
-                            var latLng = marker.getLatLng()
 
-                            //for some strange reason updating the iconSize of the existing marker fails
-                            //hence we create a new one and remove it afterwards
-                            tempMarker = L.marker([latLng.lat, latLng.lng], {icon: L.icon(iconProperties)})
-                            tempMarker.addTo(map);
-                        },
-                        mouseOut: function () {
-                            map.removeLayer(tempMarker);
-                        }
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'Free air anomaly',
-            data: data
-        }]
+//         $.each(values, function(index, value) {
+//             if (dates[index].length > 10) {
+//                 year = dates[index].split(' ')[0].split('-');
+//                 time = dates[index].split(' ')[1].split(':');
 
-        // should become a list of date / value pairs
+//                 // var date = dates[index].split('-');
+//                 //Substract 1 from month as UTC months start at 0
+//                 date = Date.UTC(year[0], year[1]-1, year[2], time[0], time[1]);
 
-        //  {
-        //     name: 'New York',
-        //     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        // }, {
-        //     name: 'Berlin',
-        //     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        // }, {
-        //     name: 'London',
-        //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        // }]
-    });
-}
+//             } else {
+//                 year = dates[index].split('-');
+//                 date = Date.UTC(year[0], year[1]-1, year[2]);
+//             }
+
+//             data.push([date, value]);
+//         });
+
+
+//         $('#chart').highcharts({
+//         title: {
+//             text: 'Gravity and depth measurements',
+//             //x: -20 //center
+//         },
+//         // subtitle: {
+//         //     text: 'Source: WorldClimate.com',
+//         //     x: -20
+//         // },
+//         xAxis: {
+//             type: 'datetime'
+//         },
+//         yAxis: {
+//             title: {
+//                 text: 'Free air anomaly [mgal]'
+//             }
+//             // plotLines: [{
+//             //     value: 0,
+//             //     width: 1,
+//             //     color: '#808080'
+//             // }]
+//         },
+//         tooltip: {
+//             enabled: true,
+//             valueSuffix: ' mgal'
+//         },
+//         // legend: {
+//         //     layout: 'vertical',
+//         //     align: 'right',
+//         //     verticalAlign: 'middle',
+//         //     borderWidth: 0
+//         //},
+//         plotOptions: {
+//             series: {
+//                 cursor: 'pointer',
+//                 point: {
+//                     events: {
+//                         mouseOver: function () {
+//                             var index = this.index;
+//                             var marker = geometries[index];
+//                             var latLng = marker.getLatLng()
+
+//                             //for some strange reason updating the iconSize of the existing marker fails
+//                             //hence we create a new one and remove it afterwards
+//                             tempMarker = L.marker([latLng.lat, latLng.lng], {icon: L.icon(iconProperties)})
+//                             tempMarker.addTo(map);
+//                         },
+//                         mouseOut: function () {
+//                             map.removeLayer(tempMarker);
+//                         }
+//                     }
+//                 }
+//             }
+//         },
+//         series: [{
+//             name: 'Free air anomaly',
+//             data: data
+//         }]
+
+//         // should become a list of date / value pairs
+
+//         //  {
+//         //     name: 'New York',
+//         //     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+//         // }, {
+//         //     name: 'Berlin',
+//         //     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+//         // }, {
+//         //     name: 'London',
+//         //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+//         // }]
+//     });
+// }
 
 window.onload = function () {
+
+    // var loadChart = require('./charts.js');
+
     var chapters = {},              //holds individual Chapter objects
         currentChapter = "hoofdstuk 1";    //currentChapterly selected chapter
 
     //UI elements
     var uiToggleStory = $('.story-button'),
         uiBannerMenu = $("#banner-menu"),
-        uiMenu = $("#menu");
-        uiMenuItem = $(".menu-item");
+        uiMenu = $("#menu"),
+        uiMenuItem = $(".menu-item"),
         uiHistoricalMaps = $("#historical-map"),
         uiChart = $("#chart-control"),
         tabs = $("#tabs");
@@ -278,7 +287,7 @@ window.onload = function () {
     uiBannerMenu.click(function() {
         //TODO turn int a variable
         uiMenu.slideToggle(300);
-    })
+    });
 
     map.on('click', function(event) {
         console.log("northEast...");
@@ -330,7 +339,7 @@ window.onload = function () {
 
     uiChart.click(function() {
         $("#chart").fadeToggle(300);
-    })
+    });
 
     tabs.tabs();
 
@@ -382,7 +391,7 @@ window.onload = function () {
 			"hoofdstuk 2": "Hoofdstuk 2 <br /> Vulkanisme",
 			"hoofdstuk 3": "Hoofdstuk 3 <br /> Plaattektoniek",
             "k18": "K XVIII <br /> De Onderzeeboot"
-		}
+		};
 
         var zoomTo = zoom_coordinates[id];
         map.fitBounds(L.latLngBounds(zoomTo.southWest, zoomTo.northEast), {animate: true, pan: {duration: 1.0}});
@@ -430,11 +439,11 @@ window.onload = function () {
 		$.get('data/'+ chapter +'/'+ chapter + '.htm', function(data) {
 			//console.log('data/'+ chapter +'/'+ chapter + '.htm');
 			story = data;
-		})
+		});
 
 		this.getStory = function () {
 			return story;
-		}
+		};
 
         this.hide = function () {
             measurements.hide();
@@ -505,7 +514,7 @@ window.onload = function () {
 
         var iconProperties = {
             //iconUrl: 'http://static.ndkv.nl/vm/images/measure_white.png',
-            iconUrl: 'resources/images/icons/measurements.png',
+            iconUrl: 'dist/images/icons/measurements.png',
             iconSize: [10, 10],
             opacity: 0.1
         };
@@ -550,15 +559,15 @@ window.onload = function () {
 
         this.getGeometries = function() {
             return geoms;
-        }
+        };
 
         this.getDates = function () {
             return dates;
-        }
+        };
 
         this.getValues = function () {
             return values;
-        }
+        };
     }
 
     function Pois(chapter) {
@@ -578,10 +587,11 @@ window.onload = function () {
                     //add CSS centering code
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
                     var test = $.parseHTML(html);
+                    var marker;
                     
                     //TODO: photos don't need html hence should be out of the .get function
                     if (icon == "photo") {
-                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})});
+                        marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'dist/images/icons/' + icon + '.png', iconSize: [30, 30]})});
                         marker.on('click', function() {
                             $.fancybox.open([
                                 {
@@ -602,7 +612,7 @@ window.onload = function () {
                                 });
                         }); 
                     } else {
-                        var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
+                        marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'dist/images/icons/' + icon + '.png', iconSize: [30, 30]})}).bindPopup(html, {maxWidth: 450});
 //                    geoms.push(marker);
                     }
                     markersCluster.addLayer(marker);

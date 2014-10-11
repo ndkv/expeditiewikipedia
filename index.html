@@ -4,37 +4,37 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.9, user-scalable=no" />
         
-        <link href='resources/MarkerCluster.css' rel='stylesheet' />
-
-
         <!--Leaflet -->
-        <script type="text/javascript" src="resources/leaflet.js"></script>
-        <script src="plugins/leaflet-providers.js"></script>
-        <script src="plugins/leaflet-label.js"></script>
-        <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+        <script type="text/javascript" src="js/lib/leaflet.js"></script>
+        <script type="text/javascript" src="js/lib/leaflet-providers.js"></script>
+        <script type="text/javascript" src="js/lib/leaflet-label.js"></script>
+        <script type="text/javascript" src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 
-        <link href='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+        <!-- <link href='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' /> -->
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-        <link rel="stylesheet" href="plugins/leaflet-label.css" />
+        <link href='css/leaflet-markercluster.css' rel='stylesheet' />
+        <link rel="stylesheet" href="css/leaflet-label.css" />
 
         <!-- jquery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="resources/jquery-ui/jquery-ui.min.js"></script>
-        <link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
+        <script src="js/lib/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.css" />
 
         <!-- anima 3d -->
-        <script src="resources/minimit-anima.min.js"></script>
+        <script src="js/lib/minimit-anima.min.js"></script> 
 
         <!-- fancybox -->
-        <link rel="stylesheet" href="resources/jquery.fancybox.css" type="text/css" media="screen" />
-        <script type="text/javascript" src="resources/jquery.fancybox.pack.js"></script>
+        <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="js/lib/jquery.fancybox.pack.js"></script>
         
         <!-- highcharts -->
-        <script type="text/javascript" src="resources/highcharts.js"></script>
+        <script type="text/javascript" src="js/lib/highcharts.js"></script>
         
         <!-- app -->
-        <link rel="stylesheet" href="resources/style.css" />
-        <script src="app.js"></script>
+        <link rel="stylesheet" href="css/style.css" />
+        <!-- <script src="app.js"></script> -->
+        <!-- <script src="dist/js/index.js"></script> -->
+        <script src="dist/vening-meinesz.min.js"></script>
         
 
     </head>
@@ -76,18 +76,18 @@
 
                 <div id="legend">
                     <div><strong>Legenda</strong></div>
-                    <div><img class="legend" src="resources/images/icons/measurements.png"><span> - metingen</span></div>
-                    <div><img class="legend" src="resources/images/icons/quote.png"><span> - anektode</span></div>
-                    <div><img class="legend" src="resources/images/icons/photo.png"><span> - foto</span></div>
-                    <div><img class="legend" src="resources/images/icons/science.png"><span> - wetenschap</span></div>
+                    <div><img class="legend" src="dist/images/icons/measurements.png"><span> - metingen</span></div>
+                    <div><img class="legend" src="dist/images/icons/quote.png"><span> - anektode</span></div>
+                    <div><img class="legend" src="dist/images/icons/photo.png"><span> - foto</span></div>
+                    <div><img class="legend" src="dist/images/icons/science.png"><span> - wetenschap</span></div>
                 </div>
 
                 <hr>
 
                 <div id ="controls">
-                    <span><img id="historical-map" class="controls-icon" src="resources/images/icons/map.png"></span>
-                    <span><img id="chart-control" class="controls-icon" src="resources/images/icons/chart.png"></span>
-                    <span><img id="readmore-control" class="controls-icon" src="resources/images/icons/book.png"></span>
+                    <span><img id="historical-map" class="controls-icon" src="dist/images/icons/map.png"></span>
+                    <span><img id="chart-control" class="controls-icon" src="dist/images/icons/chart.png"></span>
+                    <span><img id="readmore-control" class="controls-icon" src="dist/images/icons/book.png"></span>
                 </div>
 
                 <!-- <br /> -->
@@ -109,7 +109,7 @@
     <div id="opening">
         <h3>Vening Meinesz - Gravity Expeditions at Sea</h3>
 
-        <!-- <img style="float:right; margin:4px; width: 300px;" src="http://static.ndkv.nl/vm/resources/images/vm_instrument.jpg"> -->
+        <!-- <img style="float:right; margin:4px; width: 300px;" src="http://static.ndkv.nl/vm/dist/images/vm_instrument.jpg"> -->
         <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p>
         <!-- <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p> -->
 
@@ -171,12 +171,12 @@
     </div>
 
     <div id="banner">
-        <img id="ff" src="resources/images/vm_icon.jpg" />
+        <img id="ff" src="dist/images/icons/vm_icon.jpg" />
         <div id="banner-logo">
             <div id="banner-title">Vening Meinesz</div>
             <div id="banner-subtitle">Gravity Expeditions at Sea</div>
         </div>
-        <img id="banner-menu" src="resources/images/icons/menu48.png">
+        <img id="banner-menu" src="dist/images/icons/menu48.png">
         <div id="banner-chapter" class="banner-chapter">
             <!-- <div id="banner-chapter-title">Hoofdstuk 1</div>
             <div id="banner-chapter-subtitle">Vertrek</div> -->
