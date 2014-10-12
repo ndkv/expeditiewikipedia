@@ -1,5 +1,5 @@
-// module.exports = function (measurements, map) {
-    function loadChart(measurements, mao) {
+module.exports = function (measurements, map) {
+    // function loadChart(measurements, mao) {
 
          var values = measurements.getValues(),
              dates = measurements.getDates(),
@@ -33,7 +33,6 @@
 
             data.push([date, value]);
         });
-
 
         $('#chart').highcharts({
         title: {
@@ -73,7 +72,8 @@
                 point: {
                     events: {
                         mouseOver: function () {
-                            var index = this.index;
+                            //var index = this.index;
+                            var index = values.indexOf(this.y);
                             var marker = geometries[index];
                             var latLng = marker.getLatLng();
 
@@ -107,4 +107,4 @@
         //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
         // }]
     });
-}
+};

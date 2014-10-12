@@ -1,8 +1,10 @@
-// $ = require('jquery-browserify');
-// jQuery = $;
-//require('./lib/jquery.fancybox.pack.js');
-//require('./js/lib/jquery-ui.js');
-//require('./js/lib/minimit-anima.min.js');
+$ = require('jquery-browserify');
+jQuery = $;
+require('./lib/jquery.fancybox.pack.js');
+require('./lib/jquery-ui.js');
+//require('./lib/minimit-anima.js');
+//require('../node_modules/highcharts-browserify/highcharts.js');
+require('highcharts-browserify');
 
 function setFancybox() {
     $(".fancybox").fancybox({
@@ -133,9 +135,10 @@ function toggleStory() {
         // $("#title-content").fadeIn();
     }
 
-    story.anima3d({
-        height: height
-    }, 500, 'linear');
+    // story.anima3d({
+    //     height: height
+    // }, 500, 'linear');
+    story.animate({height: height});
 }
 
 // function loadChart(measurements, map) {
@@ -250,7 +253,7 @@ function toggleStory() {
 
 window.onload = function () {
 
-    // var loadChart = require('./charts.js');
+    var loadChart = require('./charts.js');
 
     var chapters = {},              //holds individual Chapter objects
         currentChapter = "hoofdstuk 1";    //currentChapterly selected chapter
@@ -305,18 +308,27 @@ window.onload = function () {
 
 	$('#opening-close').click(function() {
 		var that = $(this).parent();
-		that.anima3d({
-			opacity: 0
-		}, 500, 'linear', {complete:
-			function () {
-				$("#title").fadeIn();
-				$("#menu-content").fadeIn();
-				$("#banner").fadeIn();
-				changeChapter("hoofdstuk 1");
-				$("#video").remove();
-				that.remove();
-			}
-		});
+		// that.anima3d({
+		// 	opacity: 0
+		// }, 500, 'linear', {complete:
+		// 	function () {
+		// 		$("#title").fadeIn();
+		// 		$("#menu-content").fadeIn();
+		// 		$("#banner").fadeIn();
+		// 		changeChapter("hoofdstuk 1");
+		// 		$("#video").remove();
+		// 		that.remove();
+		// 	}
+		// });
+
+        that.hide("slow", function () {
+            $("#title").fadeIn();
+            $("#menu-content").fadeIn();
+            $("#banner").fadeIn();
+            changeChapter("hoofdstuk 1");
+            $("#video").remove();
+            that.remove();
+        });
 	});
 
 	uiToggleStory.click(toggleStory);
