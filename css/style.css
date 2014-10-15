@@ -298,7 +298,7 @@ blockquote {
 }
 
 .popup-content {
-    /*height: 300px;*/
+    height: 200px;
     overflow: auto;
     font-size: 1.3em;
 }
