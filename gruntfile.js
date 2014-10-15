@@ -56,20 +56,19 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: {
-			options: {
-				livereload: true
-			},
 			scripts: {
 				files: ['<%= jshint.files %>'],
-				// tasks: ['jshint', 'browserify', 'concat', 'uglify']
-				// tasks: ['jshint', 'concat', 'browserify']
 				tasks: ['jshint']
-				// tasks: ['browserify']
 			},
 			css: {
-				files: ['css/*.css'],
-				// tasks: ['jshint', 'browserify', 'concat', 'uglify']
-				 tasks: ['copy']
+				files: ['css/style.css'],
+				tasks: ['copy']
+			},
+			deployed: {
+				files: ['dist/css/style.css'],
+				options: {
+					livereload: true
+				}
 			}
 		}
 	});

@@ -298,8 +298,9 @@ blockquote {
 }
 
 .popup-content {
-    height: 300px;
+    /*height: 300px;*/
     overflow: auto;
+    font-size: 1.3em;
 }
 
 .fancybox-overlay {
