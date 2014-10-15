@@ -1,10 +1,15 @@
+//GLOBAL!!
 $ = require('jquery-browserify');
 jQuery = $;
 require('./lib/jquery.fancybox.pack.js');
 require('./lib/jquery-ui.js');
-//require('./lib/minimit-anima.js');
-//require('../node_modules/highcharts-browserify/highcharts.js');
 require('highcharts-browserify');
+
+//GLOBAL!!
+L = require('leaflet');
+require('./lib/leaflet-providers.js');
+require('./lib/leaflet-label.js');
+require('./lib/leaflet.markercluster.js');
 
 function setFancybox() {
     $(".fancybox").fancybox({
