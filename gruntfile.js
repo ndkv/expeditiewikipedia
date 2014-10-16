@@ -14,6 +14,10 @@ module.exports = function(grunt) {
 			css: {
 				src: ['css/style.css'],
 				dest: 'dist/css/style.css'
+			},
+			images: {
+				src: ['images/icons/*.png', 'images/icons/*.jpg'],
+				dest: 'dist/'
 			}
 		},
 		uglify: {
