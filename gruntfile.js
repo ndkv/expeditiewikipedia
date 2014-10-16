@@ -86,6 +86,6 @@ module.exports = function(grunt) {
 
 	//grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
 	grunt.registerTask('default', ['browserify', 'concat', 'copy', 'watch']);
-	grunt.registerTask('minify', ['uglify', 'concat', 'copy', 'cssmin']);
+	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy', 'cssmin']);
 
 };
