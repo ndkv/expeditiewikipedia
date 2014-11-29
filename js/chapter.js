@@ -194,7 +194,7 @@ module.exports = function (chapter) {
             changeState(map);
         };
 
-        this.show = function() {
+        this.show = function(map) {
             //console.log("show");
             state = "visible";
             changeState(map);
