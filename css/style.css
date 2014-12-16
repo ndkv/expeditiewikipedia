@@ -382,6 +382,16 @@ blockquote {
     border-style: none;
 }
 
+#expeditions-menu {
+    display: block;
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 5;
+}
+
 @media (max-width: 900px), (max-height: 500px) {
     #title {
         font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;
