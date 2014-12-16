@@ -1,12 +1,14 @@
-module.exports = function (chapter) {
+module.exports = function (path) {
         //console.log("creating new chapter");
         //this.pois = new Pois(chapter);
         //var track = new Route(chapter);
-        var pois = new Pois(chapter);
-        var measurements = new Measurements(chapter);
+        var pois = new Pois(path);
+        var measurements = new Measurements(path);
     	var story;
 
-    	$.get('data/'+ chapter +'/'+ chapter + '.htm', function(data) {
+        var chapter = path.split("/").pop();
+
+    	$.get(path +'/'+ chapter + '.htm', function(data) {
     		//console.log('data/'+ chapter +'/'+ chapter + '.htm');
     		story = data;
     	});
@@ -32,13 +34,13 @@ module.exports = function (chapter) {
         };
 };
 
-    function Route(chapter) {
+    function Route(path) {
         //console.log("creating new route...");
         var geom;
         var state = "hidden";
-        this.id = chapter;
+        //this.id = chapter;
 
-        $.getJSON('data/'+chapter+'/track.json', function(data) {
+        $.getJSON(path+'/track.json', function(data) {
            //console.log(data.type);
            geom = L.geoJson(data, {
                style: {
@@ -73,7 +75,7 @@ module.exports = function (chapter) {
         };
     }
 
-    function Measurements(chapter) {
+    function Measurements(path) {
         var icon = "",
             geoms = [],
             dates = [],
@@ -88,7 +90,7 @@ module.exports = function (chapter) {
             opacity: 0.1
         };
 
-        $.getJSON('data/'+chapter+'/measurements.json', function(data) {
+        $.getJSON(path+'/measurements.json', function(data) {
             $.each(data, function(index, value) {
                 var marker = L.marker([value.lat, value.lon], {icon: L.icon(iconProperties)});
                 marker.bindLabel(value.date);
@@ -139,20 +141,20 @@ module.exports = function (chapter) {
         };
     }
 
-    function Pois(chapter) {
+    function Pois(path) {
         var geoms = [];
         var state = "hidden";
         var markersCluster = new L.MarkerClusterGroup();
 
         //console.log("firing Poi get");
-        $.getJSON('data/'+chapter+'/pois/pois.json', function(data) {
+        $.getJSON(path + '/pois/pois.json', function(data) {
             $.each(data, function(index, value) {
                 var lon = value.lon;
                 var lat = value.lat;
                 var content = value.content;
                 var icon = value.icon;
 
-                $.get('data/'+chapter+'/pois/'+content+'.html', function(html) {
+                $.get(path + '/pois/'+content+'.html', function(html) {
                     //add CSS centering code
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
                     //var test = $.parseHTML(html);
@@ -164,7 +166,7 @@ module.exports = function (chapter) {
                         marker.on('click', function() {
                             $.fancybox.open([
                                 {
-                                    href: 'data/'+ chapter +'/pois/images/'+ content.slice(6) + '.png'
+                                    href: path +'/pois/images/'+ content.slice(6) + '.png'
                                 }],
                                 {   
                                     autoSize: true,
