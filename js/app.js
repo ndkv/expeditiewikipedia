@@ -61,7 +61,8 @@ window.onload = function () {
         opacity: 1
     });
 
-    var CP = require('./chapter-manager.js');
-    var ChapterManager = new CP(map);
-    require('./ui-events.js')(map, ChapterManager, overlays);      
+    var CM = require('./chapter-manager.js');
+    var ChapterManager = new CM(map);
+    require('./ui-events.js')(map, ChapterManager, overlays);
+    ChapterManager.buildInterface();    
 };

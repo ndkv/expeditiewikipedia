@@ -2,21 +2,29 @@
 	"hoofdstuk 1": {
 		"zoom_coordinates": {"northEast": [54.290, 21.269], "southWest": [31.203, -27.377] },
 		"intro_story": "Intro text hoofdstuk 1 Intro text hoofdstuk 1 Intro text hoofdstuk 1",
-		"banner_title": "Hoofdstuk 1 <br /> Vertrek"
+		"banner_title": "Hoofdstuk 1 <br /> Vertrek",
+		"title": "Hoofdstuk 1",
+		"subtitle": "Vertrek"
 	},
 	"hoofdstuk 2": {
 		"zoom_coordinates": {"northEast": [35.065, 4.614], "southWest": [19.932, -42.758] },
 		"intro_story": "Intro text hoofdstuk 2",
-		"banner_title": "Hoofdstuk 2 <br /> Vulkanisme"
+		"banner_title": "Hoofdstuk 2 <br /> Vulkanisme",
+		"title": "Hoofdstuk 2",
+		"subtitle": "Vulkanisme"
 	},
 	"hoofdstuk 3": {
 		"zoom_coordinates": {"northEast": [15.855, -13.798], "southWest": [7.471, -37.485] },
 		"intro_story": "Intro text hoofdstuk 3",
-		"banner_title": "Hoofdstuk 3 <br /> Plaattektoniek"
+		"banner_title": "Hoofdstuk 3 <br /> Plaattektoniek",
+		"title": "Hoofdstuk 3",
+		"subtitle": "Plaattektoniek"
 	},
 	"k18": {
 		"zoom_coordinates": {"northEast": [51.916, 4.540], "southWest": [51.890, 4.442] },
 		"intro_story": "Intro hoofdstuk 4",
-		"banner_title": "K XVIII <br /> De Onderzeeboot"
+		"banner_title": "K XVIII <br /> De Onderzeeboot",
+		"title": "K XVII",
+		"subtitle": "De Onderzeeboot"
 	}
 }
