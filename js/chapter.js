@@ -155,7 +155,7 @@ module.exports = function (chapter) {
                 $.get('data/'+chapter+'/pois/'+content+'.html', function(html) {
                     //add CSS centering code
                     //var marker = L.marker([lat, lon], {icon: L.icon({iconUrl: 'resources/images/icons/' + icon + '.png', iconSize: [40, 20]})}).bindPopup(html, {maxWidth: 450});
-                    var test = $.parseHTML(html);
+                    //var test = $.parseHTML(html);
                     var marker;
                     
                     //TODO: photos don't need html hence should be out of the .get function
