@@ -19,7 +19,7 @@
     z-index: 1;
 }
 
-#menu-content {
+.menu-content {
     background-color: rgba(245,245,245,0.95);
     /*border-radius: 15px;*/
     display:none;

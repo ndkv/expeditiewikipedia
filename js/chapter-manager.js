@@ -47,8 +47,9 @@ module.exports = function (map) {
 
 	function buildInterface() {
 		var menu = $("#menu");
-		menu.clear();
-		var menuContent = $('<div id="menu-content"></div>');
+		//menu.empty();
+		
+		var menuContent = $('<div class="menu-content"></div>');
 		menuContent.appendTo(menu);
 
 		$.each(chapters, function(index, value) {
