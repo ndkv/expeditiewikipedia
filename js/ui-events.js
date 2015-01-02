@@ -4,17 +4,14 @@ module.exports = function (map, ChapterManager, overlays) {
     var uiToggleStory = $('.story-button'),
         uiBannerMenu = $("#banner-menu"),
         uiMenu = $("#menu"),
-        uiMenuItem = $(".menu-item"),
+        uiExpeditionsMenu = $("#expeditions-menu"),
         uiHistoricalMaps = $("#historical-map"),
         uiChart = $("#chart-control"),
         tabs = $("#tabs");
 
 
-    //
-    //event handlers
-    //
     uiBannerMenu.click(function() {
-        //TODO turn int a variable
+        console.log("clicking on button");
         uiMenu.slideToggle(300);
     });
 
@@ -25,32 +22,24 @@ module.exports = function (map, ChapterManager, overlays) {
     //     console.log(event.latlng.lat + ", " + event.latlng.lng);
     // });
 
-    uiMenuItem.click(function(event) {
-        // console.log(this.id);
-        ChapterManager.changeChapter(this.id);
-        //TODO: menu in a variable
-        uiMenu.slideToggle(300);
-    });
+    //make "sticky" event handlers
+    // uiMenu.on("click", ".menu-item", function(event) {
+    //     console.log("clicking menu");
+    //     ChapterManager.changeChapter(this.id);
+    //     uiMenu.slideToggle(300); 
+    // });
+
+    // uiExpeditionsMenu.on("click", ".menu-item", function(event) {
+    //     console.log("alert, switching expedition");
+    // });
 
 	$('#opening-close').click(function() {
 		var that = $(this).parent();
-		// that.anima3d({
-		// 	opacity: 0
-		// }, 500, 'linear', {complete:
-		// 	function () {
-		// 		$("#title").fadeIn();
-		// 		$("#menu-content").fadeIn();
-		// 		$("#banner").fadeIn();
-		// 		changeChapter("hoofdstuk 1");
-		// 		$("#video").remove();
-		// 		that.remove();
-		// 	}
-		// });
-
         that.hide("slow", function () {
             $("#title").fadeIn();
-            $("#menu-content").fadeIn();
+            $(".menu-content").fadeIn();
             $("#banner").fadeIn();
+            //TODO: replace with showing of expeditions
             ChapterManager.changeChapter("hoofdstuk 1");
             $("#video").remove();
             that.remove();

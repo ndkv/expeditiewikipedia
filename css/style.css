@@ -19,7 +19,7 @@
     z-index: 1;
 }
 
-#menu-content {
+.menu-content {
     background-color: rgba(245,245,245,0.95);
     /*border-radius: 15px;*/
     display:none;
@@ -380,6 +380,16 @@ blockquote {
 
 .ui-state-focus {
     border-style: none;
+}
+
+#expeditions-menu {
+    display: block;
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 5;
 }
 
 @media (max-width: 900px), (max-height: 500px) {
