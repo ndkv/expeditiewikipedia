@@ -1,138 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.9, user-scalable=no" />
-        
-        <link rel="stylesheet" href="dist/css/vendor.css" />
-        <link rel="stylesheet" href="dist/css/style.css" />
-        <script src="dist/js/index.js"></script>
-    </head>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="dist/css/style.css">
+      <link rel="stylesheet" type="text/css" href="dist/css/vendor.css" >
+
+	<script type="text/javascript" src="dist/js/index.js"></script>
+	<title></title>
+</head>
+
 <body>
-    <div id="main">
-        <div id="map"></div>
-        <div id="expeditions-menu">vsdvdfvdf</div>
-        <div id="menu"></div>
-        <div id="title">
-            <!-- TOOD make relative to parent div not absolute as it is now-->
-            <!-- <span id="close-title" class="close">X</span> -->
-            <div id="title-content">
+<header>
+	<div class="top">
+		<div class="heading">
+			<div class="experiment-number">
+				Expeditie Wikipedia
+			</div>
+			<h2></h2>
+		</div>
+		<a href="#" class="menu" id="toggleTopDrawer"><span>&equiv;</span> Menu</a>
+            <a href="#" class="menu" style="right: 200px" id="toggleDetail">More detail</a>
+	</div>
+</header>
 
-                <!-- <div id="blurb">
-                    fdfsfdLores ipsum Lores ipsum Lores ipsum Lores ipsum
-                    Lores ipsum Lores ipsum Lores ipsum Lores ipsumIntroverhaal ...
-                </div> -->
-
-                <!-- <div id="story-more-button" class="story-button">Lees meer...</div> -->
-
-                <div id="legend">
-                    <div><strong>Legenda</strong></div>
-                    <div><img class="legend" src="dist/images/icons/measurements.png"><span> - metingen</span></div>
-                    <div><img class="legend" src="dist/images/icons/quote.png"><span> - anektode</span></div>
-                    <div><img class="legend" src="dist/images/icons/photo.png"><span> - foto</span></div>
-                    <div><img class="legend" src="dist/images/icons/science.png"><span> - wetenschap</span></div>
-                    <div><img class="legend" src="dist/images/icons/wikipedia.png"><span> - wikipedia</span></div>
-                </div>
-
-                <hr>
-
-                <div id ="controls">
-                    <span><img id="historical-map" class="controls-icon" src="dist/images/icons/map.png"></span>
-                    <span><img id="chart-control" class="controls-icon" src="dist/images/icons/chart.png"></span>
-                    <span><img id="readmore-control" class="controls-icon" src="dist/images/icons/book.png"></span>
-                </div>
-
-                <!-- <div id="sponsors">
-                    <strong>Sponsoren</strong>
-                    <ul>
-                        <li>TU Delft</li>
-                        <li>...</li>
-                        <li>...</li>
-                    </ul>
-                </div> -->
-
-                <!-- <br /> -->
-            </div>
-        </div>
-    </div>
-
-    <div id="opening">
-        <h3>Vening Meinesz - Gravity Expeditions at Sea</h3>
-
-        <!-- <img style="float:right; margin:4px; width: 300px;" src="http://static.ndkv.nl/vm/dist/images/vm_instrument.jpg"> -->
-        <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p>
-        <!-- <p>Felix Andries Vening Mienesz (The Hague July 30, 1887 - Amersfoort August 10, 1966) was a Dutch geophysicist and geodesist. He is known for his invention of a precise method for measuring gravity. Thanks to his invention, it became possible to measure gravity at sea, which led him to the discovery of gravity anomalies above the ocean floor. He later attributed these anomalies to continental drift.</p> -->
-
-        <div style="display:block; margin-left: auto; margin-right: auto; width: 560px;">
-            <a class="various fancybox.iframe" href="//www.youtube.com/embed/qtur3EOB0js#t=2m?rel=5s"><img src="data/images/title-youtube.png" /></a>
-
-        </div>
-
-        <div id="opening-close">Start het avontuur!</div>
-
-
-        <!-- <iframe style="display:block; margin-left: auto; margin-right: auto; width:420px;" height="315" src="http://www.youtube.com/embed/eOqalX5FJ2c" frameborder="0"></iframe> -->
-
-    </div>
-    <div id="story">
-        <div id="tabs">
+<div class="detailedDrawer">
+	<div id="detailList">
             <ul>
-                <li><a href="#geschiedenis">Geschiedenis</a></li>
-                <li><a href="#wetenschap">Wetenschap</a></li>
+            <li class="first dragend-page">
+            	<div>
+            		<h3>Geschiedenis</h3>
+            		<div class="columns">
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, 
+
+            			<div><img class="img-content" src="img/image006.png" /></div>
+
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla</p></p>
+
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla,</p>
+
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla</p>
+
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla</p>
+
+            			<p>bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla,</p>
+
+            		</div>
+            	</div>
+            </li>
+            <li class="dragend-page">
+            	<div>
+            		<h3>Techniek</h3>
+            		<div class="columns">
+            			<p>At noon they sat down by the roadside, near a little brook, and Dorothy opened her basket and got out some bread.  She offered a piece to the Scarecrow, but he refused.</p>
+      				
+      				<p>&ldquo;I am never hungry,&rdquo; he said, &ldquo;and it is a lucky thing I am not, for my mouth is only painted, and if I should cut a hole in it so I could eat, the straw I am stuffed with would come out, and that would spoil the shape of my head.&rdquo;</p>
+      				
+      				<p>Dorothy saw at once that this was true, so she only nodded and went on eating her bread.</p>
+      				
+      				<p>&ldquo;Tell me something about yourself and the country you came from,&rdquo; said the Scarecrow, when she had finished her dinner.  So she told him all about Kansas, and how gray everything was there, and how the cyclone had carried her to this queer Land of Oz.</p>
+
+            		</div>
+            	</div>
+            </li>
+            <li class="middle dragend-page">
+            	<div>
+            		<h3>Wetenschap</h3>
+            	</div>
+            </li>
+            <li class="dragend-page">
+             	<div>
+            		<h3>Wetenschap</h3>
+            	</div>
+            </li>
+
+            <li class="last dragend-page">
+            	<div>
+            		<h3>Wetenschap</h3>
+            	</div>
+            </li>
             </ul>
-        
-            <div id="geschiedenis">
-                <div class="story-content" id="geschiedenis-content"></div>
-            </div>
-            <div id="wetenschap">
-                <div class="story-content" id="wetemschap-content">
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                wetenschap wetenschap wetenschap wetenschap wetenschap
-                </div>
-            </div>
-        </div>   
 
-    </div>
+      </div>  
 
-    <div id="banner">
-        <img id="ff" src="dist/images/icons/vm_icon.jpg" />
-        <div id="banner-logo">
-            <div id="banner-title"></div>
-            <div id="banner-subtitle"></div>
-        </div>
-        <img id="banner-menu" src="dist/images/icons/menu48.png">
-        <div id="banner-chapter" class="banner-chapter">
-            <!-- <div id="banner-chapter-title">Hoofdstuk 1</div>
-            <div id="banner-chapter-subtitle">Vertrek</div> -->
-        </div>
-    </div>
+      <div id="previewList">
+            <h1>Blaaaah!</h1>
+      </div>
+</div>
 
-    <div id="chart"></div>
+<div class="previewDrawer">
+      
+</div>
+
+<div id="map"></div>
+
 </body>
 </html>
+

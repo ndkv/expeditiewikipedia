@@ -1,14 +1,12 @@
-{
-	"vening meinesz": {
-		"historicalMapURI": "",
+[
+	{
+		"id": "vm",
 		"title": "Vening Meinesz",
-		"subtitle": "Gravity Expeditions at Sea",
-		"routeStyling": {}
-	},
-	"snip": {
-		"historicalMapURI": "",
+		"subtitle": "In een duikboot de wereld rond"
+	}, 
+	{
+		"id": "snip",
 		"title": "De Snip",
-		"subtitle": "De Snip",
-		"routeStyling": {}
+		"subtitle": ""
 	}
-}
+]

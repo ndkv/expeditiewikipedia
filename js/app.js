@@ -1,66 +1,20 @@
-//GLOBAL!!
-$ = require('jquery-browserify');
-jQuery = $;
-require('./lib/jquery.fancybox.pack.js');
-require('./lib/jquery-ui.js');
-//require('highcharts-browserify');
-
-//GLOBAL!!
+//GLOBALS!!
 L = require('leaflet');
-require('./lib/leaflet-providers.js');
-require('./lib/leaflet-label.js');
-require('./lib/leaflet.markercluster.js');
+jQuery = require('jquery-browserify');
+$ = jQuery;
+Dragend = require('./lib/dragend-vert.js');
 
-function setFancybox() {
-    $(".fancybox").fancybox({
-        helpers: {
-            overlay: {
-                css: {
-                    'background': 'rgba(0, 0, 0, 0.95)',
-                    'z-index': '1001'
-                }
-            }
-        }
-    });
+window.onload = function() {
+	var EC = require('./expedition-controller.js');
 
-    $(".various").fancybox({
-        maxWidth    : 708,
-        maxHeight   : 482,
-        fitToView   : false,
-        // width       : '70%',
-        // height      : '70%',
-        autoSize    : true,
-        closeClick  : false,
-        openEffect  : 'none',
-        closeEffect : 'none',
-        helpers: {
-            overlay: {
-                css : { 'background': 'rgba(0, 0, 0, 0.70)',
-                        'z-index': '1001'
-                      }
-                }
-        }
-    }); 
-}
+	//implement data loader?
+	var ExpeditionController = new EC();
 
-window.onload = function () {
-    var loadChart = require('./charts.js');
-    setFancybox();
+	//check whether URL contains specific expedition
 
-    var initMap = require('./map.js');
-    var map = initMap.map,
-        layerControl = initMap.layerControl,
-        overlays = initMap.overlays;
+	console.log("loaded");
 
-    //TODO remove this! Hack for chapter 3
-    var wms_url = "http://188.226.136.81:80/mapproxy/service/";
-    var snip = L.tileLayer.wms(wms_url, {
-        layers: 'vening-snip',
-        format: 'image/png',
-        transparent: true,
-        opacity: 1
-    });
-
+<<<<<<< HEAD
     var EM = require('./expedition-manager.js');
     var expeditionManager = new EM(map);
 
@@ -68,4 +22,7 @@ window.onload = function () {
     var ChapterManager = new CM(map);
     require('./ui-events.js')(map, ChapterManager, overlays);
     //ChapterManager.buildInterface();    
+=======
+	
+>>>>>>> top-drawer
 };

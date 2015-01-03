@@ -1,5 +1,5 @@
 //ui-events
-module.exports = function (map, ChapterManager, overlays) {
+module.exports = function(map, ChapterManager, overlays) {
     //UI elements
     var uiToggleStory = $('.story-button'),
         uiBannerMenu = $("#banner-menu"),
