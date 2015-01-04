@@ -1,5 +1,5 @@
 var MapController = function() {
-	var features; //are either routes for introscreen or POIs
+	var features = []; //are either routes for introscreen or POIs
 	this.overlays = [];
 	this.basemaps = [];
 
@@ -31,10 +31,10 @@ var MapController = function() {
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(index, feature) {
 			var handler = function () {
-				InterfaceController.openDetailView(feature.id);
+				InterfaceController.openDetailViewDirect(index);
 			};
 
-			listeners.append(handler);
+			listeners.push(handler);
 			feature.on('click', handler);
 				
 		});
@@ -51,18 +51,28 @@ var MapController = function() {
 
 	};
 
-	this.zoomTo = function(id) {
+	this.zoomTo = function(index) {
 		//TODO: implement zoomTo for POIs
-		var coords = features[id].getBounds();
-		map.zoomTo();
+		var bounds = features[index].getBounds();
+		map.fitBounds(bounds);
+		// map.panBy(L.point(0, -200));
 	};
 
 	//VIEWING MODE 
 
-	this.buildLandingView = function(expeditionGeometries, labelGeometries) {
-		$.each(expeditionGeometries, function(index, value) {
-			//var feature = ...
-			features.append(feature);
+	this.buildLandingView = function(feats) {
+		$.each(feats, function(index, value) {
+			var geometry = value.geometry.coordinates;
+			var coordinates = [];
+
+			//reverse geojson.io's lat/lng order
+			$.each(geometry, function(i, v) {
+				coordinates.push([v[1], v[0]]);
+			});
+
+			var feature = L.polyline(coordinates);
+			feature.addTo(map);
+			features.push(feature);
 		});
 	};
 

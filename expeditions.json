@@ -2,11 +2,15 @@
 	{
 		"id": "vm",
 		"title": "Vening Meinesz",
-		"subtitle": "In een duikboot de wereld rond"
+		"subtitle": "In een duikboot de wereld rond",
+		"blurp": "Fantastische reis door de zwaartekracht",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}, 
 	{
 		"id": "snip",
 		"title": "De Snip",
-		"subtitle": ""
+		"subtitle": "",
+		"blurp": "Eerste luchtpost naar Amerika!",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}
 ]

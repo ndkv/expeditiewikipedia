@@ -1,5 +1,7 @@
 
 var InterfaceController = function(ExpeditionController) {
+	var previewItems = [];
+
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
 
@@ -32,25 +34,36 @@ var InterfaceController = function(ExpeditionController) {
 	uiToggleTopDrawer.click(function(e){
 		console.log("clicked");
       	$('.detailedDrawer').toggleClass('active');
+      	//$("#map").toggleClass('preview');
       	e.preventDefault();
     });
 
-    uiToggleDetail.click(function() {
+    this.openDetailView = function() {
     	$("#detailList").toggleClass('active');
-    	$("#previewList").toggleClass('disabled');
+    	previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
-    });
+    };
+
+    this.openDetailViewDirect = function(input) {
+    	previewList.toggleClass('hidden');
+    	$(".detailedDrawer").toggleClass('active');
+    	$(".detailedDrawer").toggleClass('high');
+    	$("#detailList").toggleClass('activeDirect');
+    };
+
+    uiToggleDetail.click(this.openDetailView);
 
 	var listeners = [];
 
 	this.registerMapEvents = function(MapController) {
 		$.each(previewItems, function(index, item) {
-			var handler = function(MapController) {
-				MapController.zoomTo(item.id);
+			var handler = function() {
+				console.log("cliked");
+				MapController.zoomTo(index);
 			};
 
-			listeners.append(handler);
-			item.on('focus', handler);
+			listeners.push(handler);
+			item.on('click', handler);
 		});
 	};
 
@@ -89,8 +102,20 @@ var InterfaceController = function(ExpeditionController) {
 	//VIEWING MODE 
 
 	this.buildLandingView = function() {
-		// populate previewList with expeditions
-	 // 	populate DetailLIst with expedition descriptions
+		var expeditions = ExpeditionController.expeditions;
+
+		var previewListContent = $('<div id="previewListContent"></div>');
+		previewListContent.appendTo(previewList);
+
+		$.each(expeditions, function(index, value) {
+			var expedition = $('<div class=".expeditionPreview"></div>');
+			expedition.html("blaa");
+			expedition.appendTo(previewListContent);
+			previewItems.push(expedition);
+		});
+
+
+		// 	populate DetailLIst with expedition descriptions
 
 	};
 

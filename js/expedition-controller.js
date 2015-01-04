@@ -3,7 +3,8 @@ var ExpeditionController = function() {
 	//this.currentExpedition;
 	//this.viewingMode; //landing, expedition
 	
-	var expeditions;
+	this.expeditions = [];
+	var features;
 	var that = this;
 
 	var IC = require('./interface-controller.js');
@@ -12,8 +13,10 @@ var ExpeditionController = function() {
 	var MapController = new MC();
 	
 
-	$.get('expeditions.json', function(data) {
-		expeditions = data;
+	$.when($.get('expeditions.json'), $.get('expeditions-geometries.geojson'))
+	.done(function(exp, geoms) {
+		that.expeditions = $.parseJSON(exp[0]);
+		features = $.parseJSON(geoms[0]).features;
 
 		//read hash from URL and direct to correct expedition
 		//if urlParameters !== null {
@@ -21,8 +24,9 @@ var ExpeditionController = function() {
 			//call InterfaceController()
 		//} else {
 		//goto landing page
-			//that.buildLandingView();
+			buildLandingView();
 		//}
+
 	});
 
 	this.changeViewingMode = function() {
@@ -35,9 +39,9 @@ var ExpeditionController = function() {
 	};
 
 	var buildLandingView = function() {
-		//start app in default view
+		console.log("building LandingView");
 		InterfaceController.buildLandingView();
-		MapController.buildLandingView(expeditionGeometries, labelGeometries);
+		MapController.buildLandingView(features);
 
 		InterfaceController.registerMapEvents(MapController);
 		MapController.registerInterfaceEvents(InterfaceController);
