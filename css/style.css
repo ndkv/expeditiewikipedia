@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Blokk";
+    src: url("../fonts/BLOKKRegular.ttf");
+}
+
 .heading {
   height: 50px;
   z-index: 1;
@@ -56,24 +61,38 @@ margin-bottom: 1px;
   -moz-transition:-moz-transform 0.25s linear;
   -o-transition:-o-transform 0.25s linear;
   transition: transform 0.4s linear, height .30s 0.50s;
-  /*border-style: solid;
-  border-width: 2px;*/
   width: 100%;
   -webkit-overflow-scrolling: touch;
-  height: 160px;
+  height: 170px;
   background-color: white;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0px;
 }
 .detailedDrawer.active {
  -webkit-transform: translate3d(0,50px,0);
   -moz-transform: translate3d(0,50px,0);
   -o-transform: translate3d(0,50px,0);
   transform: translate3d(0,50px,0);
+  margin: 0px;
   /*z-index: 3;*/
 }
 
 .detailedDrawer.high {
-  height: 410px;
+  height: 440px;
   transition: height .3s;
+}
+
+.btnDetailedDrawer {
+  width: 150px;
+  margin: 10px;
+  height: 20px;
+}
+
+#detailedDrawerNavigation {
+  width: 350px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #previewList {
@@ -83,7 +102,7 @@ margin-bottom: 1px;
   position: absolute;
   top: 0px;
   left: 0px;
-  /*transition: opacity .30s linear;*/
+  transition: opacity .30s linear;
 }
 
 #previewList.disabled {
@@ -118,6 +137,7 @@ margin-bottom: 1px;
   -o-transform: translate3d(0,50px,0);
   transform: translate3d(0,50px,0);
   /*z-index: 3;*/
+  margin: 0px;
 }
 
 /* Fallbacks */
@@ -155,16 +175,15 @@ body {
 #detailList {
   width: auto;
   height: 400px;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin: 0px;
   background: #457;
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
   opacity: 0;
-  /*transition: opacity .30s linear;*/
+  transition: opacity .30s linear;
   transform: translate3d(0px, -400px, 0);
-  transition: transform 0.0s .4s linear, opacity .3s;
+  transition: transform 0.0s .45s linear, opacity .35s;
 }
 #detailList li.first {
   background: #577;
@@ -224,4 +243,43 @@ p {
  /* transform: translate3d(0, 160px, 0);
   transition: transform .35s;
   height: 100%;*/
+}
+
+.expeditionItem {
+  width: 180px;
+  height: 110px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  background-color: #8882BE;
+  color: white;
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  text-align: center;
+  /*cursor: pointer;*/
+  float: left;
+}
+
+.previewItemActive {
+  border-color: red;
+}
+
+.expeditionPreviewTitle {
+  cursor: pointer;
+  color: white;
+}
+
+.expeditionPreviewSummary {
+  /*font-family: "Blokk";*/
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.readMore {
+  text-align: right;
+}
+
+.readMore > a {
+  color: black;
 }

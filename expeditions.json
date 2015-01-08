@@ -3,6 +3,7 @@
 		"id": "vm",
 		"title": "Vening Meinesz",
 		"subtitle": "In een duikboot de wereld rond",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text, text, text, text",
 		"blurp": "Fantastische reis door de zwaartekracht",
 		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}, 
@@ -10,6 +11,7 @@
 		"id": "snip",
 		"title": "De Snip",
 		"subtitle": "",
+				"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
 		"blurp": "Eerste luchtpost naar Amerika!",
 		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}

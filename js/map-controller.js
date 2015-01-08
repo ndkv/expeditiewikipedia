@@ -31,7 +31,8 @@ var MapController = function() {
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(index, feature) {
 			var handler = function () {
-				InterfaceController.openDetailViewDirect(index);
+				//InterfaceController.openDetailView(index);
+				InterfaceController.togglePreviewItem(index);
 			};
 
 			listeners.push(handler);

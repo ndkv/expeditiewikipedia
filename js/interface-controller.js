@@ -1,6 +1,11 @@
 
 var InterfaceController = function(ExpeditionController) {
 	var previewItems = [];
+	var that = this;
+	var currentPreviewItem;
+
+	var detailedViewDirect = false;
+	var detailedView = false;
 
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
@@ -27,9 +32,9 @@ var InterfaceController = function(ExpeditionController) {
 	//CONTROLS
 	var uiTopDrawerList,
 		uiTopDrawerDetail,
-	    uiToggleTopDrawer = $("#toggleTopDrawer"),
-		uiToggleDetail = $("#toggleDetail");
-
+	    uiToggleTopDrawer = $("#toggleTopDrawer");
+		// uiToggleDetail = $("#toggleDetail"),
+		//uiReadMore = $(".readMore");
 
 	uiToggleTopDrawer.click(function(e){
 		console.log("clicked");
@@ -39,31 +44,52 @@ var InterfaceController = function(ExpeditionController) {
     });
 
     this.openDetailView = function() {
+    	console.log("clicked detailView");
     	$("#detailList").toggleClass('active');
     	previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
     };
+
+    $("#btnBack").click(function () {
+    	if (detailedViewDirect) {
+    		that.openDetailViewDirect();
+    		detailViewDirect = false;
+    		console.log('returning from high to low');
+    	} else {
+			that.openDetailView();
+    	}
+    });
 
     this.openDetailViewDirect = function(input) {
     	previewList.toggleClass('hidden');
     	$(".detailedDrawer").toggleClass('active');
     	$(".detailedDrawer").toggleClass('high');
     	$("#detailList").toggleClass('activeDirect');
+    	detailedViewDirect = true;
     };
-
-    uiToggleDetail.click(this.openDetailView);
+    
 
 	var listeners = [];
+
+	this.togglePreviewItem = function(index) {
+		if (currentPreviewItem !== undefined) {
+			previewItems[currentPreviewItem].removeClass("previewItemActive");
+		}
+
+		currentPreviewItem = index;
+		previewItems[index].addClass("previewItemActive");
+	};
 
 	this.registerMapEvents = function(MapController) {
 		$.each(previewItems, function(index, item) {
 			var handler = function() {
-				console.log("cliked");
+				console.log("clicked map event");
 				MapController.zoomTo(index);
+				that.togglePreviewItem(index);
 			};
 
 			listeners.push(handler);
-			item.on('click', handler);
+			item.children().first().on('click', handler);
 		});
 	};
 
@@ -105,13 +131,25 @@ var InterfaceController = function(ExpeditionController) {
 		var expeditions = ExpeditionController.expeditions;
 
 		var previewListContent = $('<div id="previewListContent"></div>');
+		previewListContent.width((expeditions.length * 180) + 4*20);
 		previewListContent.appendTo(previewList);
 
 		$.each(expeditions, function(index, value) {
-			var expedition = $('<div class=".expeditionPreview"></div>');
-			expedition.html("blaa");
-			expedition.appendTo(previewListContent);
-			previewItems.push(expedition);
+			var expeditionItem = $('<div class="expeditionItem"></div>');
+			expeditionItem.appendTo(previewListContent);
+			previewItems.push(expeditionItem);
+
+			var expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
+			expeditionTitle.html(value.title);
+			expeditionTitle.appendTo(expeditionItem);
+
+			var expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
+			expeditionSummary.html(value.summary);
+			expeditionSummary.appendTo(expeditionItem);
+
+			var moreInfo = $('<div class="readMore"><a href="#" id="toggleDetail-'+ index +'">Lees meer</a></div>');
+			moreInfo.appendTo(expeditionItem);
+			moreInfo.click(that.openDetailView);
 		});
 
 
