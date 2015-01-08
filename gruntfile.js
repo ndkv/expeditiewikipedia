@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 				dest: 'dist/'
 			},
 			data: {
-				src: ['expeditions.json', 'expeditions-geometries.geojson'],
+				src: ['expeditions.json', 'expeditions-geometries.json'],
 				dest: 'dist/data/'
 			}
 		},
