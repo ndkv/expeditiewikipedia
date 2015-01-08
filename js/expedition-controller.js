@@ -13,7 +13,7 @@ var ExpeditionController = function() {
 	var MapController = new MC();
 	
 
-	$.when($.get('expeditions.json'), $.get('expeditions-geometries.geojson'))
+	$.when($.get('dist/data/expeditions.json'), $.get('dist/data/expeditions-geometries.geojson'))
 	.done(function(exp, geoms) {
 		that.expeditions = $.parseJSON(exp[0]);
 		features = $.parseJSON(geoms[0]).features;

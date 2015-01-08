@@ -18,6 +18,10 @@ module.exports = function(grunt) {
 			images: {
 				src: ['images/icons/*.png', 'images/icons/*.jpg'],
 				dest: 'dist/'
+			},
+			data: {
+				src: ['expeditions.json', 'expeditions-geometries.geojson'],
+				dest: 'dist/data/'
 			}
 		},
 		uglify: {
