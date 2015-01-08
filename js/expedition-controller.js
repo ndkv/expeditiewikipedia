@@ -15,8 +15,14 @@ var ExpeditionController = function() {
 
 	$.when($.get('dist/data/expeditions.json'), $.get('dist/data/expeditions-geometries.json'))
 	.done(function(exp, geoms) {
-		that.expeditions = $.parseJSON(exp[0]);
-		features = $.parseJSON(geoms[0]).features;
+		
+		if (typeof exp[0] === "string") {
+			that.expeditions = $.parseJSON(exp[0]);
+			features = $.parseJSON(geoms[0]).features;
+		} else {
+			that.expeditions = exp[0];
+			features = $.parseJSON(geoms[0]).features;
+		}
 
 		//read hash from URL and direct to correct expedition
 		//if urlParameters !== null {
