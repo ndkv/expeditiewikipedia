@@ -21,7 +21,7 @@ var ExpeditionController = function() {
 			features = $.parseJSON(geoms[0]).features;
 		} else {
 			that.expeditions = exp[0];
-			features = $.parseJSON(geoms[0]).features;
+			features = geoms[0].features;
 		}
 
 		//read hash from URL and direct to correct expedition
