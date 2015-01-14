@@ -41,12 +41,6 @@ var MapController = function() {
 		});
 	};
 
-	this.destroyInterfaceEvents = function(InterfaceController) {
-		$.each(handler, function(index, value) {
-			feature.off('click', listeners.pop(index));
-		});
-	};
-
 	var destroyFeatures = function() {
 		//deregister events? or handle by empty() the linked element?
 
@@ -77,7 +71,14 @@ var MapController = function() {
 		});
 	};
 
-	//this.destroyLandingView
+	this.destroyLandingView = function() {
+		$.each(features, function(index, feature) {
+			//feature.off('click', listeners.pop(index));
+			map.removeLayer(feature);
+		});
+
+		features = [];
+	};
 
 	//this.buildExpeditionView
 	//this.destroyExpeditionView

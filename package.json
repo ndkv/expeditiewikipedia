@@ -7,7 +7,8 @@
     "fastclick": "^1.0.3",
     "highcharts-browserify": "~0.1.1-4.0.3",
     "jquery-browserify": "^1.8.1",
-    "leaflet": "^0.7.3"
+    "leaflet": "^0.7.3",
+    "swiper": "^2.7.5"
   },
   "devDependencies": {
     "browserify": "^6.1.0",

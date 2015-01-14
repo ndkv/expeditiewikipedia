@@ -3,6 +3,7 @@ var InterfaceController = function(ExpeditionController) {
 	var previewItems = [];
 	var that = this;
 	var currentPreviewItem;
+	var swiper;
 
 	var detailedViewDirect = false;
 	var detailedView = false;
@@ -17,10 +18,16 @@ var InterfaceController = function(ExpeditionController) {
        	}
     });
 
+    $("#btnStartExpedition").click(function() {
+    	console.log("start expedition");
+    	ExpeditionController.startExpedition(currentPreviewItem);
+    });
+
     //prevent propagation of dragend overscroll to body
     //TODO change to detailList preview
 
     var previewList = $('#previewList');
+
 
     var topDrawer = $('#detailedDrawer');
      
@@ -43,24 +50,25 @@ var InterfaceController = function(ExpeditionController) {
       	e.preventDefault();
     });
 
-    this.openDetailView = function() {
+    this.toggleDetailView = function() {
     	console.log("clicked detailView");
     	$("#detailList").toggleClass('active');
     	previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
+    	$(".swiper-container").toggleClass('hidden');
     };
 
     $("#btnBack").click(function () {
     	if (detailedViewDirect) {
-    		that.openDetailViewDirect();
+    		that.toggleDetailViewDirect();
     		detailViewDirect = false;
     		console.log('returning from high to low');
     	} else {
-			that.openDetailView();
+			that.toggleDetailView();
     	}
     });
 
-    this.openDetailViewDirect = function(input) {
+    this.toggleDetailViewDirect = function(input) {
     	previewList.toggleClass('hidden');
     	$(".detailedDrawer").toggleClass('active');
     	$(".detailedDrawer").toggleClass('high');
@@ -99,7 +107,7 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	// this.openDetailView(id) {
+	// this.toggleDetailView(id) {
 
 	// };
 
@@ -127,16 +135,26 @@ var InterfaceController = function(ExpeditionController) {
 
 	//VIEWING MODE 
 
+
+	var buildSwiper = function() {
+			swiper = new Swiper('.swiper-container', {
+			mode: 'horizontal',
+			scrollContainer: true
+			//slidesPerView: 5
+		});
+	};
+
 	this.buildLandingView = function() {
 		var expeditions = ExpeditionController.expeditions;
 
 		var previewListContent = $('<div id="previewListContent"></div>');
-		previewListContent.width((expeditions.length * 180) + 4*20);
-		previewListContent.appendTo(previewList);
+		var width = (expeditions.length * 180) + 4*20;
+		previewListContent.width(width);
+		//previewListContent.appendTo(previewList);
 
 		$.each(expeditions, function(index, value) {
 			var expeditionItem = $('<div class="expeditionItem"></div>');
-			expeditionItem.appendTo(previewListContent);
+			//expeditionItem.appendTo(previewListContent);
 			previewItems.push(expeditionItem);
 
 			var expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
@@ -147,22 +165,43 @@ var InterfaceController = function(ExpeditionController) {
 			expeditionSummary.html(value.summary);
 			expeditionSummary.appendTo(expeditionItem);
 
-			var moreInfo = $('<div class="readMore"><a href="#" id="toggleDetail-'+ index +'">Lees meer</a></div>');
+			var moreInfo = $('<div class="readMore"><a href="#readMore" id="toggleDetail-'+ index +'">Lees meer</a></div>');
 			moreInfo.appendTo(expeditionItem);
-			moreInfo.click(that.openDetailView);
+			moreInfo.click(that.toggleDetailView);
+
+			//var container = $('<div class="swiper-slide"></div>');
+			$('.swiper-slide').width(width);
+			expeditionItem.appendTo($('.swiper-slide'));
+			// swiper.createSlide(container.html()).append();
+			//$('.swiper-wrapper').width(width);
+			//container.appendTo($('.swiper-wrapper'));
 		});
+			buildSwiper();
+
 
 
 		// 	populate DetailLIst with expedition descriptions
 
 	};
 
-	//this.destroyLandingView
+	this.destroyLandingView = function() {
+		//console.log("destroy LandingView");
+		swiper.destroy();
+		$(swiper.container).empty();		//cleans event listeners too
+		that.toggleDetailView();
+	};
 
-	//this.buildExpeditionView(expedition)
-	  //  populate previewList with POIs
-	  //  populate DetailList with POIs expeditions
-	//this.destroyExpeditionView
+	this.buildExpeditionView = function(pois) {
+		//buildPoIList(pois);
+		//build toolbar
+		//build events
+	};
+
+	var buildPoIList = function () {
+		//load PoIs
+		//add them to DOM
+		//buildSwiper
+	};
 
     var overscroll = function(el) {
     	el.addEventListener('touchstart', function() {

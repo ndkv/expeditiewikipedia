@@ -6,6 +6,7 @@ var ExpeditionController = function() {
 	this.expeditions = [];
 	var features;
 	var that = this;
+	var mode;
 
 	var IC = require('./interface-controller.js');
 	var InterfaceController = new IC(this);
@@ -45,6 +46,7 @@ var ExpeditionController = function() {
 	};
 
 	var buildLandingView = function() {
+		mode = "landing";
 		console.log("building LandingView");
 		InterfaceController.buildLandingView();
 		MapController.buildLandingView(features);
@@ -54,14 +56,24 @@ var ExpeditionController = function() {
 
 	};
 
-	this.loadExpedition = function(expedition) {
+	this.startExpedition = function(expedition) {
 		currentExpedition = expedition;
-		//destroy current expedition if in viewing mode
-		//destroy expeditions if on landing page
+		console.log(mode);
 
-		//call InterfaceController
-		//call MapController
-		//register events in both
+		//load expedition information
+
+		if (mode === "landing") {
+			InterfaceController.destroyLandingView();
+			MapController.destroyLandingView();
+		} else {
+			//destroy current expedition if in viewing mode
+			//destroy expeditions if on landing page
+
+			//call InterfaceController
+			//call MapController
+			//register events in both
+			mode = "expedition";
+		}
 	};
 };
 

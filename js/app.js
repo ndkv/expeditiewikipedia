@@ -3,6 +3,7 @@ L = require('leaflet');
 jQuery = require('jquery-browserify');
 $ = jQuery;
 Dragend = require('./lib/dragend-vert.js');
+Swiper = require('swiper');
 
 window.onload = function() {
 	var EC = require('./expedition-controller.js');

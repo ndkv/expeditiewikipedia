@@ -65,8 +65,7 @@ margin-bottom: 1px;
   -webkit-overflow-scrolling: touch;
   height: 170px;
   background-color: white;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   margin: 0px;
 }
 .detailedDrawer.active {
@@ -181,7 +180,7 @@ body {
   cursor: -webkit-grab;
   cursor: grab;
   opacity: 0;
-  transition: opacity .30s linear;
+  /*transition: opacity .30s linear;*/
   transform: translate3d(0px, -400px, 0);
   transition: transform 0.0s .45s linear, opacity .35s;
 }
@@ -282,4 +281,26 @@ p {
 
 .readMore > a {
   color: black;
+}
+
+.swiper-container .swiper-slide {
+  width: 150px;
+}
+
+.swiper-container {
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+  transition: opacity .5s 1s, transform 0s 1s;
+}
+
+.swiper-container.hidden {
+  position: absolute;
+  transform: translate3d(0px, -500px, 0px);
+  opacity: 0;
+  transition: opacity .3s, transform 0s .35s;
+}
+
+.swiper-free-mode > .swiper-wrapper {
+  /*width: 500px;*/
+  margin: 0px !important;
 }
