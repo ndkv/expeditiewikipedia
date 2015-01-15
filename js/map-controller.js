@@ -10,12 +10,6 @@ var MapController = function() {
 	var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
 	basemap.addTo(map);
 
-	//set up intro screen map
-	  //load all expeditions from ExpeditionController
-	  //link map events to interface
-	  //link interface events to map
-
-
 	var loadExpeditions = function() {
 
 	};
@@ -46,11 +40,9 @@ var MapController = function() {
 
 	};
 
-	this.zoomTo = function(index) {
-		//TODO: implement zoomTo for POIs
-		var bounds = features[index].getBounds();
-		map.fitBounds(bounds);
-		// map.panBy(L.point(0, -200));
+	var zoomTo = function(e) {
+		var index = e.vmIndex;
+		map.fitBounds(features[index].getBounds());
 	};
 
 	//VIEWING MODE 
@@ -82,6 +74,8 @@ var MapController = function() {
 
 	//this.buildExpeditionView
 	//this.destroyExpeditionView
+
+	$(document).bind('mapZoomTo', zoomTo);
 };
 
 module.exports = MapController;

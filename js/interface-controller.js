@@ -1,84 +1,50 @@
-
 var InterfaceController = function(ExpeditionController) {
-	var previewItems = [];
-	var that = this;
-	var currentPreviewItem;
-	var swiper;
-
-	var detailedViewDirect = false;
-	var detailedView = false;
+	var expeditions = ExpeditionController.expeditions,
+		previewItems = [],
+		that = this,
+		detailedViewDirect = false,
+		detailedView = false,
+		currentPreviewItem, swiper;
 
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
-
-	var container = $("#detailList")[0];
-    var detailList = new Dragend(container, {
+	
+	var $detailList = $('#detailList');
+    var detailList = new Dragend($detailList[0], {
     	afterInitialize: function() {
-        	container.style.visibility = "visible";
+        	$detailList.style.visibility = 'visible';
        	}
     });
 
-    $("#btnStartExpedition").click(function() {
-    	console.log("start expedition");
-    	ExpeditionController.startExpedition(currentPreviewItem);
-    });
+    var $previewList = $('#previewList');
+  
+	$(document)
+		.on('click', '#toggleTopDrawer', function(e) {
+			e.preventDefault();
+			$('.detailedDrawer').toggleClass('active');
+		})
+		.on('click', '#btnStartExpedition', function(e) {
+			ExpeditionController.startExpedition(currentPreviewItem);
+		})
+		.on('click', '#btnBack', function(e) { that.toggleDetailView(); });
 
-    //prevent propagation of dragend overscroll to body
-    //TODO change to detailList preview
+    this.toggleDetailView = function() {    	
+    	//display different data based on currently selected 
 
-    var previewList = $('#previewList');
-
-
-    var topDrawer = $('#detailedDrawer');
-     
-	//register initialevents
-
-	var topDrawerMode; //closed, open, detail
-	var changeViewingMode; //landing, expedition
-
-	//CONTROLS
-	var uiTopDrawerList,
-		uiTopDrawerDetail,
-	    uiToggleTopDrawer = $("#toggleTopDrawer");
-		// uiToggleDetail = $("#toggleDetail"),
-		//uiReadMore = $(".readMore");
-
-	uiToggleTopDrawer.click(function(e){
-		console.log("clicked");
-      	$('.detailedDrawer').toggleClass('active');
-      	//$("#map").toggleClass('preview');
-      	e.preventDefault();
-    });
-
-    this.toggleDetailView = function() {
-    	console.log("clicked detailView");
-    	$("#detailList").toggleClass('active');
-    	previewList.toggleClass('disabled');
+    	$detailList.toggleClass('active');
+    	$previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
     	$(".swiper-container").toggleClass('hidden');
     };
 
-    $("#btnBack").click(function () {
-    	if (detailedViewDirect) {
-    		that.toggleDetailViewDirect();
-    		detailViewDirect = false;
-    		console.log('returning from high to low');
-    	} else {
-			that.toggleDetailView();
-    	}
-    });
-
-    this.toggleDetailViewDirect = function(input) {
-    	previewList.toggleClass('hidden');
-    	$(".detailedDrawer").toggleClass('active');
-    	$(".detailedDrawer").toggleClass('high');
-    	$("#detailList").toggleClass('activeDirect');
-    	detailedViewDirect = true;
-    };
+    // this.toggleDetailViewDirect = function(input) {
+    // 	$previewList.toggleClass('hidden');
+    // 	$(".detailedDrawer").toggleClass('active');
+    // 	$(".detailedDrawer").toggleClass('high');
+    // 	$detailList.toggleClass('activeDirect');
+    // 	detailedViewDirect = true;
+    // };
     
-
-	var listeners = [];
-
 	this.togglePreviewItem = function(index) {
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
@@ -88,28 +54,21 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 	};
 
-	this.registerMapEvents = function(MapController) {
+	this.registerMapEvents = function() {
 		$.each(previewItems, function(index, item) {
-			var handler = function() {
-				console.log("clicked map event");
-				MapController.zoomTo(index);
+			var $el = item.children().first();
+
+			$el.click(function() {
 				that.togglePreviewItem(index);
-			};
+				$el.trigger({
+					type: 'mapZoomTo',
+					vmIndex: index
+				});			
+			});
 
-			listeners.push(handler);
-			item.children().first().on('click', handler);
+
 		});
 	};
-
-	this.destroyMapEvents = function() {
-		$.each(handlers, function(index, item) {
-			item.off('focus', handlers.pop(index));
-		});
-	};
-
-	// this.toggleDetailView(id) {
-
-	// };
 
 	var populatePreviewList = function() {
 
@@ -133,54 +92,53 @@ var InterfaceController = function(ExpeditionController) {
 
 	};
 
-	//VIEWING MODE 
-
+	//
+	//VIEWING MODE
+	// 
 
 	var buildSwiper = function() {
-			swiper = new Swiper('.swiper-container', {
+		swiper = new Swiper('.swiper-container', {
 			mode: 'horizontal',
 			scrollContainer: true
 			//slidesPerView: 5
 		});
 	};
 
-	this.buildLandingView = function() {
-		var expeditions = ExpeditionController.expeditions;
 
-		var previewListContent = $('<div id="previewListContent"></div>');
+	this.buildLandingView = function() {
+		var $previewListContent = $('<div id="previewListContent"></div>');
 		var width = (expeditions.length * 180) + 4*20;
-		previewListContent.width(width);
+		$previewListContent.width(width);
 		//previewListContent.appendTo(previewList);
 
 		$.each(expeditions, function(index, value) {
-			var expeditionItem = $('<div class="expeditionItem"></div>');
-			//expeditionItem.appendTo(previewListContent);
-			previewItems.push(expeditionItem);
+			var $expeditionItem = $('<div class="expeditionItem"></div>');
+			previewItems.push($expeditionItem);
 
-			var expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
-			expeditionTitle.html(value.title);
-			expeditionTitle.appendTo(expeditionItem);
+			var $expeditionContent = $('<div></div>');
+			$expeditionContent.appendTo($expeditionItem);
 
-			var expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
-			expeditionSummary.html(value.summary);
-			expeditionSummary.appendTo(expeditionItem);
+			var $expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
+			$expeditionTitle.html(value.title);
+			$expeditionTitle.appendTo($expeditionContent);
 
-			var moreInfo = $('<div class="readMore"><a href="#readMore" id="toggleDetail-'+ index +'">Lees meer</a></div>');
-			moreInfo.appendTo(expeditionItem);
-			moreInfo.click(that.toggleDetailView);
+			var $expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
+			$expeditionSummary.html(value.summary);
+			$expeditionSummary.appendTo($expeditionContent);
 
-			//var container = $('<div class="swiper-slide"></div>');
+			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
+			$readMore.appendTo($expeditionItem);
+			
+			$readMore.click(function () {
+				currentPreviewItem = index;
+				that.toggleDetailView();
+			});
+
 			$('.swiper-slide').width(width);
-			expeditionItem.appendTo($('.swiper-slide'));
-			// swiper.createSlide(container.html()).append();
-			//$('.swiper-wrapper').width(width);
-			//container.appendTo($('.swiper-wrapper'));
+			$expeditionItem.appendTo($('.swiper-slide'));
 		});
-			buildSwiper();
 
-
-
-		// 	populate DetailLIst with expedition descriptions
+		buildSwiper();
 
 	};
 
@@ -193,8 +151,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	this.buildExpeditionView = function(pois) {
 		//buildPoIList(pois);
-		//build toolbar
-		//build events
+		//build toolbar on bottom
 	};
 
 	var buildPoIList = function () {
@@ -203,6 +160,7 @@ var InterfaceController = function(ExpeditionController) {
 		//buildSwiper
 	};
 
+    //can be removed once dragend is out
     var overscroll = function(el) {
     	el.addEventListener('touchstart', function() {
     		var top = el.scrollTop,
@@ -239,6 +197,8 @@ var InterfaceController = function(ExpeditionController) {
 	    evt.preventDefault();
 	  }
 	});
+
+	$("body").bind("_toggleDetailedView", that.toggleDetailView);
 };
 
 module.exports = InterfaceController;

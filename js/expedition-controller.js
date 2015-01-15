@@ -1,22 +1,15 @@
 var ExpeditionController = function() {
-	//var loadData = require('data-loader.js');
-	//this.currentExpedition;
-	//this.viewingMode; //landing, expedition
-	
 	this.expeditions = [];
-	var features;
-	var that = this;
-	var mode;
-
-	var IC = require('./interface-controller.js');
-	var InterfaceController = new IC(this);
-	var MC = require('./map-controller.js');
-	var MapController = new MC();
-	
+	var features,
+		that = this,
+		mode = "landing",
+		IC = require('./interface-controller.js'),
+		InterfaceController,
+		MapController,
+		MC = require('./map-controller.js');
 
 	$.when($.get('dist/data/expeditions.json'), $.get('dist/data/expeditions-geometries.json'))
 	.done(function(exp, geoms) {
-		
 		if (typeof exp[0] === "string") {
 			that.expeditions = $.parseJSON(exp[0]);
 			features = $.parseJSON(geoms[0]).features;
@@ -24,6 +17,9 @@ var ExpeditionController = function() {
 			that.expeditions = exp[0];
 			features = geoms[0].features;
 		}
+
+		InterfaceController = new IC(that);
+		MapController = new MC();
 
 		//read hash from URL and direct to correct expedition
 		//if urlParameters !== null {
@@ -47,24 +43,30 @@ var ExpeditionController = function() {
 
 	var buildLandingView = function() {
 		mode = "landing";
-		console.log("building LandingView");
 		InterfaceController.buildLandingView();
 		MapController.buildLandingView(features);
 
 		InterfaceController.registerMapEvents(MapController);
 		MapController.registerInterfaceEvents(InterfaceController);
-
 	};
 
-	this.startExpedition = function(expedition) {
-		currentExpedition = expedition;
-		console.log(mode);
+	this.startExpedition = function(index) {
+		var expedition = that.expeditions[index].id;
+		console.log(expedition);
 
 		//load expedition information
 
 		if (mode === "landing") {
 			InterfaceController.destroyLandingView();
 			MapController.destroyLandingView();
+
+			$.when($.get("data/" + expedition + "/expedition.json"), $.get("data/" + expedition + "/geometries.json"))
+			.done(function(expedition, geometries) {
+				InterfaceController.buildExpeditionView(expedition);
+				MapController.buildExpeditionView(geometries);
+			});
+
+			mode = "expedition";
 		} else {
 			//destroy current expedition if in viewing mode
 			//destroy expeditions if on landing page
@@ -72,7 +74,8 @@ var ExpeditionController = function() {
 			//call InterfaceController
 			//call MapController
 			//register events in both
-			mode = "expedition";
+
+
 		}
 	};
 };
