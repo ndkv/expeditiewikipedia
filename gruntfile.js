@@ -19,6 +19,10 @@ module.exports = function(grunt) {
 				src: ['images/icons/*.png', 'images/icons/*.jpg'],
 				dest: 'dist/'
 			},
+			expeditionsData: {
+				src: ['data/**'],
+				dest: 'dist/'
+			},
 			data: {
 				src: ['expeditions.json', 'expeditions-geometries.json'],
 				dest: 'dist/data/'

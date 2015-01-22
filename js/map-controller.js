@@ -72,7 +72,10 @@ var MapController = function() {
 		features = [];
 	};
 
-	//this.buildExpeditionView
+	this.buildExpeditionView = function(geometries) {
+
+	};
+	
 	//this.destroyExpeditionView
 
 	$(document).bind('mapZoomTo', zoomTo);

@@ -60,10 +60,24 @@ var ExpeditionController = function() {
 			InterfaceController.destroyLandingView();
 			MapController.destroyLandingView();
 
-			$.when($.get("data/" + expedition + "/expedition.json"), $.get("data/" + expedition + "/geometries.json"))
+			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
 			.done(function(expedition, geometries) {
-				InterfaceController.buildExpeditionView(expedition);
-				MapController.buildExpeditionView(geometries);
+
+				var features = geometries[0].features,
+					route,
+					pois = [];
+					// geoms = $.parseJSON(expedition);
+
+				$.each(features, function(index, value) {
+					if (value.properties.type === "route") {
+						route = value;
+					} else {
+						pois.push(value.properties);
+					}
+				});
+
+				InterfaceController.buildExpeditionView(expedition, pois);
+				// MapController.buildExpeditionView(pois);
 			});
 
 			mode = "expedition";
