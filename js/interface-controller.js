@@ -162,43 +162,38 @@ var InterfaceController = function(ExpeditionController) {
 
 	var buildPoIList = function (pois) {
 		var $previewListContent = $('<div id="previewListContent"></div>');
-		var width = (pois.length * 180) + 2*pois.length*20;
-		$previewListContent.width(width);
-		//previewListContent.appendTo(previewList);
+		var $swiperSlide = $('.swiper-slide');
 
 		var sortable = [];
 		$.each(pois, function(index, poi) {
 			sortable.push([poi.order, poi.title, poi.summary]);	
 		});
-
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
 		$.each(sortable, function(index, value) {
-			var $expeditionItem = $('<div class="expeditionItem"></div>');
-			previewItems.push($expeditionItem);
+			var $expeditionContent = $('<div></div>')
+			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1]))
+			.append($('<div class="expeditionPreviewSummary"></div>').html(value[2]));
 
-			var $expeditionContent = $('<div></div>');
-			$expeditionContent.appendTo($expeditionItem);
-
-			var $expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
-			$expeditionTitle.html(value[1]);
-			$expeditionTitle.appendTo($expeditionContent);
-
-			var $expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
-			$expeditionSummary.html(value[2]);
-			$expeditionSummary.appendTo($expeditionContent);
-
-			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
-			$readMore.appendTo($expeditionItem);
-			
+			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				that.toggleDetailView();
 			});
 
-			$('.swiper-slide').width(width);
-			$expeditionItem.appendTo($('.swiper-slide'));
+			var $expeditionItem = $('<div class="expeditionItem"></div>')
+			.append($expeditionContent)
+			.append($readMore);
+			
+			previewItems.push($expeditionItem);
+
+			$swiperSlide.append($expeditionItem);
 		});
+
+		var margin = 20;
+		var width = (pois.length * 180) + pois.length * margin * 2;
+		$swiperSlide.width(width);
+		$previewListContent.width(width);
 
 		buildSwiper();
 
