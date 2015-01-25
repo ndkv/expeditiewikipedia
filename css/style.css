@@ -264,16 +264,16 @@ p {
   background-repeat: no-repeat;
   background-position: 20px 50px;
 
-  -moz-transition: border-radius 1s;
-  -webkit-transition: border-radius 1s;
+  -moz-transition: border-radius 1s, border-color 1s;
+  -webkit-transition: border-radius 1s, border-color 1s;
 }
 
 .previewItemActive {
   border-color: rgb(0, 179, 239);
   border-radius: 20px;
   border-width: 2px;
-  -moz-transition: border-radius 1s;
-  -webkit-transition: border-radius 1s;
+  -moz-transition: border-radius 1s, border-color 1s;;
+  -webkit-transition: border-radius 1s, border-color 1s;;
 }
 
 .expeditionPreviewTitle {

@@ -77,9 +77,12 @@ var ExpeditionController = function() {
 				});
 
 				InterfaceController.buildExpeditionView(expedition[0], pois);
-				MapController.buildExpeditionView(route, pois);
-				InterfaceController.registerMapEventsPois(MapController);
-				MapController.registerInterfaceEvents(InterfaceController);
+				setTimeout(function () { 
+					MapController.buildExpeditionView(route, pois);
+					InterfaceController.registerMapEventsPois(MapController);
+					MapController.registerInterfaceEvents(InterfaceController);
+				 }, 1500);
+
 			});
 
 			mode = "expedition";
