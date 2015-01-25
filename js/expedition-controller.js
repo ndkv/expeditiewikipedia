@@ -46,7 +46,7 @@ var ExpeditionController = function() {
 		InterfaceController.buildLandingView();
 		MapController.buildLandingView(features);
 
-		InterfaceController.registerMapEvents(MapController);
+		InterfaceController.registerMapEventsRoute(MapController);
 		MapController.registerInterfaceEvents(InterfaceController);
 	};
 
@@ -78,6 +78,8 @@ var ExpeditionController = function() {
 
 				InterfaceController.buildExpeditionView(expedition[0], pois);
 				MapController.buildExpeditionView(route, pois);
+				InterfaceController.registerMapEventsPois(MapController);
+				MapController.registerInterfaceEvents(InterfaceController);
 			});
 
 			mode = "expedition";

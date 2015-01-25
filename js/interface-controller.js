@@ -6,7 +6,8 @@ var InterfaceController = function(ExpeditionController) {
 		that = this,
 		detailedViewDirect = false,
 		detailedView = false,
-		currentPreviewItem, swiper;
+		currentPreviewItem, swiper,
+		mode = "landing";
 
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
@@ -56,19 +57,33 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 	};
 
-	this.registerMapEvents = function() {
+	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
 			var $el = item.children().first();
 
 			$el.click(function() {
 				that.togglePreviewItem(index);
 				$el.trigger({
-					type: 'mapZoomTo',
+					type: 'mapZoomToRoute',
 					vmIndex: index
 				});			
 			});
 
 
+		});
+	};
+
+	this.registerMapEventsPois = function() {
+		$.each(previewItems, function(index, item) {
+			var $el = item.children().first();
+
+			$el.click(function() {
+				that.togglePreviewItem(index);
+				$el.trigger({
+					type: 'mapZoomToPoI',
+					vmIndex: index
+				});			
+			});
 		});
 	};
 
@@ -107,6 +122,7 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	this.buildLandingView = function() {
+		mode = "landing";
 		var $previewListContent = $('<div id="previewListContent"></div>');
 		//TODO pass expeditions as a variable
 		var width = (expeditions.length * 180) + 4*20;
@@ -151,10 +167,12 @@ var InterfaceController = function(ExpeditionController) {
 		//$('swiper-slide').empty();		//cleans event listeners too
 		$('<div class="swiper-slide"></div>').appendTo($('.swiper-wrapper')); //
 		that.toggleDetailView();
+		previewItems = [];
 	};
 
 	this.buildExpeditionView = function(expedition, pois) {
 		//read expedition texts and place them on interface
+		mode = "expedition";
 
 		buildPoIList(pois);
 		//build toolbar on bottom

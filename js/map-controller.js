@@ -1,5 +1,6 @@
 var MapController = function() {
 	var features = []; //are either routes for introscreen or POIs
+	var poisList = [];
 	this.overlays = [];
 	this.basemaps = [];
 
@@ -33,6 +34,13 @@ var MapController = function() {
 			feature.on('click', handler);
 				
 		});
+
+		//TODO: simplify and don't repeat yourself
+		$.each(poisList, function (index, poi) {
+			var handler = function () { InterfaceController.togglePreviewItem(index); };
+			listeners.push(handler);
+			poi.on('click', handler);
+		});
 	};
 
 	var destroyFeatures = function() {
@@ -40,10 +48,16 @@ var MapController = function() {
 
 	};
 
-	var zoomTo = function(e) {
+	var zoomToRoute = function(e) {
 		var index = e.vmIndex;
 		map.fitBounds(features[index].getBounds());
 	};
+
+	var zoomToPoi = function(e) {
+		var index = e.vmIndex;
+		map.panTo(poisList[index].getLatLng());
+	};
+
 
 	//VIEWING MODE 
 
@@ -80,16 +94,27 @@ var MapController = function() {
 		feature.addTo(map);
 		features.push(feature);
 
-		pois.map(function(pois) {
+
+		//to do: put in a data reading module
+		var sortable = [];
+		$.each(pois, function(index, poi) {
+			sortable.push([poi[0].order, poi[1]]);	
+		});
+		sortable.sort(function(a, b) { return a[0] - b[0]; });
+
+		sortable.map(function(pois) {
 			var coords = pois[1];
 			var marker = L.marker([coords[1], coords[0]]);
 			marker.addTo(map);
+
+			poisList.push(marker);
 		});
 	};
 	
 	//this.destroyExpeditionView
 
-	$(document).bind('mapZoomTo', zoomTo);
+	$(document).bind('mapZoomToRoute', zoomToRoute);
+	$(document).bind('mapZoomToPoI', zoomToPoi);
 };
 
 module.exports = MapController;
