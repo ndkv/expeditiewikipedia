@@ -32,12 +32,56 @@ var MapController = function() {
 
 			listeners.push(handler);
 			feature.on('click', handler);
-				
 		});
 
-		//TODO: simplify and don't repeat yourself
+
+		var $swiper = $('.swiper-wrapper');
+
 		$.each(poisList, function (index, poi) {
-			var handler = function () { InterfaceController.togglePreviewItem(index); };
+			var handler = function () { 
+				InterfaceController.togglePreviewItem(index); 
+
+				var swiperOffset = $swiper.offset().left,
+					docWidth = $(document).width(), 
+					docSwiperDiff = docWidth - $swiper.width(),				
+					$element = $('.expeditionItem').eq(index),
+					margin = 20,
+					elemMid = $element.offset().left + $element.width()/2 + margin/2,
+					elem = index + 1,
+					offset;
+
+				if (docSwiperDiff < 0) {
+					switch (index) {
+						case 0:
+							offset = 0;
+							break;
+						case poisList.length - 1:
+							offset = docSwiperDiff;
+							break;
+						default:
+							if (elemMid < docWidth/2) {
+								offset = swiperOffset + (docWidth/2 - elemMid);
+								if (offset > 0) { offset = 0; }
+							} else if (elemMid > docWidth/2) {
+								offset = swiperOffset - (elemMid - docWidth/2);
+								if (offset < docSwiperDiff) { offset = docSwiperDiff; }
+							}
+							break;
+					}
+				}
+
+				$swiper.css('-webkit-transform', 'translate3d(' + offset + 'px, 0px, 0px');
+			};
+
+			// $swiper.css('-webkit-transition', '1s');
+			// $swiper.css({
+			// 	WebkitTransition : 'transfom 1s ease-out',
+			// 	MozTransition    : 'transfom 1s ease-out',
+			// 	MsTransition     : 'transfom 1s ease-out',
+			// 	OTransition      : 'transfom 1s ease-out',
+			// 	transition       : 'transfom 1s ease-out'
+			// });
+		
 			listeners.push(handler);
 			poi.on('click', handler);
 		});

@@ -176,6 +176,9 @@ var InterfaceController = function(ExpeditionController) {
 
 		buildPoIList(pois);
 		//build toolbar on bottom
+
+		//hide and show interface elements
+		$('#btnStartExpedition').css('display', 'none');
 	};
 
 	var buildPoIList = function (pois) {
