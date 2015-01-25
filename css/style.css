@@ -64,7 +64,7 @@ margin-bottom: 1px;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   height: 170px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
   margin: 0px;
 }
@@ -245,42 +245,65 @@ p {
 }
 
 .expeditionItem {
-  width: 180px;
-  height: 110px;
+  width: 160px;
+  height: 130px;
   border-style: solid;
   border-color: black;
-  border-width: 1px;
-  background-color: #8882BE;
-  color: white;
+  border-width: 2px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
   padding: 10px;
   margin-left: 10px;
   margin-top: 10px;
   text-align: center;
   /*cursor: pointer;*/
   float: left;
+  background-image: url(http://upload.wikimedia.org/wikipedia/commons/9/91/Hr._Ms._K_XVIII_%2811_July_1935%29.jpg);
+  background-size: 140px 70px;
+  background-repeat: no-repeat;
+  background-position: 20px 50px;
+
+  -moz-transition: border-radius 1s;
+  -webkit-transition: border-radius 1s;
 }
 
 .previewItemActive {
-  border-color: red;
+  border-color: rgb(0, 179, 239);
+  border-radius: 20px;
+  border-width: 2px;
+  -moz-transition: border-radius 1s;
+  -webkit-transition: border-radius 1s;
 }
 
 .expeditionPreviewTitle {
   cursor: pointer;
-  color: white;
+  color: black;
+  font-size: 0.9em;
 }
 
 .expeditionPreviewSummary {
   /*font-family: "Blokk";*/
-  font-size: 0.8em;
+  font-size: 0.7em;
   cursor: pointer;
 }
 
 .readMore {
   text-align: right;
+  font-size: .8em;
+  border-radius: 3px;
+  float: right;
+  padding: 2px;
+  position: absolute;
+  top: 135px;
+  /*left: 30px;*/
+  margin-left: 7px;
 }
 
 .readMore > a {
-  color: black;
+  color: gray;
+  margin-right: 5px;
+  text-align: center;
 }
 
 .swiper-container .swiper-slide {
@@ -303,4 +326,13 @@ p {
 .swiper-free-mode > .swiper-wrapper {
   /*width: 500px;*/
   margin: 0px !important;
+}
+
+.expedition-logo {
+  background-image: url(../images/icons/wikipedialogo.jpg);
+  height: 100px;
+  width: 115px;
+  background-size: 103px 34px;
+  background-repeat: no-repeat;
+  background-position: 10px 8px;
 }

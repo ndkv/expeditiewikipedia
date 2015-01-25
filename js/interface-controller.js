@@ -77,7 +77,8 @@ var InterfaceController = function(ExpeditionController) {
 		$.each(previewItems, function(index, item) {
 			var $el = item.children().first();
 
-			$el.click(function() {
+			$el.click(function(e) {
+				e.preventDefault();
 				that.togglePreviewItem(index);
 				$el.trigger({
 					type: 'mapZoomToPoI',
@@ -140,9 +141,9 @@ var InterfaceController = function(ExpeditionController) {
 			$expeditionTitle.html(value.title);
 			$expeditionTitle.appendTo($expeditionContent);
 
-			var $expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
-			$expeditionSummary.html(value.summary);
-			$expeditionSummary.appendTo($expeditionContent);
+			// var $expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
+			// $expeditionSummary.html(value.summary);
+			// $expeditionSummary.appendTo($expeditionContent);
 
 			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
 			$readMore.appendTo($expeditionItem);
@@ -212,7 +213,7 @@ var InterfaceController = function(ExpeditionController) {
 		});
 
 		var margin = 20;
-		var width = (pois.length * 180) + pois.length * margin * 2;
+		var width = (pois.length * 160) + pois.length * margin * 2;
 		$swiperSlide.width(width);
 		$previewListContent.width(width);
 

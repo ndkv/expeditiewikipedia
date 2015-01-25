@@ -80,7 +80,10 @@ var MapController = function() {
 				// });
 
 				$swiper.css('-webkit-transform', translate);
+				$swiper.css('-webkit-transition', 'transform .5s ease-out');
 				$swiper.css('-moz-transform', translate);
+				$swiper.css('-moz-transition', 'transform .5s ease-out');
+
 			};
 	
 			listeners.push(handler);
@@ -137,6 +140,8 @@ var MapController = function() {
 
 		var feature = L.polyline(routeGeometry);
 		feature.addTo(map);
+		map.fitBounds(feature.getBounds());
+		map.zoomOut();
 		features.push(feature);
 
 
