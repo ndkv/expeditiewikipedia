@@ -37,18 +37,7 @@ a.menu span {
   vertical-align: -0.15em;
 }
 
-nav ul {
-list-style:none;
-}
-
-nav ul li a {
-display: block;
-text-decoration: none;
-background: rgba(0,0,0,0.3);
-color: white;
-padding: 1em; 
-margin-bottom: 1px;
-}
+/*Menu animations*/
 
 .detailedDrawer {
   position: relative;
@@ -60,7 +49,7 @@ margin-bottom: 1px;
   -webkit-transition:-webkit-transform 0.25s linear;
   -moz-transition:-moz-transform 0.25s linear;
   -o-transition:-o-transform 0.25s linear;
-  transition: transform 0.4s linear, height .30s 0.50s;
+  transition: transform 0.4s linear, height .30s 0.7s;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   height: 170px;
@@ -68,6 +57,7 @@ margin-bottom: 1px;
   overflow: hidden;
   margin: 0px;
 }
+
 .detailedDrawer.active {
  -webkit-transform: translate3d(0,50px,0);
   -moz-transform: translate3d(0,50px,0);
@@ -82,6 +72,41 @@ margin-bottom: 1px;
   transition: height .3s;
 }
 
+/*dragend container*/
+#detailList {
+  width: auto;
+  height: 400px;
+  margin: 0px;
+  background: #457;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+  opacity: 0;
+  transform: translate3d(0px, -400px, 0px);
+  transition: transform 0s 0.7s linear, opacity 0.4s .3s;
+  /*transition: opacity .3s .30s linear;*/
+}
+
+#detailList.active {
+  opacity: 1;
+  transition: opacity .3s .35s linear;
+  transform: translate3d(0px, -165px, 0px);
+}
+
+.swiper-container {
+  position: absolute;
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+  transition: opacity .3s .3s, transform 0s .35s;
+}
+
+.swiper-container.hidden {
+  /*position: absolute;*/
+  transform: translate3d(0px, -500px, 0px);
+  opacity: 1;
+  transition: opacity .3s, transform 0s .35s;
+}
+
 .btnDetailedDrawer {
   width: 150px;
   margin: 10px;
@@ -92,51 +117,8 @@ margin-bottom: 1px;
   width: 350px;
   margin-right: auto;
   margin-left: auto;
-}
-
-#previewList {
-  height: 150px;
-  width: 100%;
-  z-index: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  transition: opacity .30s linear;
-}
-
-#previewList.disabled {
-  opacity: 0;
-  z-index: -1;
-  transition: opacity .30s .5s linear;
-}
-
-#previewList.hidden {
-  opacity: 0;
-}
-
-.previewDrawer {
-  position: relative;
-  z-index: 1;
-  -webkit-transform: translate3d(0, -350px, 0);
-  -moz-transform: translate3d(0, -350px, 0);
-  -o-transform: translate3d(0, -350px, 0);
-  transform: translate3d(0, -350px, 0);
-  -webkit-transition:-webkit-transform 0.25s linear;
-  -moz-transition:-moz-transform 0.25s linear;
-  -o-transition:-o-transform 0.25s linear;
-  transition:transform 0.25s linear;
-  /*border-style: solid;
-  border-width: 2px;*/
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-.previewDrawer.active {
- -webkit-transform: translate3d(0,50px,0);
-  -moz-transform: translate3d(0,50px,0);
-  -o-transform: translate3d(0,50px,0);
-  transform: translate3d(0,50px,0);
-  /*z-index: 3;*/
-  margin: 0px;
+  /*top: -165px;*/
+  transform: translate3d(0px, -165px, 0px);
 }
 
 /* Fallbacks */
@@ -171,19 +153,6 @@ body {
   user-select: none;
 }
 
-#detailList {
-  width: auto;
-  height: 400px;
-  margin: 0px;
-  background: #457;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-  cursor: grab;
-  opacity: 0;
-  /*transition: opacity .30s linear;*/
-  transform: translate3d(0px, -400px, 0);
-  transition: transform 0.0s .45s linear, opacity .35s;
-}
 #detailList li.first {
   background: #577;
 }
@@ -192,18 +161,6 @@ body {
 }
 #detailList li.last {
   background: #e8b;
-}
-
-#detailList.active {
-  opacity: 1;
-  transition: opacity .30s .5s linear;
-  transform: translate3d(0px, 0px, 0);
-}
-
-#detailList.activeDirect {
-  opacity: 1;
-  transition: opacity .30s .5s linear;
-  transform: translate3d(0px, 0px, 0);
 }
 
 .columns {
@@ -308,19 +265,6 @@ p {
 
 .swiper-container .swiper-slide {
   width: 150px;
-}
-
-.swiper-container {
-  opacity: 1;
-  transform: translate3d(0px, 0px, 0px);
-  transition: opacity .5s 1s, transform 0s 1s;
-}
-
-.swiper-container.hidden {
-  position: absolute;
-  transform: translate3d(0px, -500px, 0px);
-  opacity: 0;
-  transition: opacity .3s, transform 0s .35s;
 }
 
 .swiper-free-mode > .swiper-wrapper {

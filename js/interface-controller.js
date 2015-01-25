@@ -35,7 +35,7 @@ var InterfaceController = function(ExpeditionController) {
     	//display different data based on currently selected 
 
     	$detailList.toggleClass('active');
-    	$previewList.toggleClass('disabled');
+    	// $previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
     	$(".swiper-container").toggleClass('hidden');
     };
