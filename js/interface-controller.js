@@ -166,7 +166,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		var sortable = [];
 		$.each(pois, function(index, poi) {
-			sortable.push([poi.order, poi.title, poi.summary]);	
+			sortable.push([poi[0].order, poi[0].title, poi[0].summary]);	
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
@@ -184,7 +184,7 @@ var InterfaceController = function(ExpeditionController) {
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
 			.append($expeditionContent)
 			.append($readMore);
-			
+
 			previewItems.push($expeditionItem);
 
 			$swiperSlide.append($expeditionItem);

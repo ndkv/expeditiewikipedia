@@ -72,12 +72,12 @@ var ExpeditionController = function() {
 					if (value.properties.type === "route") {
 						route = value;
 					} else {
-						pois.push(value.properties);
+						pois.push([value.properties, value.geometry.coordinates]);
 					}
 				});
 
-				InterfaceController.buildExpeditionView(expedition, pois);
-				// MapController.buildExpeditionView(pois);
+				InterfaceController.buildExpeditionView(expedition[0], pois);
+				MapController.buildExpeditionView(route, pois);
 			});
 
 			mode = "expedition";

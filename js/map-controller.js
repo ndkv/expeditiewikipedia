@@ -72,8 +72,19 @@ var MapController = function() {
 		features = [];
 	};
 
-	this.buildExpeditionView = function(geometries) {
+	this.buildExpeditionView = function(route, pois) {
+		var routeGeometry = route.geometry.coordinates
+		.map(function(coords) { return [coords[1], coords[0]]; });
 
+		var feature = L.polyline(routeGeometry);
+		feature.addTo(map);
+		features.push(feature);
+
+		pois.map(function(pois) {
+			var coords = pois[1];
+			var marker = L.marker([coords[1], coords[0]]);
+			marker.addTo(map);
+		});
 	};
 	
 	//this.destroyExpeditionView
