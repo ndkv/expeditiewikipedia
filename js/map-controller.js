@@ -70,18 +70,19 @@ var MapController = function() {
 					}
 				}
 
-				$swiper.css('-webkit-transform', 'translate3d(' + offset + 'px, 0px, 0px');
-			};
+				var translate = 'translate3d(' + offset + 'px, 0px, 0px';
+				// $swiper.css({
+				// 	WebKitTransform		: translate,
+				// 	MozTransform		: translate,
+				// 	MsTransform			: translate,
+				// 	OTransform 			: translate,
+				// 	transform 			: translate
+				// });
 
-			// $swiper.css('-webkit-transition', '1s');
-			// $swiper.css({
-			// 	WebkitTransition : 'transfom 1s ease-out',
-			// 	MozTransition    : 'transfom 1s ease-out',
-			// 	MsTransition     : 'transfom 1s ease-out',
-			// 	OTransition      : 'transfom 1s ease-out',
-			// 	transition       : 'transfom 1s ease-out'
-			// });
-		
+				$swiper.css('-webkit-transform', translate);
+				$swiper.css('-moz-transform', translate);
+			};
+	
 			listeners.push(handler);
 			poi.on('click', handler);
 		});
