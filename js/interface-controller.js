@@ -179,9 +179,9 @@ var InterfaceController = function(ExpeditionController) {
 	this.destroyLandingView = function() {
 		//console.log("destroy LandingView");
 		swiper.destroy();
-		$('.swiper-wrapper').empty();		//cleans event listeners too
+		$('#previewSwiper .swiper-wrapper').empty();		//cleans event listeners too
 		//$('swiper-slide').empty();		//cleans event listeners too
-		$('<div class="swiper-slide"></div>').appendTo($('.swiper-wrapper')); //
+		$('<div class="swiper-slide"></div>').appendTo($('#previewSwiper .swiper-wrapper')); //
 		that.toggleDetailView();
 		previewItems = [];
 	};
@@ -199,7 +199,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	var buildPoIList = function (pois) {
 		var $previewListContent = $('<div id="previewListContent"></div>');
-		var $swiperSlide = $('.swiper-slide');
+		var $swiperSlide = $('#previewSwiper .swiper-slide');
 
 		var sortable = [];
 		$.each(pois, function(index, poi) {
