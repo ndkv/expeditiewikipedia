@@ -3,7 +3,6 @@ L = require('leaflet');
 L.Icon.Default.imagePath = 'images/icons/';
 jQuery = require('jquery-browserify');
 $ = jQuery;
-Dragend = require('./lib/dragend-vert.js');
 Swiper = require('swiper');
 
 window.onload = function() {
