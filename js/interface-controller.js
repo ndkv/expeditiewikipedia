@@ -6,18 +6,29 @@ var InterfaceController = function(ExpeditionController) {
 		that = this,
 		detailedViewDirect = false,
 		detailedView = false,
-		currentPreviewItem, swiper,
+		currentPreviewItem, 
+		swiper,
 		mode = "landing";
 
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
 	
-	var $detailList = $('#detailList');
-    var detailList = new Dragend($detailList[0], {
-    	afterInitialize: function() {
-        	$detailList.style.visibility = 'visible';
-       	}
-    });
+	// var $detailList = $('#detailList');
+ //    var detailList = new Dragend($detailList[0], {
+ //    	afterInitialize: function() {
+ //        	$detailList.style.visibility = 'visible';
+ //       	}
+ //    });
+
+	var contentSwiper = new Swiper('#contentSwiper', {
+			mode: 'horizontal',
+			//scrollContainer: true,
+			slidesPerView: 1
+		});
+	
+	var $contentSwiper = $("#contentSwiper");
+	var $previewSwiper = $("#previewSwiper");
+
 
     var $previewList = $('#previewList');
   
@@ -34,10 +45,11 @@ var InterfaceController = function(ExpeditionController) {
     this.toggleDetailView = function() {    	
     	//display different data based on currently selected 
 
-    	$detailList.toggleClass('active');
+    	$contentSwiper.toggleClass('active');
     	// $previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
-    	$(".swiper-container").toggleClass('hidden');
+    	// $("#previewSwiper").toggleClass('hidden');
+    	$previewSwiper.toggleClass('hidden');
     };
 
     // this.toggleDetailViewDirect = function(input) {
@@ -115,10 +127,11 @@ var InterfaceController = function(ExpeditionController) {
 	// 
 
 	var buildSwiper = function() {
-		swiper = new Swiper('.swiper-container', {
+		// swiper = new Swiper('.swiper-container', {
+		swiper = new Swiper('#previewSwiper', {
 			mode: 'horizontal',
 			scrollContainer: true
-			//slidesPerView: 5
+			//slidesPerView: 1
 		});
 	};
 
@@ -153,8 +166,10 @@ var InterfaceController = function(ExpeditionController) {
 				that.toggleDetailView();
 			});
 
-			$('.swiper-slide').width(width);
-			$expeditionItem.appendTo($('.swiper-slide'));
+			// $('.swiper-slide').width(width);
+			// $expeditionItem.appendTo($('.swiper-slide'));
+			$('#previewSwiper .swiper-slide').width(width);
+			$expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
 		});
 
 		buildSwiper();
@@ -252,15 +267,15 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	overscroll(document.querySelector('.dragend-page'));
+	// overscroll(document.querySelector('.dragend-page'));
 		
-	document.body.addEventListener('touchmove', function(evt) {
-	  //In this case, the default behavior is scrolling the body, which
-	  //would result in an overflow.  Since we don't want that, we preventDefault.
-	  if(!evt._isScroller) {
-	    evt.preventDefault();
-	  }
-	});
+	// document.body.addEventListener('touchmove', function(evt) {
+	//   //In this case, the default behavior is scrolling the body, which
+	//   //would result in an overflow.  Since we don't want that, we preventDefault.
+	//   if(!evt._isScroller) {
+	//     evt.preventDefault();
+	//   }
+	// });
 
 	$("body").bind("_toggleDetailedView", that.toggleDetailView);
 };

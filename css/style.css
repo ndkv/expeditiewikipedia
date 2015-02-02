@@ -73,7 +73,7 @@ a.menu span {
 }
 
 /*dragend container*/
-#detailList {
+#contentSwiper {
   width: auto;
   height: 400px;
   margin: 0px;
@@ -85,26 +85,32 @@ a.menu span {
   transform: translate3d(0px, -400px, 0px);
   transition: transform 0s 0.7s linear, opacity 0.4s 0s;
   /*transition: opacity .3s .30s linear;*/
+  z-index: 0;
+  /*overflow-y: scroll;*/
 }
 
-#detailList.active {
+#contentSwiper .swiper-slide {
+  overflow-y: auto;
+}
+
+#contentSwiper.active {
   opacity: 1;
   transition: opacity .3s .35s linear;
   transform: translate3d(0px, -165px, 0px);
+  z-index: 1;
 }
 
 .swiper-container {
   position: absolute;
-  opacity: 1;
+  /*opacity: 1;*/
   transform: translate3d(0px, 0px, 0px);
-  transition: opacity .3s .3s, transform 0s .35s;
+  transition: opacity .5s .35s linear, transform 0s .35s;
 }
 
 .swiper-container.hidden {
-  /*position: absolute;*/
+  opacity: 0;
   transform: translate3d(0px, -500px, 0px);
-  opacity: 1;
-  transition: opacity .3s, transform 0s .35s;
+  transition: opacity .35s, transform 0s .35s;
 }
 
 .btnDetailedDrawer {
@@ -153,13 +159,13 @@ body {
   user-select: none;
 }
 
-#detailList li.first {
+#contentSwiper li.first {
   background: #577;
 }
-#detailList li.middle {
+#contentSwiper li.middle {
   background: #1e8;
 }
-#detailList li.last {
+#contentSwiper li.last {
   background: #e8b;
 }
 
