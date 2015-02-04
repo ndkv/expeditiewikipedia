@@ -61,7 +61,7 @@ var ExpeditionController = function() {
 			MapController.destroyLandingView();
 
 			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
-			.done(function(expedition, geometries) {
+			.done(function(expeditionAttributes, geometries) {
 
 				var features = geometries[0].features,
 					route,
@@ -76,7 +76,7 @@ var ExpeditionController = function() {
 					}
 				});
 
-				InterfaceController.buildExpeditionView(expedition[0], pois);
+				InterfaceController.buildExpeditionView(expedition, pois);
 				setTimeout(function () { 
 					MapController.buildExpeditionView(route, pois);
 					InterfaceController.registerMapEventsPois(MapController);

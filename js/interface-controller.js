@@ -6,7 +6,9 @@ var InterfaceController = function(ExpeditionController) {
 		that = this,
 		detailedViewDirect = false,
 		detailedView = false,
-		currentPreviewItem, 
+		currentPreviewItem,
+		currentPoi,
+		currentExpedition,
 		swiper,
 		mode = "landing";
 
@@ -43,15 +45,9 @@ var InterfaceController = function(ExpeditionController) {
     	$(".detailedDrawer").toggleClass('high');
     	// $("#previewSwiper").toggleClass('hidden');
     	$previewSwiper.toggleClass('hidden');
-    };
 
-    // this.toggleDetailViewDirect = function(input) {
-    // 	$previewList.toggleClass('hidden');
-    // 	$(".detailedDrawer").toggleClass('active');
-    // 	$(".detailedDrawer").toggleClass('high');
-    // 	$detailList.toggleClass('activeDirect');
-    // 	detailedViewDirect = true;
-    // };
+
+    };
     
 	this.togglePreviewItem = function(index) {
 		if (currentPreviewItem !== undefined) {
@@ -156,6 +152,7 @@ var InterfaceController = function(ExpeditionController) {
 			
 			$readMore.click(function () {
 				currentPreviewItem = index;
+				that.loadContent();
 				that.toggleDetailView();
 			});
 
@@ -167,6 +164,25 @@ var InterfaceController = function(ExpeditionController) {
 
 		buildSwiper();
 
+	};
+
+	this.loadContent = function() {
+		//TODO don't forget chapters
+		var path = 'data/' + currentExpedition + '/pois/' + currentPoi + '.html';
+		
+		if (mode == 'landing') {
+			//do nothing
+		} else {
+			contentSwiper.removeAllSlides();
+
+			$.get(path, function(data) {
+				var pages = $(data).filter('div');
+				$.each(pages, function(index, value) {
+					var slide = contentSwiper.createSlide(value.outerHTML);
+					slide.append();
+				});
+			});
+		}
 	};
 
 	this.destroyLandingView = function() {
@@ -182,8 +198,10 @@ var InterfaceController = function(ExpeditionController) {
 	this.buildExpeditionView = function(expedition, pois) {
 		//read expedition texts and place them on interface
 		mode = "expedition";
+		currentExpedition = expedition;
 
 		buildPoIList(pois);
+		//that.loadContent();
 		//build toolbar on bottom
 
 		//hide and show interface elements
@@ -208,7 +226,9 @@ var InterfaceController = function(ExpeditionController) {
 			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
 			$readMore.click(function () {
 				currentPreviewItem = index;
+				currentPoi = value[0];
 				that.toggleDetailView();
+				that.loadContent();
 			});
 
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
