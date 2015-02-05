@@ -38,11 +38,9 @@ var InterfaceController = function(ExpeditionController) {
 		.on('click', '#btnBack', function(e) { that.toggleDetailView(); })
 		.on('click', '#btnMapDrawer', function(e) { 
 			$('#lstMap').toggleClass('active');
-			$('#lstMap').focus();
- 	
 			console.log('opening map drawer'); 
 		});
-
+		
     this.toggleDetailView = function() {    	
     	//display different data based on currently selected 
 
@@ -254,10 +252,6 @@ var InterfaceController = function(ExpeditionController) {
 
 	var loadMaps = function(maps) {
 		var $mapList = $('#lstMap');
-		$mapList.focusout(function () {
-			console.log('lost focus');
-			$mapList.toggleClass('active');
-		});
 
 		try {
 			$.each(maps, function(index, value) {
@@ -265,12 +259,11 @@ var InterfaceController = function(ExpeditionController) {
 
 				var $checkbox = $('<input type="checkbox">');
 				$checkbox.click(function() {
-					//$mapList.focus();
 					$checkbox.trigger('_toggleOverlayVisibility', [index]);
 				});
 
 				var label = $('<label></label>')
-				.append($checkbox)
+				.append($checkbox) 
 				.append(value)
 				.appendTo($mapList.last());
 			});

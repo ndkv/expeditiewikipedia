@@ -3,14 +3,11 @@ var MapController = function() {
 		poisList = [],
 		overlays = [],
 		currentExpedition,
-		listeners = [];
-
-	this.basemaps = [];
+		listeners = [],
+		basemaps = [];
 	
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: true});
 	map.setView([0.0, 55.0], 3);
-	var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
-	basemap.addTo(map);
 
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(index, feature) {
@@ -101,6 +98,10 @@ var MapController = function() {
 			feature.addTo(map);
 			features.push(feature);
 		});
+
+		var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+		basemap.addTo(map);
+		basemaps.push(basemap);
 	};
 
 	this.destroyLandingView = function() {
@@ -110,12 +111,39 @@ var MapController = function() {
 		});
 
 		features = [];
+		
 	};
 
 	this.buildExpeditionView = function(expedition, maps, route, pois) {
 		currentExpedition = expedition;
-		buildExpeditionGeometries(route, pois);
 		loadMaps(maps);
+		buildExpeditionGeometries(route, pois);
+
+		// $('.leaflet-tile-pane').css('-webkit-transition', 'opacity 3s');
+		// $('.leaflet-layer').css('-webkit-transition', 'opacity 3s');
+		// $('.leaflet-tile-container').css('-webkit-transition', 'opacity 3s');
+		
+		var basemap = L.tileLayer.provider('Esri.OceanBasemap', {opacity: 0});
+		
+		var handler = function() {
+			$('.leaflet-tile-pane').css('-webkit-transition', 'opacity .45s');
+			$('.leaflet-layer').css('-webkit-transition', 'opacity .45s');
+			$('.leaflet-tile-container').css('-webkit-transition', 'opacity .45s');
+			basemap.setOpacity(1);
+			basemaps[0].setOpacity(0);
+ 	
+			setTimeout(function() {
+				$('.leaflet-tile-pane').css('-webkit-transition', '');
+				$('.leaflet-layer').css('-webkit-transition', '');
+				$('.leaflet-tile-container').css('-webkit-transition', '');
+				map.removeLayer(basemaps[0]);
+				basemap.off('load', handler);
+			}, 350);
+		};
+
+		basemap.on('load', handler);
+
+		basemap.addTo(map);
 	};
 
 	var buildExpeditionGeometries = function(route, pois) {
@@ -146,12 +174,17 @@ var MapController = function() {
 	};
 
 	var loadMaps = function(maps) {
-		$.each(maps, function(index, value) {
-			var path = 'data/' + currentExpedition + '/maps/' + value + '/{z}/{x}/{y}.png';
-			var overlay = L.tileLayer(path, { tms: true, updateWhenIdle: true });
-			//overlay.addTo(map);
-			overlays.push(overlay);
-		});
+		try {
+				$.each(maps, function(index, value) {
+				var path = 'data/' + currentExpedition + '/maps/' + value + '/{z}/{x}/{y}.png';
+				var overlay = L.tileLayer(path, { tms: true, updateWhenIdle: true });
+				//overlay.addTo(map);
+				overlays.push(overlay);
+			});
+		}
+		catch (e) {
+			console.log('no maps');
+		}
 	};
 	
 	//this.destroyExpeditionView

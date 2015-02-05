@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 @font-face {
     font-family: "Blokk";
     src: url("../fonts/BLOKKRegular.ttf");
@@ -282,9 +287,11 @@ p {
 .map-controls {
   position: fixed;
   bottom: 10px;
-  /*width: 100%;*/
+  width: 200px;
   left: 0;
   right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .map-control {
@@ -300,16 +307,22 @@ p {
 
 #mapDrawer {
   display: inline-block;
+  cursor: crosshair;
   opacity: 0;
 }
 
 #btnMapDrawer {
-  position: absolute;
-  bottom: -100px;
+  /*position: absolute;
+  bottom: -100px;*/
+  opacity: .5;
+  cursor: not-allowed;
+
 }
 
 #btnMapDrawer.active {
-  position: static;
+  /*position: static;*/
+  cursor: pointer;
+  opacity: 1;
 }
 
 .map-list {

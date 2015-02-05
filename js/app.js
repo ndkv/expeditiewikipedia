@@ -1,5 +1,6 @@
 //GLOBALS!!
 L = require('leaflet');
+require('leaflet-providers');
 L.Icon.Default.imagePath = 'images/icons/';
 jQuery = require('jquery-browserify');
 $ = jQuery;
