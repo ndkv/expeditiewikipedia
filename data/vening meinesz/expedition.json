@@ -1,3 +1,4 @@
 {
-	"extent": "test"
+	"extent": "test",
+	"maps": ["atlantic-indian", "vening"]
 }

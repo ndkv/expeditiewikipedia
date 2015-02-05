@@ -1,27 +1,16 @@
 var MapController = function() {
-	var features = []; //are either routes for introscreen or POIs
-	var poisList = [];
-	this.overlays = [];
+	var features = [],
+		poisList = [],
+		overlays = [],
+		currentExpedition,
+		listeners = [];
+
 	this.basemaps = [];
-
-	var listeners = [];
-
+	
 	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: true});
 	map.setView([0.0, 55.0], 3);
 	var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
 	basemap.addTo(map);
-
-	var loadExpeditions = function() {
-
-	};
-
-	var loadPoIs = function() {
-
-	};
-
-	var loadHistoricalMaps = function() {
-
-	};
 
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(index, feature) {
@@ -96,17 +85,6 @@ var MapController = function() {
 
 	};
 
-	var zoomToRoute = function(e) {
-		var index = e.vmIndex;
-		map.fitBounds(features[index].getBounds());
-	};
-
-	var zoomToPoi = function(e) {
-		var index = e.vmIndex;
-		map.panTo(poisList[index].getLatLng());
-	};
-
-
 	//VIEWING MODE 
 
 	this.buildLandingView = function(feats) {
@@ -134,7 +112,13 @@ var MapController = function() {
 		features = [];
 	};
 
-	this.buildExpeditionView = function(route, pois) {
+	this.buildExpeditionView = function(expedition, maps, route, pois) {
+		currentExpedition = expedition;
+		buildExpeditionGeometries(route, pois);
+		loadMaps(maps);
+	};
+
+	var buildExpeditionGeometries = function(route, pois) {
 		var routeGeometry = route.geometry.coordinates
 		.map(function(coords) { return [coords[1], coords[0]]; });
 
@@ -160,11 +144,41 @@ var MapController = function() {
 			poisList.push(marker);
 		});
 	};
+
+	var loadMaps = function(maps) {
+		$.each(maps, function(index, value) {
+			var path = 'data/' + currentExpedition + '/maps/' + value + '/{z}/{x}/{y}.png';
+			var overlay = L.tileLayer(path, { tms: true, updateWhenIdle: true });
+			//overlay.addTo(map);
+			overlays.push(overlay);
+		});
+	};
 	
 	//this.destroyExpeditionView
 
+	var zoomToRoute = function(e) {
+		var index = e.vmIndex;
+		map.fitBounds(features[index].getBounds());
+	};
+
+	var zoomToPoi = function(e) {
+		console.log('catchintg zoomToPoi trigger');
+		var index = e.vmIndex;
+		map.panTo(poisList[index].getLatLng());
+	};
+
+	var toggleLayer = function(event, index) {
+		var layer = overlays[index];
+		if (map.hasLayer(layer)) {
+			map.removeLayer(layer);
+		} else {
+			map.addLayer(layer);
+		}
+	};
+
 	$(document).bind('mapZoomToRoute', zoomToRoute);
 	$(document).bind('mapZoomToPoI', zoomToPoi);
+	$(document).bind('_toggleOverlayVisibility', toggleLayer);
 };
 
 module.exports = MapController;

@@ -278,3 +278,59 @@ p {
   background-repeat: no-repeat;
   background-position: 10px 8px;
 }
+
+.map-controls {
+  position: fixed;
+  bottom: 10px;
+  /*width: 100%;*/
+  left: 0;
+  right: 0;
+}
+
+.map-control {
+  display: inline-block;
+  margin: 10px;
+  border-style: solid;
+  padding: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, .4);
+}
+
+#mapDrawer {
+  display: inline-block;
+  opacity: 0;
+}
+
+#btnMapDrawer {
+  position: absolute;
+  bottom: -100px;
+}
+
+#btnMapDrawer.active {
+  position: static;
+}
+
+.map-list {
+  opacity: 0;
+
+}
+
+.map-list.active {
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+#lstMap {
+  position: absolute;
+  bottom: 50px;
+  border-style: solid;
+  max-height: 200px;
+  padding: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, .4);
+  overflow-y: auto;
+}

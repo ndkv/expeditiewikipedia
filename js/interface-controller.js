@@ -35,7 +35,13 @@ var InterfaceController = function(ExpeditionController) {
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
 		})
-		.on('click', '#btnBack', function(e) { that.toggleDetailView(); });
+		.on('click', '#btnBack', function(e) { that.toggleDetailView(); })
+		.on('click', '#btnMapDrawer', function(e) { 
+			$('#lstMap').toggleClass('active');
+			$('#lstMap').focus();
+ 	
+			console.log('opening map drawer'); 
+		});
 
     this.toggleDetailView = function() {    	
     	//display different data based on currently selected 
@@ -69,8 +75,6 @@ var InterfaceController = function(ExpeditionController) {
 					vmIndex: index
 				});			
 			});
-
-
 		});
 	};
 
@@ -84,7 +88,7 @@ var InterfaceController = function(ExpeditionController) {
 				$el.trigger({
 					type: 'mapZoomToPoI',
 					vmIndex: index
-				});			
+				});
 			});
 		});
 	};
@@ -195,14 +199,14 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems = [];
 	};
 
-	this.buildExpeditionView = function(expedition, pois) {
+	this.buildExpeditionView = function(maps, expedition, pois) {
 		//read expedition texts and place them on interface
 		mode = "expedition";
 		currentExpedition = expedition;
+		$('#btnMapDrawer').toggleClass('active');
 
 		buildPoIList(pois);
-		//that.loadContent();
-		//build toolbar on bottom
+		loadMaps(maps);
 
 		//hide and show interface elements
 		$('#btnStartExpedition').css('display', 'none');
@@ -248,8 +252,37 @@ var InterfaceController = function(ExpeditionController) {
 		buildSwiper();
 	};
 
+	var loadMaps = function(maps) {
+		var $mapList = $('#lstMap');
+		$mapList.focusout(function () {
+			console.log('lost focus');
+			$mapList.toggleClass('active');
+		});
 
-	$("body").bind("_toggleDetailedView", that.toggleDetailView);
+		try {
+			$.each(maps, function(index, value) {
+				$mapList.append('<div></div>');
+
+				var $checkbox = $('<input type="checkbox">');
+				$checkbox.click(function() {
+					//$mapList.focus();
+					$checkbox.trigger('_toggleOverlayVisibility', [index]);
+				});
+
+				var label = $('<label></label>')
+				.append($checkbox)
+				.append(value)
+				.appendTo($mapList.last());
+			});
+		}
+		catch (e) {
+			$('#btnMapDrawer').css('opacity', 0);
+			console.log("Warning, this expedition does not have any maps.");
+		}		
+	};
+
+
+	//$("body").bind("_toggleDetailedView", that.toggleDetailView);
 };
 
 module.exports = InterfaceController;

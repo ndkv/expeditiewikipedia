@@ -46,7 +46,7 @@ var ExpeditionController = function() {
 		InterfaceController.buildLandingView();
 		MapController.buildLandingView(features);
 
-		InterfaceController.registerMapEventsRoute(MapController);
+		InterfaceController.registerMapEventsRoute();
 		MapController.registerInterfaceEvents(InterfaceController);
 	};
 
@@ -61,8 +61,8 @@ var ExpeditionController = function() {
 			MapController.destroyLandingView();
 
 			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
-			.done(function(expeditionAttributes, geometries) {
-
+			.done(function(exp, geometries) {
+				var expeditionAttributes = exp[0];
 				var features = geometries[0].features,
 					route,
 					pois = [];
@@ -76,10 +76,11 @@ var ExpeditionController = function() {
 					}
 				});
 
-				InterfaceController.buildExpeditionView(expedition, pois);
+				InterfaceController.buildExpeditionView(expeditionAttributes.maps, expedition, pois);
+				
 				setTimeout(function () { 
-					MapController.buildExpeditionView(route, pois);
-					InterfaceController.registerMapEventsPois(MapController);
+					MapController.buildExpeditionView(expedition, expeditionAttributes.maps, route, pois);
+					InterfaceController.registerMapEventsPois();
 					MapController.registerInterfaceEvents(InterfaceController);
 				 }, 1500);
 
