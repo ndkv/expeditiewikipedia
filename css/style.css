@@ -347,3 +347,31 @@ p {
   border-color: rgba(255, 255, 255, .4);
   overflow-y: auto;
 }
+
+.spacer-left {
+  position: absolute;
+  width: 100px;
+  display: inline;
+  background-color: black;
+  left: 0px;
+  padding-left: 50px;
+  top: 0px;
+  bottom: 0px;
+}
+
+.spacer-right {
+  width: 50px;
+  display: inline;
+  background-color: black;
+  right: 0px;
+  padding-right: 50px;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+}
+
+#previewSwiper {
+  position: absolute;
+  left: 160px;
+  right: 100px;
+}

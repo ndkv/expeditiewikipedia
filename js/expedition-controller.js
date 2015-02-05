@@ -78,11 +78,11 @@ var ExpeditionController = function() {
 
 				InterfaceController.buildExpeditionView(expeditionAttributes.maps, expedition, pois);
 				
-				//setTimeout(function () { 
+				setTimeout(function () { 
 					MapController.buildExpeditionView(expedition, expeditionAttributes.maps, route, pois);
 					InterfaceController.registerMapEventsPois();
 					MapController.registerInterfaceEvents(InterfaceController);
-				 //}, 1500);
+				}, 1500);
 
 			});
 

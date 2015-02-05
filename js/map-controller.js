@@ -21,49 +21,28 @@ var MapController = function() {
 		});
 
 
-		var $swiper = $('.swiper-wrapper');
+		var $swiper = $('.swiper-wrapper'),
+			swiperOffset = $swiper.offset().left,
+			docWidth = $(document).width(), 
+			docSwiperDiff = docWidth - $swiper.width(),				
+			margin = 20,
+			offset;
 
 		$.each(poisList, function (index, poi) {
 			var handler = function () { 
 				InterfaceController.togglePreviewItem(index); 
-
-				var swiperOffset = $swiper.offset().left,
-					docWidth = $(document).width(), 
-					docSwiperDiff = docWidth - $swiper.width(),				
-					$element = $('.expeditionItem').eq(index),
-					margin = 20,
+				var	$element = $('.expeditionItem').eq(index),
 					elemMid = $element.offset().left + $element.width()/2 + margin/2,
-					elem = index + 1,
-					offset;
+					elem = index + 1;
 
 				if (docSwiperDiff < 0) {
-					switch (index) {
-						case 0:
-							offset = 0;
-							break;
-						case poisList.length - 1:
-							offset = docSwiperDiff;
-							break;
-						default:
-							if (elemMid < docWidth/2) {
-								offset = swiperOffset + (docWidth/2 - elemMid);
-								if (offset > 0) { offset = 0; }
-							} else if (elemMid > docWidth/2) {
-								offset = swiperOffset - (elemMid - docWidth/2);
-								if (offset < docSwiperDiff) { offset = docSwiperDiff; }
-							}
-							break;
-					}
+					offset = $swiper.position().left - (elemMid - docWidth/2);
+
+					if (offset > 0) { offset  = 0 ;}
+					if (offset < docSwiperDiff - 150 - 100) { offset = docSwiperDiff - 150 - 100; }
 				}
 
-				var translate = 'translate3d(' + offset + 'px, 0px, 0px';
-				// $swiper.css({
-				// 	WebKitTransform		: translate,
-				// 	MozTransform		: translate,
-				// 	MsTransform			: translate,
-				// 	OTransform 			: translate,
-				// 	transform 			: translate
-				// });
+				var translate = 'translate3d(' + offset + 'px, 0px, 0px)';
 
 				$swiper.css('-webkit-transform', translate);
 				$swiper.css('-webkit-transition', 'transform .5s ease-out');
@@ -126,16 +105,16 @@ var MapController = function() {
 		var basemap = L.tileLayer.provider('Esri.OceanBasemap', {opacity: 0});
 		
 		var handler = function() {
-			$('.leaflet-tile-pane').css('-webkit-transition', 'opacity .45s');
-			$('.leaflet-layer').css('-webkit-transition', 'opacity .45s');
-			$('.leaflet-tile-container').css('-webkit-transition', 'opacity .45s');
+			$('.leaflet-tile-pane').css('transition', 'opacity .45s');
+			$('.leaflet-layer').css('transition', 'opacity .45s');
+			$('.leaflet-tile-container').css('transition', 'opacity .45s');
 			basemap.setOpacity(1);
 			basemaps[0].setOpacity(0);
  	
 			setTimeout(function() {
-				$('.leaflet-tile-pane').css('-webkit-transition', '');
-				$('.leaflet-layer').css('-webkit-transition', '');
-				$('.leaflet-tile-container').css('-webkit-transition', '');
+				$('.leaflet-tile-pane').css('transition', '');
+				$('.leaflet-layer').css('transition', '');
+				$('.leaflet-tile-container').css('transition', '');
 				map.removeLayer(basemaps[0]);
 				basemap.off('load', handler);
 			}, 350);
