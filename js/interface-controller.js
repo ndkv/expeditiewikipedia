@@ -45,12 +45,13 @@ var InterfaceController = function(ExpeditionController) {
     	//display different data based on currently selected 
 
     	$contentSwiper.toggleClass('active');
-    	// $previewList.toggleClass('disabled');
     	$(".detailedDrawer").toggleClass('high');
-    	// $("#previewSwiper").toggleClass('hidden');
-    	$previewSwiper.toggleClass('hidden');
+    	//$previewSwiper.toggleClass('hidden');
 
-
+    	//hide spacers
+    	//$('.spacer-left').toggleClass('hidden');
+    	//$('.spacer-right').toggleClass('hidden');
+    	$('#swiper-menu').toggleClass('hidden');
     };
     
 	this.togglePreviewItem = function(index) {
@@ -163,6 +164,9 @@ var InterfaceController = function(ExpeditionController) {
 			$('#previewSwiper .swiper-slide').width(width);
 			$expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
 		});
+
+		$('.spacer-left-title').html('kies een reis');
+		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
 

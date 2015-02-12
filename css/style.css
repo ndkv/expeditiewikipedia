@@ -112,11 +112,11 @@ a.menu span {
   transition: opacity .5s .35s linear, transform 0s .35s;
 }
 
-.swiper-container.hidden {
+/*.swiper-container.hidden {
   opacity: 0;
   transform: translate3d(0px, -500px, 0px);
   transition: opacity .35s, transform 0s .35s;
-}
+}*/
 
 .btnDetailedDrawer {
   width: 150px;
@@ -360,21 +360,55 @@ p {
   z-index: 2;
 }
 
+
+.spacer-left-content {
+  width: 100%;
+  text-align: center;
+  margin-left: 5px;
+  padding: 5px;
+}
+
+.spacer-left-title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.spacer-left-summary {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
 .spacer-right {
+  position: absolute;
   width: 50px;
   display: inline;
   background-color: white;
   right: 0px;
-  /*padding-right: 50px;*/
-  position: absolute;
   top: 0px;
   bottom: 0px;
   box-shadow: -10px 0px 10px 20px white;
   z-index: 2;
 }
 
+.spacer-left.hidden {
+  transform: translate3d(-1000px, 0px, 0px);
+}
+
 #previewSwiper {
   position: absolute;
   left: 175px;
   right: 80px;
+}
+
+#swiper-menu {
+  opacity: 1;
+  transition: opacity .5s .3s, translate 0s 0s;
+}
+
+#swiper-menu.hidden {
+  /*position: absolute;*/
+  opacity: 0;
+  /*transform: translate3d(-1000px, 0px, 0px);*/
+  transition: opacity .5s, translate 0s 1s;
 }
