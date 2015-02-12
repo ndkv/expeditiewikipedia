@@ -23,23 +23,27 @@ var MapController = function() {
 
 		var $swiper = $('.swiper-wrapper'),
 			swiperOffset = $swiper.offset().left,
-			docWidth = $(document).width(), 
-			docSwiperDiff = docWidth - $swiper.width(),				
+			spacerLeftWidth = $('.spacer-left').width(),
+			spacerRightShadow = 30,
+			spacerRightWidth = $('.spacer-right').width() + spacerRightShadow,
 			margin = 20,
 			offset;
 
 		$.each(poisList, function (index, poi) {
 			var handler = function () { 
-				InterfaceController.togglePreviewItem(index); 
+				InterfaceController.togglePreviewItem(index);
+				var docWidth = $(document).width(),
+					docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth - spacerLeftWidth;
+
 				var	$element = $('.expeditionItem').eq(index),
-					elemMid = $element.offset().left + $element.width()/2 + margin/2,
-					elem = index + 1;
+					elemMid = $element.offset().left + $element.width()/2 + margin/2;
+					//elem = index + 1;
 
 				if (docSwiperDiff < 0) {
 					offset = $swiper.position().left - (elemMid - docWidth/2);
 
 					if (offset > 0) { offset  = 0 ;}
-					if (offset < docSwiperDiff - 150 - 100) { offset = docSwiperDiff - 150 - 100; }
+					if (offset < docSwiperDiff) { offset = docSwiperDiff; }
 				}
 
 				var translate = 'translate3d(' + offset + 'px, 0px, 0px)';

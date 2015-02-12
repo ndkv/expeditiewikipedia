@@ -349,11 +349,11 @@ p {
 
 .spacer-left {
   position: absolute;
-  width: 100px;
+  width: 150px;
   display: inline;
   background-color: white;
   left: 0px;
-  padding-left: 50px;
+  /*padding-left: 50px;*/
   top: 0px;
   bottom: 0px;
   box-shadow: 10px 0px 10px 20px white;
@@ -361,11 +361,11 @@ p {
 }
 
 .spacer-right {
-  /*width: 50px;*/
+  width: 50px;
   display: inline;
   background-color: white;
   right: 0px;
-  padding-right: 50px;
+  /*padding-right: 50px;*/
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -376,5 +376,5 @@ p {
 #previewSwiper {
   position: absolute;
   left: 175px;
-  right: 100px;
+  right: 80px;
 }
