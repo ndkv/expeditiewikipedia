@@ -2,6 +2,7 @@
 //function
 var InterfaceController = function(ExpeditionController) {
 	var expeditions = ExpeditionController.expeditions,
+		expeditionsHash = {},
 		previewItems = [],
 		that = this,
 		detailedViewDirect = false,
@@ -11,6 +12,10 @@ var InterfaceController = function(ExpeditionController) {
 		currentExpedition,
 		swiper,
 		mode = "landing";
+
+	$.each(ExpeditionController.expeditions, function(index, value) {
+		expeditionsHash[value.id] = index;
+	});
 
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
@@ -48,9 +53,6 @@ var InterfaceController = function(ExpeditionController) {
     	$(".detailedDrawer").toggleClass('high');
     	//$previewSwiper.toggleClass('hidden');
 
-    	//hide spacers
-    	//$('.spacer-left').toggleClass('hidden');
-    	//$('.spacer-right').toggleClass('hidden');
     	$('#swiper-menu').toggleClass('hidden');
     };
     
@@ -198,6 +200,10 @@ var InterfaceController = function(ExpeditionController) {
 		//$('swiper-slide').empty();		//cleans event listeners too
 		$('<div class="swiper-slide"></div>').appendTo($('#previewSwiper .swiper-wrapper')); //
 		that.toggleDetailView();
+
+		$('.spacer-left-title').html("");
+		$('.spacer-left-summary').html("");
+
 		previewItems = [];
 	};
 
@@ -205,13 +211,19 @@ var InterfaceController = function(ExpeditionController) {
 		//read expedition texts and place them on interface
 		mode = "expedition";
 		currentExpedition = expedition;
+		var expeditionAttributes = expeditions[expeditionsHash[expedition]];
+
 		$('#btnMapDrawer').toggleClass('active');
 
 		buildPoIList(pois);
 		loadMaps(maps);
 
 		//hide and show interface elements
+		//TODO toggle visibility through class and translate
 		$('#btnStartExpedition').css('display', 'none');
+
+		$('.spacer-left-title').html(expeditionAttributes.title);
+		$('.spacer-left-summary').html(expeditionAttributes.summary);
 	};
 
 	var buildPoIList = function (pois) {
