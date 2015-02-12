@@ -58,7 +58,7 @@ a.menu span {
   width: 100%;
   -webkit-overflow-scrolling: touch;
   height: 170px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   overflow: hidden;
   margin: 0px;
 }
@@ -209,10 +209,10 @@ p {
   width: 160px;
   height: 130px;
   border-style: solid;
-  border-color: black;
+  border-color: white;
   border-width: 2px;
-  border-radius: 5px;
   background-color: white;
+  border-radius: 5px;
   color: black;
   padding: 10px;
   margin-left: 10px;
@@ -224,16 +224,15 @@ p {
   background-size: 140px 70px;
   background-repeat: no-repeat;
   background-position: 20px 50px;
-  -moz-transition: border-radius 1s, border-color 1s;
-  -webkit-transition: border-radius 1s, border-color 1s;
+  -moz-transition: border-color .3s;
+  -webkit-transition: border-color .3s;
 }
 
 .previewItemActive {
-  border-color: rgb(0, 179, 239);
-  border-radius: 20px;
+  border-color: black;
   border-width: 2px;
-  -moz-transition: border-radius 1s, border-color 1s;;
-  -webkit-transition: border-radius 1s, border-color 1s;;
+  -moz-transition: border-color .3s;
+  -webkit-transition: border-color .3s;;
 }
 
 .expeditionPreviewTitle {
@@ -352,26 +351,30 @@ p {
   position: absolute;
   width: 100px;
   display: inline;
-  background-color: black;
+  background-color: white;
   left: 0px;
   padding-left: 50px;
   top: 0px;
   bottom: 0px;
+  box-shadow: 10px 0px 10px 20px white;
+  z-index: 2;
 }
 
 .spacer-right {
-  width: 50px;
+  /*width: 50px;*/
   display: inline;
-  background-color: black;
+  background-color: white;
   right: 0px;
   padding-right: 50px;
   position: absolute;
   top: 0px;
   bottom: 0px;
+  box-shadow: -10px 0px 10px 20px white;
+  z-index: 2;
 }
 
 #previewSwiper {
   position: absolute;
-  left: 160px;
+  left: 175px;
   right: 100px;
 }
