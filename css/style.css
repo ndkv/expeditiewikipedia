@@ -26,15 +26,11 @@
 a.menu {
   position: absolute;
   z-index: 3;
-  border:1px solid white;
   text-decoration: none;
-  top: 1em;
-  right: 1.6em;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 0.65em;
-  padding: 0.4em 0.7em;
-  border-radius: 4px;
+  bottom: 0px;
+  right: 20px;
+  font-size: 1.5em;
+  color: black;
 }
 
 a.menu span {
@@ -47,14 +43,14 @@ a.menu span {
 .detailedDrawer {
   position: relative;
   z-index: 1;
-  -webkit-transform: translate3d(0, -350px, 0);
+  -webkit-transform: translate3d(0, -90px, 0);
   -moz-transform: translate3d(0, -350px, 0);
   -o-transform: translate3d(0, -350px, 0);
-  transform: translate3d(0, -350px, 0);
+  transform: translate3d(0, -90px, 0);
   -webkit-transition:-webkit-transform 0.25s linear;
   -moz-transition:-moz-transform 0.25s linear;
   -o-transition:-o-transform 0.25s linear;
-  transition: transform 0.4s linear, height .30s 0.7s;
+  transition: transform 0.2s linear, height .30s 0.7s;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   height: 170px;
@@ -82,7 +78,7 @@ a.menu span {
   width: auto;
   height: 400px;
   margin: 0px;
-  background: #457;
+  /*background: #457;*/
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
@@ -101,7 +97,7 @@ a.menu span {
 #contentSwiper.active {
   opacity: 1;
   transition: opacity .3s .35s linear;
-  transform: translate3d(0px, -165px, 0px);
+  transform: translate3d(0px, 0px, 0px);
   z-index: 1;
 }
 
@@ -122,6 +118,11 @@ a.menu span {
   width: 150px;
   margin: 10px;
   height: 20px;
+  border: 0;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.7em;
 }
 
 #detailedDrawerNavigation {
@@ -129,7 +130,7 @@ a.menu span {
   margin-right: auto;
   margin-left: auto;
   /*top: -165px;*/
-  transform: translate3d(0px, -165px, 0px);
+  transform: translate3d(0px, 0px, 0px);
 }
 
 /* Fallbacks */
@@ -401,12 +402,12 @@ p {
   right: 80px;
 }
 
-#swiper-menu {
+#swiperMenu {
   opacity: 1;
   transition: opacity .5s .3s, translate 0s 0s;
 }
 
-#swiper-menu.hidden {
+#swiperMenu.hidden {
   /*position: absolute;*/
   opacity: 0;
   /*transform: translate3d(-1000px, 0px, 0px);*/

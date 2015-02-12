@@ -28,14 +28,18 @@ var InterfaceController = function(ExpeditionController) {
 	
 	var $contentSwiper = $("#contentSwiper");
 	var $previewSwiper = $("#previewSwiper");
+	var $swiperMenu = $('#swiperMenu');
 
 
     var $previewList = $('#previewList');
   
 	$(document)
 		.on('click', '#toggleTopDrawer', function(e) {
-			e.preventDefault();
+			// e.preventDefault();
 			$('.detailedDrawer').toggleClass('active');
+			$swiperMenu.toggleClass('hidden');
+
+			this.text = (this.text === "x") ? "+" : "x";
 		})
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
@@ -53,7 +57,7 @@ var InterfaceController = function(ExpeditionController) {
     	$(".detailedDrawer").toggleClass('high');
     	//$previewSwiper.toggleClass('hidden');
 
-    	$('#swiper-menu').toggleClass('hidden');
+    	$swiperMenu.toggleClass('hidden');
     };
     
 	this.togglePreviewItem = function(index) {
