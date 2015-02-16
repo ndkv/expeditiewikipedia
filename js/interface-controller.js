@@ -49,6 +49,9 @@ var InterfaceController = function(ExpeditionController) {
 			$('#lstMap').toggleClass('active');
 			console.log('opening map drawer'); 
 		});
+
+	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
+	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
 		
     this.toggleDetailView = function() {    	
     	//display different data based on currently selected 
@@ -284,8 +287,8 @@ var InterfaceController = function(ExpeditionController) {
 
 				var label = $('<label></label>')
 				.append($checkbox) 
-				.append(value)
-				.appendTo($mapList.last());
+				.append($('<div>' + value + '</div>'))
+				.appendTo($mapList.children().last());
 			});
 		}
 		catch (e) {

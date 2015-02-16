@@ -195,6 +195,8 @@ var MapController = function() {
 	$(document).bind('mapZoomToRoute', zoomToRoute);
 	$(document).bind('mapZoomToPoI', zoomToPoi);
 	$(document).bind('_toggleOverlayVisibility', toggleLayer);
+	$(document).bind('_mapZoomIn', function() { map.zoomIn(); });
+	$(document).bind('_mapZoomOut', function() { map.zoomOut(); });
 };
 
 module.exports = MapController;

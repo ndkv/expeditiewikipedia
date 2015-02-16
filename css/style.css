@@ -287,7 +287,7 @@ p {
 .map-controls {
   position: fixed;
   bottom: 10px;
-  width: 200px;
+  width: 110px;
   left: 0;
   right: 0;
   margin-left: auto;
@@ -296,13 +296,13 @@ p {
 
 .map-control {
   display: inline-block;
-  margin: 10px;
-  border-style: solid;
-  padding: 3px;
-  padding-left: 5px;
-  padding-right: 5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-color: rgba(255, 255, 255, .4);
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+.map-control > img {
+  width: 30px;
+  stroke: white;
 }
 
 #mapDrawer {
@@ -327,16 +327,7 @@ p {
 
 .map-list {
   opacity: 0;
-
-}
-
-.map-list.active {
-  opacity: 1;
-  transition: opacity .3s;
-}
-
-#lstMap {
-  position: absolute;
+  position: fixed;
   bottom: 50px;
   border-style: solid;
   max-height: 200px;
@@ -346,6 +337,12 @@ p {
   background-color: rgba(255, 255, 255, 0.7);
   border-color: rgba(255, 255, 255, .4);
   overflow-y: auto;
+
+}
+
+.map-list.active {
+  opacity: 1;
+  transition: opacity .3s;
 }
 
 .spacer-left {
@@ -412,4 +409,9 @@ p {
   opacity: 0;
   /*transform: translate3d(-1000px, 0px, 0px);*/
   transition: opacity .5s, translate 0s 1s;
+}
+
+#lstMap label > div {
+  display: inline;
+  margin: 10px;
 }
