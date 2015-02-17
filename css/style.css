@@ -207,21 +207,21 @@ p {
 }
 
 .expeditionItem {
-  width: 160px;
-  height: 130px;
+  width: 190px;
+  height: 150px;
   border-style: solid;
   border-color: white;
   border-width: 2px;
   background-color: white;
   border-radius: 5px;
   color: black;
-  padding: 10px;
+  /*padding: 10px;*/
   margin-left: 10px;
   margin-top: 10px;
   text-align: center;
   /*cursor: pointer;*/
   float: left;
-  background-image: url(http://upload.wikimedia.org/wikipedia/commons/9/91/Hr._Ms._K_XVIII_%2811_July_1935%29.jpg);
+  /*background-image: url(http://upload.wikimedia.org/wikipedia/commons/9/91/Hr._Ms._K_XVIII_%2811_July_1935%29.jpg);*/
   background-size: 140px 70px;
   background-repeat: no-repeat;
   background-position: 20px 50px;

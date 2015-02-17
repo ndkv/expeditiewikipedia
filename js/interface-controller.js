@@ -266,7 +266,7 @@ var InterfaceController = function(ExpeditionController) {
 		});
 
 		var margin = 20;
-		var width = (pois.length * 160) + pois.length * margin * 2;
+		var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2;
 		$swiperSlide.width(width);
 		$previewListContent.width(width);
 
