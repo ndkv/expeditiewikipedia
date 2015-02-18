@@ -8,11 +8,6 @@
     src: url("../fonts/BLOKKRegular.ttf");
 }
 
-.heading {
-  height: 50px;
-  z-index: 1;
-}
-
 .top {
   background: #212121;
   color: #fff;
@@ -21,7 +16,6 @@
   top: 0;
   right: 0;
   z-index: 2;
-  overflow: hidden;
 }
 a.menu {
   position: absolute;
@@ -275,13 +269,13 @@ p {
   margin: 0px !important;
 }
 
-.expedition-logo {
-  background-image: url(../images/icons/wikipedialogo.jpg);
-  height: 100px;
-  width: 115px;
-  background-size: 103px 34px;
-  background-repeat: no-repeat;
-  background-position: 10px 8px;
+.expedition-logo img {
+  /*background-image: url(../images/icons/wikipedialogo.jpg);*/
+  height: 40px;
+  margin-top: 5px;
+  /*background-size: 103px 34px;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: 10px 8px;*/
 }
 
 .map-controls {
@@ -298,22 +292,6 @@ p {
   display: inline-block;
   margin-left: 3px;
   cursor: pointer;
-}
-
-#menuContentContainer {
-  position: absolute;
-  background-color: white;
-  z-index: 2;
-  top: -5000px;
-  bottom: 5000px;
-  display: block;
-  left: 100px;
-  right: 100px;
-}
-
-#menuContentContainer.active {
-  top: 80px;
-  bottom: 80px;
 }
 
 .map-control > img {
@@ -432,18 +410,15 @@ p {
   margin: 10px;
 }
 
-#menu {
+#btnMenu {
   position: fixed;
-  right: 10px;
+  right: 25px;
   top: 15px;
 }
 
-#menuContainer {
-  position: fixed;
-  top: -1000px;
-  right: 10px;
-  z-index: 2;
-  cursor: pointer;
+#btnMenu > img {
+  float: right;
+  width: 30px;
 }
 
 #menuContainer.active {
@@ -463,6 +438,45 @@ p {
   background-color: #01aef0;
 }
 
+#menuContainer {
+  position: fixed;
+  top: -1000px;
+  right: 10px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+#menuContentContainer {
+  position: absolute;
+  background-color: white;
+  z-index: 3;
+  top: -5000px;
+  bottom: 5000px;
+  display: block;
+  left: 100px;
+  right: 100px;
+}
+
+#menuContentContainer.active {
+  top: 80px;
+  bottom: 80px;
+}
+
+#menuContent {
+  padding: 10px;
+}
+
 #btnMenuClose {
   float: right;
+}
+
+#menuBlackout.active {
+  position: absolute;
+  z-index: 2;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: black;
+  opacity: .7;
 }

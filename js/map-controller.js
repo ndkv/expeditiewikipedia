@@ -77,7 +77,14 @@ var MapController = function() {
 				coordinates.push([v[1], v[0]]);
 			});
 
-			var feature = L.polyline(coordinates);
+			var feature = L.polyline(coordinates, {
+				weight: 6,
+				opacity: 0.9, 
+				color: '#a00', 
+				dashArray: '10, 5',
+				lineCap: 'butt',
+				lineJoin: 'round'
+			});
 			feature.addTo(map);
 			features.push(feature);
 		});
@@ -148,8 +155,10 @@ var MapController = function() {
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
 		sortable.map(function(pois) {
+			var icon = new L.Icon.Default();
+			icon.options.shadowSize = [0,0];
 			var coords = pois[1];
-			var marker = L.marker([coords[1], coords[0]]);
+			var marker = L.marker([coords[1], coords[0]], {icon: icon});
 			marker.addTo(map);
 
 			poisList.push(marker);

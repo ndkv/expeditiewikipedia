@@ -58,8 +58,9 @@ var InterfaceController = function(ExpeditionController) {
 		$menuContainer = $('#menuContainer'),
 		$menuContent = $('#menuContent');
 
-	$('#menu').click(function() { 
+	$('#btnMenu').click(function() { 
 		$menuContainer.toggleClass('active');
+		this.toggleClass('active');
 	});
 
 
@@ -67,10 +68,12 @@ var InterfaceController = function(ExpeditionController) {
 		$menuContainer.toggleClass('active');
 		$menuContentContainer.toggleClass('active');
 		$menuContent.html(this.innerHTML);
+		$('#menuBlackout').addClass('active');
 	});
 
 	$('#btnMenuClose').click(function() {
 		$menuContentContainer.toggleClass('active');
+		$('#menuBlackout').removeClass('active');
 	});
 		
     this.toggleDetailView = function() {    	
