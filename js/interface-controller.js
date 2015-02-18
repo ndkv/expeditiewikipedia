@@ -52,6 +52,26 @@ var InterfaceController = function(ExpeditionController) {
 
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
 	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
+
+
+	var $menuContentContainer = $('#menuContentContainer'),
+		$menuContainer = $('#menuContainer'),
+		$menuContent = $('#menuContent');
+
+	$('#menu').click(function() { 
+		$menuContainer.toggleClass('active');
+	});
+
+
+	$('.menu-item').click(function() {
+		$menuContainer.toggleClass('active');
+		$menuContentContainer.toggleClass('active');
+		$menuContent.html(this.innerHTML);
+	});
+
+	$('#btnMenuClose').click(function() {
+		$menuContentContainer.toggleClass('active');
+	});
 		
     this.toggleDetailView = function() {    	
     	//display different data based on currently selected 

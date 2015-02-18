@@ -300,6 +300,22 @@ p {
   cursor: pointer;
 }
 
+#menuContentContainer {
+  position: absolute;
+  background-color: white;
+  z-index: 2;
+  top: -5000px;
+  bottom: 5000px;
+  display: block;
+  left: 100px;
+  right: 100px;
+}
+
+#menuContentContainer.active {
+  top: 80px;
+  bottom: 80px;
+}
+
 .map-control > img {
   width: 30px;
   stroke: white;
@@ -414,4 +430,39 @@ p {
 #lstMap label > div {
   display: inline;
   margin: 10px;
+}
+
+#menu {
+  position: fixed;
+  right: 10px;
+  top: 15px;
+}
+
+#menuContainer {
+  position: fixed;
+  top: -1000px;
+  right: 10px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#menuContainer.active {
+  top: 55px;
+}
+
+.menu-item {
+  width: 300px;
+  background-color: gray;
+  text-align: center;
+  margin-bottom: 2px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.menu-item:hover {
+  background-color: #01aef0;
+}
+
+#btnMenuClose {
+  float: right;
 }
