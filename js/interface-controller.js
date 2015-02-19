@@ -211,24 +211,45 @@ var InterfaceController = function(ExpeditionController) {
 		var proxy = 'http://localhost:8000/__ajaxproxy/',
 		    wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
 		    numOfChars = 'exchars=' + 2000 + '&',
-		    articleTitle ='titles=Hendrik_Krayer_van_Aalst',
-		    requestUrl = proxy + wikiApiUrl + numOfChars + articleTitle;
+		    title = 'Alfoeren',
+		    articleTitle ='titles=' + title,
+		    // requestUrl = proxy + wikiApiUrl + numOfChars + articleTitle;
+		    requestUrl = wikiApiUrl + numOfChars + articleTitle;
 
 		if (mode == 'landing') {
 			//do nothing
 		} else {
 			contentSwiper.removeAllSlides();
 
-			$.getJSON(requestUrl, function(data) { 
-				var content = data.query.pages;
-				for (var page in content) { break; }
+			// $.getJSON(requestUrl, function(data) { 
+			// 	var content = data.query.pages;
+			// 	for (var page in content) { break; }
 
-				var columns = $('<div class="columns"></div>');
-				columns.append($(content[page].extract));
+			// 	var columns = $('<div class="columns"></div>');
+			// 	columns.append($(content[page].extract));
 
-				var slide = contentSwiper.createSlide(columns[0].outerHTML);
-				slide.append();
-			});
+			// 	var slide = contentSwiper.createSlide(columns[0].outerHTML);
+			// 	slide.append();
+			// });
+
+			$.ajax({
+   				url: requestUrl,
+ 			    jsonp: "callback",
+			    dataType: "jsonp",
+			    beforeSend: function() {
+			    	// put spinner on slide page
+			    },
+			    success: function(data) {
+					var content = data.query.pages;
+					for (var page in content) { break; }
+
+					var columns = $('<div class="columns"></div>');
+					columns.append($(content[page].extract));
+
+					var slide = contentSwiper.createSlide(columns[0].outerHTML);
+					slide.append();
+			    }
+			} );
 
 			// $.get(path, function(data) {
 			// 	var pages = $(data).filter('div');
