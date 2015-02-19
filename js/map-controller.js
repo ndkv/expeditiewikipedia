@@ -6,7 +6,7 @@ var MapController = function() {
 		listeners = [],
 		basemaps = [];
 	
-	var map = new L.Map('map', {zoomControl: true, zoomAnimation: true, touchZoom: true});
+	var map = new L.Map('map', {zoomControl: false, zoomAnimation: true, touchZoom: true});
 	map.setView([0.0, 55.0], 3);
 
 	this.registerInterfaceEvents = function(InterfaceController) {

@@ -207,19 +207,36 @@ var InterfaceController = function(ExpeditionController) {
 	this.loadContent = function() {
 		//TODO don't forget chapters
 		var path = 'data/' + currentExpedition + '/pois/' + currentPoi + '.html';
-		
+
+		var proxy = 'http://localhost:8000/__ajaxproxy/',
+		    wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
+		    numOfChars = 'exchars=' + 2000 + '&',
+		    articleTitle ='titles=Hendrik_Krayer_van_Aalst',
+		    requestUrl = proxy + wikiApiUrl + numOfChars + articleTitle;
+
 		if (mode == 'landing') {
 			//do nothing
 		} else {
 			contentSwiper.removeAllSlides();
 
-			$.get(path, function(data) {
-				var pages = $(data).filter('div');
-				$.each(pages, function(index, value) {
-					var slide = contentSwiper.createSlide(value.outerHTML);
-					slide.append();
-				});
+			$.getJSON(requestUrl, function(data) { 
+				var content = data.query.pages;
+				for (var page in content) { break; }
+
+				var columns = $('<div class="columns"></div>');
+				columns.append($(content[page].extract));
+
+				var slide = contentSwiper.createSlide(columns[0].outerHTML);
+				slide.append();
 			});
+
+			// $.get(path, function(data) {
+			// 	var pages = $(data).filter('div');
+			// 	$.each(pages, function(index, value) {
+			// 		// var slide = contentSwiper.createSlide(value.outerHTML);
+			// 		slide.append();
+			// 	});
+			// });
 		}
 	};
 
