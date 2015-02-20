@@ -1,9 +1,55 @@
 [
 	{
+		"id": "siboga",
+		"title": "De Siboga Expeditie",
+		"subtitle": "",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "",
+		"blurp": "",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
+	},
+	{
+		"id": "ceram",
+		"title": "Nederlanders in Ceram",
+		"subtitle": "",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Alfuren_uit_de_bergen_van_Ceram_TMnr_10005708.jpg",
+		"blurp": "",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
+	},
+	{
+		"id": "nieuw-guinea",
+		"title": "Noord Nieuw-Guinea",
+		"subtitle": "",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "https://commons.wikimedia.org/wiki/File:Arthur_Wichmann_en_zijn_expeditieleden.jpg",
+		"blurp": "",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
+	},
+	{
+		"id": "reisboeken",
+		"title": "Reisboeken over nieuw ontdekte gebieden",
+		"subtitle": "",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "",
+		"blurp": "",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
+	},
+	{
+		"id": "bestsellers",
+		"title": "Reis-bestsellers in de Gouden Eeuw",
+		"subtitle": "",
+		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",
+		"blurp": "",
+		"zoomto": {"lat": 1.0, "lon": 1.0}
+	},
+	{
 		"id": "vening meinesz",
 		"title": "Vening Meinesz",
 		"subtitle": "In een duikboot de wereld rond",
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "http://commons.wikimedia.org/wiki/File:Hr._Ms._K_XVIII_(11_July_1935).jpg",
 		"blurp": "Fantastische reis door de zwaartekracht",
 		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}, 
@@ -12,6 +58,7 @@
 		"title": "De Snip",
 		"subtitle": "",
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"image": "",
 		"blurp": "Eerste luchtpost naar Amerika!",
 		"zoomto": {"lat": 1.0, "lon": 1.0}
 	}

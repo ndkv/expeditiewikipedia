@@ -163,7 +163,8 @@ var InterfaceController = function(ExpeditionController) {
 		mode = "landing";
 		var $previewListContent = $('<div id="previewListContent"></div>');
 		//TODO pass expeditions as a variable
-		var width = (expeditions.length * 180) + 4*20;
+
+		var width = (expeditions.length * 195) + 4*20;
 		$previewListContent.width(width);
 		//previewListContent.appendTo(previewList);
 
@@ -178,10 +179,6 @@ var InterfaceController = function(ExpeditionController) {
 			$expeditionTitle.html(value.title);
 			$expeditionTitle.appendTo($expeditionContent);
 
-			// var $expeditionSummary = $('<div class="expeditionPreviewSummary"></div>');
-			// $expeditionSummary.html(value.summary);
-			// $expeditionSummary.appendTo($expeditionContent);
-
 			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
 			$readMore.appendTo($expeditionItem);
 			
@@ -195,6 +192,10 @@ var InterfaceController = function(ExpeditionController) {
 			// $expeditionItem.appendTo($('.swiper-slide'));
 			$('#previewSwiper .swiper-slide').width(width);
 			$expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
+
+			if (value.image !== "") {
+				var imageUrl = fetchWikiImage(value.image, $expeditionItem);
+			}
 		});
 
 		$('.spacer-left-title').html('kies een reis');
@@ -220,17 +221,6 @@ var InterfaceController = function(ExpeditionController) {
 			//do nothing
 		} else {
 			contentSwiper.removeAllSlides();
-
-			// $.getJSON(requestUrl, function(data) { 
-			// 	var content = data.query.pages;
-			// 	for (var page in content) { break; }
-
-			// 	var columns = $('<div class="columns"></div>');
-			// 	columns.append($(content[page].extract));
-
-			// 	var slide = contentSwiper.createSlide(columns[0].outerHTML);
-			// 	slide.append();
-			// });
 
 			$.ajax({
    				url: requestUrl,
@@ -360,6 +350,30 @@ var InterfaceController = function(ExpeditionController) {
 
 
 	//$("body").bind("_toggleDetailedView", that.toggleDetailView);
+
+	var fetchWikiImage = function(url, elem) {
+		var imageName = url.split("File:")[1];
+		var requestUrl = "http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlheight=100&format=json&titles=File:" + imageName;
+
+		$.ajax({
+   				url: requestUrl,
+ 			    jsonp: "callback",
+			    dataType: "jsonp",
+			    beforeSend: function() {
+			    	// put spinner on slide page
+			    },
+			    success: function(data) {
+			    	console.log(data);
+					var imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+					elem.css('background-image', 'url(' + imageUrl + ')');
+					console.log(imageUrl);
+
+					return imageUrl;
+			    }
+		});
+	};
 };
+
+
 
 module.exports = InterfaceController;

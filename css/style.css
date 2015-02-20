@@ -216,9 +216,10 @@ p {
   /*cursor: pointer;*/
   float: left;
   /*background-image: url(http://upload.wikimedia.org/wikipedia/commons/9/91/Hr._Ms._K_XVIII_%2811_July_1935%29.jpg);*/
-  background-size: 140px 70px;
+  /*background-size: 140px 70px;*/
   background-repeat: no-repeat;
-  background-position: 20px 50px;
+  /*background-position: 20px 50px;*/
+  background-position: center;
   -moz-transition: border-color .3s;
   -webkit-transition: border-color .3s;
 }
