@@ -5,6 +5,7 @@ L.Icon.Default.imagePath = 'images/icons/';
 jQuery = require('jquery-browserify');
 $ = jQuery;
 Swiper = require('swiper');
+Papa =  require('papaparse');
 
 window.onload = function() {
 	var EC = require('./expedition-controller.js');

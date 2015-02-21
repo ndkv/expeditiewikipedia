@@ -60,6 +60,13 @@ var ExpeditionController = function() {
 			InterfaceController.destroyLandingView();
 			MapController.destroyLandingView();
 
+
+			if (expedition.id === 'vening meinesz') {
+
+			}
+			// readSAE()
+			// readVM()
+
 			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
 			.done(function(exp, geometries) {
 				var expeditionAttributes = exp[0];

@@ -137,14 +137,19 @@ var MapController = function() {
 	};
 
 	var buildExpeditionGeometries = function(route, pois) {
-		var routeGeometry = route.geometry.coordinates
-		.map(function(coords) { return [coords[1], coords[0]]; });
+		try {
+			var routeGeometry = route.geometry.coordinates
+			.map(function(coords) { return [coords[1], coords[0]]; });
 
-		var feature = L.polyline(routeGeometry);
-		feature.addTo(map);
-		map.fitBounds(feature.getBounds());
-		map.zoomOut();
-		features.push(feature);
+			var feature = L.polyline(routeGeometry);
+			feature.addTo(map);
+			map.fitBounds(feature.getBounds());
+			map.zoomOut();
+			features.push(feature);
+		} catch(err) {
+			console.log('warning, failed to construct expedition route.');
+		}
+		
 
 
 		//to do: put in a data reading module

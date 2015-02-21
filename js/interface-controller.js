@@ -290,7 +290,11 @@ var InterfaceController = function(ExpeditionController) {
 
 		var sortable = [];
 		$.each(pois, function(index, poi) {
-			sortable.push([poi[0].order, poi[0].title, poi[0].summary]);	
+			sortable.push([
+				poi[0].order,
+				poi[0].title,
+				poi[0].summary,
+				poi[0].Afbeelding]);	
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
@@ -314,6 +318,11 @@ var InterfaceController = function(ExpeditionController) {
 			previewItems.push($expeditionItem);
 
 			$swiperSlide.append($expeditionItem);
+
+			
+			if (value[3] !== "") { 
+				fetchWikiImage(value[3], $expeditionItem); 
+			}
 		});
 
 		var margin = 20;
@@ -354,6 +363,7 @@ var InterfaceController = function(ExpeditionController) {
 	var fetchWikiImage = function(url, elem) {
 		var imageName = url.split("File:")[1];
 		var requestUrl = "http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlheight=100&format=json&titles=File:" + imageName;
+		var imageUrl;
 
 		$.ajax({
    				url: requestUrl,
@@ -363,12 +373,19 @@ var InterfaceController = function(ExpeditionController) {
 			    	// put spinner on slide page
 			    },
 			    success: function(data) {
-			    	console.log(data);
-					var imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-					elem.css('background-image', 'url(' + imageUrl + ')');
-					console.log(imageUrl);
+			    	// console.log(data);
+			    	try {
+						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;			    		
+			    	}
+			    	catch (err) {
+			    		console.log("warning, failed to fetch Wikipedia Image");
+			    		console.log(url);
+			    	}
 
-					return imageUrl;
+					elem.css('background-image', 'url(' + imageUrl + ')');
+					// console.log(imageUrl);
+
+					// return imageUrl;
 			    }
 		});
 	};

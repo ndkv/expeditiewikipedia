@@ -1,0 +1,14 @@
+Soort,Titel,Intro,Instelling,Datum,Bodytekst,latitude,longitude,Afbeelding,Wikipedia link,order
+Artikel,Jacob van Meurs,Jacob van Meurs was een succesvol uitgever van reisboeken uit Amsterdam. Hierbij een aantal van zijn bestsellers.,Universiteit Maastricht,1620-1680,,52.369579,4.888263,,https://nl.wikipedia.org/wiki/Jacob_van_Meurs,1
+Artikel,Arnoldus Montanus,"Nederlands theoloog en predikant. Hij verliet Nederland nooit, maar publiceerde wel een aantal standaardwerken over Azië en Amerika.",Universiteit Maastricht,1625-1683,,51.945408,4.851939,,https://nl.wikipedia.org/wiki/Arnoldus_Montanus,2
+Artikel,Olfert Dapper,"Amsterdams schrijver, die boeken publiceerde over bijna heel de toen bekende wereld. Desondanks heeft hij Nederland nooit verlaten.",Universiteit Maastricht,1636-1689,,52.362972,4.927405,,https://nl.wikipedia.org/wiki/Olfert_Dapper,3
+Artikel,Athanasius Kircher,,Universiteit Maastricht,1602-1680,,,,https://commons.wikimedia.org/wiki/File:Athanasius_Kircher_Portrait.jpg,https://nl.wikipedia.org/wiki/Athanasius_Kircher,4
+Artikel,Joan Nieuhof,,Universiteit Maastricht,1618-1672,,,,,https://nl.wikipedia.org/wiki/Joan_Nieuhof,5
+,,,,,,,,,,6
+Artikel,De Nieuwe en Onbekende Weereld,Boek van Arnoldus Montanus over Noord-Amerika,Universiteit Maastricht,1671,,40.688897,-74.017771,https://commons.wikimedia.org/wiki/File:Arnoldus_montanus_America.jpg,https://nl.wikipedia.org/wiki/De_Nieuwe_en_Onbekende_Weereld,7
+Beeld,China Illustrata,Boek van Athanasius Kircher over China,Universiteit Maastricht,1667,,,,"https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",,8
+Artikel,Het Gezantschap Der Neerlandtsche Oost-Indische Compagnie,Boek van Joan Nieuhof over China,Universiteit Maastricht,1665,,,,https://commons.wikimedia.org/wiki/File:Johan_Nieuhof_-_Gezandtschap_-_Titelplaat.jpg,https://nl.wikipedia.org/wiki/Het_Gezantschap_Der_Neerlandtsche_Oost-Indische_Compagnie,9
+Beeld,Gedenkwaerdige Gesantschappen,Boek van Arnoldus Montanus over Japan,Universiteit Maastricht,1669,,35.025278,135.762222,https://commons.wikimedia.org/wiki/File:Montanus_-_Gedenkwaerdige_Gesantschappen_-_title_plate.jpg,,10
+,Gedenkweerdige Brasiliaense zee- en lantreize,Boek van Joan Nieuhof over Brazilië,Radboud Universiteit Nijmegen,1682,,,,,,11
+,Gedenkwaerdig bedryf der Nederlandsche Oost-Indische maetschappye,Boek van Olfert Dapper over China,"Universiteit Maastricht, Radboud Universiteit Nijmegen",1670,,,,,,12
+,Description of Africa,Boek van Olfert Dapper over Afrika,n/a,1668,,6.333333,5.622222,https://commons.wikimedia.org/wiki/File:Ancient_Benin_city.JPG,https://en.wikipedia.org/wiki/Description_of_Africa_(1668_book),13
