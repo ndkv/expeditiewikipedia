@@ -7,7 +7,7 @@ with open('geometries.tsv') as f:
 	features = []
 
 	for line in f.readlines():
-		properties = line.split('\t')
+		properties = line.rstrip('\n').split('\t')
 
 		try: 
 			lat = float(properties[header.index('latitude')])

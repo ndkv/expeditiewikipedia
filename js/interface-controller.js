@@ -11,7 +11,8 @@ var InterfaceController = function(ExpeditionController) {
 		currentPoi,
 		currentExpedition,
 		swiper,
-		mode = "landing";
+		mode = "landing",
+		poisList;
 
 	$.each(ExpeditionController.expeditions, function(index, value) {
 		expeditionsHash[value.id] = index;
@@ -209,45 +210,13 @@ var InterfaceController = function(ExpeditionController) {
 		//TODO don't forget chapters
 		var path = 'data/' + currentExpedition + '/pois/' + currentPoi + '.html';
 
-		var proxy = 'http://localhost:8000/__ajaxproxy/',
-		    wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
-		    numOfChars = 'exchars=' + 2000 + '&',
-		    title = 'Alfoeren',
-		    articleTitle ='titles=' + title,
-		    // requestUrl = proxy + wikiApiUrl + numOfChars + articleTitle;
-		    requestUrl = wikiApiUrl + numOfChars + articleTitle;
-
 		if (mode == 'landing') {
 			//do nothing
 		} else {
 			contentSwiper.removeAllSlides();
 
-			$.ajax({
-   				url: requestUrl,
- 			    jsonp: "callback",
-			    dataType: "jsonp",
-			    beforeSend: function() {
-			    	// put spinner on slide page
-			    },
-			    success: function(data) {
-					var content = data.query.pages;
-					for (var page in content) { break; }
-
-					var columns = $('<div class="columns"></div>');
-					columns.append($(content[page].extract));
-
-					var slide = contentSwiper.createSlide(columns[0].outerHTML);
-					slide.append();
-			    }
-			} );
-
-			// $.get(path, function(data) {
-			// 	var pages = $(data).filter('div');
-			// 	$.each(pages, function(index, value) {
-			// 		// var slide = contentSwiper.createSlide(value.outerHTML);
-			// 		slide.append();
-			// 	});
-			// });
+			//fetch article from Wikipedia
+			fetchWikiExcerpt('Alfoeren');
 		}
 	};
 
@@ -294,9 +263,12 @@ var InterfaceController = function(ExpeditionController) {
 				poi[0].order,
 				poi[0].title,
 				poi[0].summary,
-				poi[0].Afbeelding]);	
+				poi[0].Afbeelding,
+				poi[0]['Wikipedia link']
+			]);
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
+		poisList = sortable;
 
 		$.each(sortable, function(index, value) {
 			var $expeditionContent = $('<div></div>')
@@ -319,9 +291,12 @@ var InterfaceController = function(ExpeditionController) {
 
 			$swiperSlide.append($expeditionItem);
 
-			
-			if (value[3] !== "") { 
-				fetchWikiImage(value[3], $expeditionItem); 
+			//todo: VM images will be fetched differently, probably
+			if (value[3] !== "") {
+				if (value[3] !== undefined) {
+					fetchWikiImage(value[3], $expeditionItem); 					
+				}
+
 			}
 		});
 
@@ -388,6 +363,32 @@ var InterfaceController = function(ExpeditionController) {
 					// return imageUrl;
 			    }
 		});
+	};
+
+	var fetchWikiExcerpt = function(title) {
+		var wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
+	    numOfChars = 'exchars=' + 2000 + '&',
+	    articleTitle ='titles=' + title,
+	    requestUrl = wikiApiUrl + numOfChars + articleTitle;
+
+	    $.ajax({
+   				url: requestUrl,
+ 			    jsonp: "callback",
+			    dataType: "jsonp",
+			    beforeSend: function() {
+			    	// put spinner on slide page
+			    },
+			    success: function(data) {
+					var content = data.query.pages;
+					for (var page in content) { break; }
+
+					var columns = $('<div class="columns"></div>');
+					columns.append($(content[page].extract));
+
+					var slide = contentSwiper.createSlide(columns[0].outerHTML);
+					slide.append();
+			    }
+			});
 	};
 };
 
