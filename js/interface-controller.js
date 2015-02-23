@@ -14,6 +14,17 @@ var InterfaceController = function(ExpeditionController) {
 		mode = "landing",
 		poisList;
 
+	$('.fancybox').fancybox({
+        helpers: {
+            overlay: {
+                css: {
+                    'background': 'rgba(0, 0, 0, 0.95)',
+                    'z-index': '1001'
+                }
+            }
+        }
+    });
+
 	$.each(ExpeditionController.expeditions, function(index, value) {
 		expeditionsHash[value.id] = index;
 	});
@@ -228,13 +239,18 @@ var InterfaceController = function(ExpeditionController) {
 							file = urlPieces[urlPieces.length - 1],
 							imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
-						$(value).prop('src', imageUrl);
+						$image = $(value);
+						$image.prop('src', imageUrl);
 
-						var height = $(value).prop('height'),
-							width = $(value).prop('width'),
+						var height = $image.prop('height'),
+							width = $image.prop('width'),
 							ratio = height/width;
 						
-						$(value).prop('height', 300 * ratio);
+						$image.prop('height', 300 * ratio);
+
+						var $fancybox = $('<a class="fancybox" href="' + imageUrl + '"></a>');
+						$fancybox.appendTo($image.parent());
+						$image.detach().appendTo($fancybox);
 					});
 
 					columns.append($data);
@@ -300,6 +316,7 @@ var InterfaceController = function(ExpeditionController) {
 				// poi[0].type
 			]);
 		});
+
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 		poisList = sortable;
 
@@ -308,41 +325,57 @@ var InterfaceController = function(ExpeditionController) {
 			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1].title))
 			.append($('<div class="expeditionPreviewSummary"></div>').html(value[1].summary));
 
-			var $readMore;
-			if (value[1].Afbeelding !== "") {
-				$readMore = $('<div class="readMore"><a href="#">Bekijk afbeelding</a></div>');			
-				$readMore.click(function () {
-					currentPreviewItem = index;
-					currentPoi = value[0];
-					//that.toggleDetailView();
-					//that.loadContent();
-				});	
-			} else {
-				$readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
-				$readMore.click(function () {
-					currentPreviewItem = index;
-					currentPoi = value[0];
-					that.toggleDetailView();
-					that.loadContent();
-				});
-			}
-
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
-			.append($expeditionContent)
-			.append($readMore);
+			.append($expeditionContent);
 
-			previewItems.push($expeditionItem);
+	        var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
+			$readMore.click(function () {
+				currentPreviewItem = index;
+				currentPoi = value[0];
+				that.toggleDetailView();
+				that.loadContent();
+			});
 
-			$swiperSlide.append($expeditionItem);
-
-			//todo: VM images will be fetched differently, probably
 			var afbeelding = value[1].Afbeelding;
 			if (afbeelding !== "") {
 				if (afbeelding !== undefined) {
-					fetchWikiImage(value[1].Afbeelding, $expeditionItem); 					
-				}
+					fetchWikiImage(afbeelding, $expeditionItem);
+					$readMore = $('<div class="readMore"><a href="#">Bekijk afbeelding</a></div>');			
+					$readMore.click(function () {
+						currentPreviewItem = index;
+						currentPoi = value[0];
+						
+						// var url = $expeditionItem.css('background-image');
+						// url = url.substr(4, url.length-5);
 
+						//fetch wikiImageUrl
+						var imageName = afbeelding.split('File:')[1];
+						var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
+						$.ajax({
+   							url: requestUrl,
+ 			    			jsonp: "callback",
+			    			dataType: "jsonp",
+			    			success: function(data) {
+						    	try {
+									var bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+									$.fancybox.open([{
+										href:bigViewUrl , title: 'Test'
+									}]);
+						    	}
+						    	catch (err) {
+						    		console.log('Warning, failed to load big image');
+						    		console.log(err);
+						    	}
+						    }
+						});
+					});	
+				}
 			}
+
+			$expeditionItem.append($readMore);
+
+			previewItems.push($expeditionItem);
+			$swiperSlide.append($expeditionItem);
 		});
 
 		var margin = 20;
@@ -377,12 +410,9 @@ var InterfaceController = function(ExpeditionController) {
 		}		
 	};
 
-
-	//$("body").bind("_toggleDetailedView", that.toggleDetailView);
-
 	var fetchWikiImage = function(url, elem) {
 		var imageName = url.split("File:")[1];
-		var requestUrl = "http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlheight=100&format=json&titles=File:" + imageName;
+		var requestUrl = constructWikiImageUrl(imageName, 100) + '&format=json';
 		var imageUrl;
 
 		$.ajax({
@@ -393,7 +423,6 @@ var InterfaceController = function(ExpeditionController) {
 			    	// put spinner on slide page
 			    },
 			    success: function(data) {
-			    	// console.log(data);
 			    	try {
 						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;			    		
 			    	}
@@ -403,16 +432,20 @@ var InterfaceController = function(ExpeditionController) {
 			    	}
 
 					elem.css('background-image', 'url(' + imageUrl + ')');
-					// console.log(imageUrl);
-
-					// return imageUrl;
 			    }
 		});
 	};
 
+	var constructWikiImageUrl = function(imageName, h) {
+		var title = 'titles=File:' + imageName + '&',
+			height = 'iiurlheight=' + h;
+
+		return 'http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&' + title + height;
+	};
+
 	var fetchWikiExcerpt = function(title) {
 		var wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
-	    numOfChars = 'exchars=' + 2000 + '&',
+	    numOfChars = 'exchars=' + 3000 + '&',
 	    articleTitle ='titles=' + title,
 	    requestUrl = wikiApiUrl + numOfChars + articleTitle;
 

@@ -35,7 +35,7 @@ a.menu span {
 /*Menu animations*/
 
 .detailedDrawer {
-  position: relative;
+  position: absolute;
   z-index: 1;
   -webkit-transform: translate3d(0, -90px, 0);
   -moz-transform: translate3d(0, -350px, 0);
@@ -290,7 +290,7 @@ p {
 }
 
 .map-controls {
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   width: 110px;
   left: 0;

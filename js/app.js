@@ -6,6 +6,7 @@ jQuery = require('jquery-browserify');
 $ = jQuery;
 Swiper = require('swiper');
 Papa =  require('papaparse');
+require('fancybox')($);
 
 window.onload = function() {
 	var EC = require('./expedition-controller.js');
