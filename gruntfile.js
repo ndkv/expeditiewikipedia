@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 				dest: 'dist/css/style.css'
 			},
 			images: {
-				src: ['images/icons/*.png', 'images/icons/*.jpg'],
+				src: ['images/icons/*.png', 'images/icons/*.jpg', 'images/lib/*.*'],
 				dest: 'dist/'
 			},
 			// expeditionsData: {
