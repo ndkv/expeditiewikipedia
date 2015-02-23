@@ -1,13 +1,14 @@
 from geojson import Feature, Point, FeatureCollection, dumps
 
 with open('geometries.tsv') as f:
-	header = f.readline().split('\t')
+	header = f.readline().rstrip('\n').split('\t')
 	print header
 
 	features = []
 
 	for line in f.readlines():
 		properties = line.rstrip('\n').split('\t')
+		print properties
 
 		try: 
 			lat = float(properties[header.index('latitude')])

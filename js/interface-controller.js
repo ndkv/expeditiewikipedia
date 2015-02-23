@@ -215,7 +215,7 @@ var InterfaceController = function(ExpeditionController) {
 			if (currentExpedition === "vening meinesz") {
 				//TODO: load pois in this object
 				var poi = poisList[currentPoi - 1];
-				var path = 'data/' + currentExpedition + '/pois/' + poi[5] + ' ' + poi[1] + '.htm';
+				var path = 'data/' + currentExpedition + '/pois/' + poi[1].type + ' ' + poi[1].title + '.htm';
 
 				$.get(path, function(data) {
 					var columns = $('<div class="columns"></div>');
@@ -223,30 +223,30 @@ var InterfaceController = function(ExpeditionController) {
 					var images = $data.find('img');
 
 					$.each(images, function(index, value) {
-						var pieces = $(value).prop('src').split('/');
-						var folder = pieces[pieces.length - 2];
-						var file = pieces[pieces.length - 1];
-						var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
+						var urlPieces = $(value).prop('src').split('/'),
+							folder = urlPieces[urlPieces.length - 2],
+							file = urlPieces[urlPieces.length - 1],
+							imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
 						$(value).prop('src', imageUrl);
-						// $(value).prop('height', '');
 
-						var height = $(value).prop('height');
-						var width = $(value).prop('width');
-						var ratio = height/width;
-						var newHeight = 250 * ratio;
-						$(value).prop('height', newHeight);
-
+						var height = $(value).prop('height'),
+							width = $(value).prop('width'),
+							ratio = height/width;
+						
+						$(value).prop('height', 300 * ratio);
 					});
 
 					columns.append($data);
-
 
 					var slide = contentSwiper.createSlide(columns[0].outerHTML);
 					slide.append();
 				});
 			} else {
-				fetchWikiExcerpt('Alfoeren');
+				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'].split('/');
+				if (wikiUrl.length > 0) {
+					fetchWikiExcerpt(wikiUrl[wikiUrl.length - 1]);
+				}
 			}
 		}
 	};
@@ -292,11 +292,12 @@ var InterfaceController = function(ExpeditionController) {
 		$.each(pois, function(index, poi) {
 			sortable.push([
 				poi[0].order,
-				poi[0].title,
-				poi[0].summary,
-				poi[0].Afbeelding,
-				poi[0]['Wikipedia link'],
-				poi[0].type
+				poi[0]
+				// poi[0].title,
+				// poi[0].summary,
+				// poi[0].Afbeelding,
+				// poi[0]['Wikipedia link'],
+				// poi[0].type
 			]);
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
@@ -304,16 +305,27 @@ var InterfaceController = function(ExpeditionController) {
 
 		$.each(sortable, function(index, value) {
 			var $expeditionContent = $('<div></div>')
-			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1]))
-			.append($('<div class="expeditionPreviewSummary"></div>').html(value[2]));
+			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1].title))
+			.append($('<div class="expeditionPreviewSummary"></div>').html(value[1].summary));
 
-			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
-			$readMore.click(function () {
-				currentPreviewItem = index;
-				currentPoi = value[0];
-				that.toggleDetailView();
-				that.loadContent();
-			});
+			var $readMore;
+			if (value[1].Afbeelding !== "") {
+				$readMore = $('<div class="readMore"><a href="#">Bekijk afbeelding</a></div>');			
+				$readMore.click(function () {
+					currentPreviewItem = index;
+					currentPoi = value[0];
+					//that.toggleDetailView();
+					//that.loadContent();
+				});	
+			} else {
+				$readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
+				$readMore.click(function () {
+					currentPreviewItem = index;
+					currentPoi = value[0];
+					that.toggleDetailView();
+					that.loadContent();
+				});
+			}
 
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
 			.append($expeditionContent)
@@ -324,9 +336,10 @@ var InterfaceController = function(ExpeditionController) {
 			$swiperSlide.append($expeditionItem);
 
 			//todo: VM images will be fetched differently, probably
-			if (value[3] !== "") {
-				if (value[3] !== undefined) {
-					fetchWikiImage(value[3], $expeditionItem); 					
+			var afbeelding = value[1].Afbeelding;
+			if (afbeelding !== "") {
+				if (afbeelding !== undefined) {
+					fetchWikiImage(value[1].Afbeelding, $expeditionItem); 					
 				}
 
 			}
