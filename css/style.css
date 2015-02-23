@@ -163,9 +163,19 @@ body {
 }
 
 .columns {
-  -webkit-columns: 4 250px;
-  -moz-columns: 4 250px;
-  columns: 4 250px;
+  -webkit-columns: 3 300px;
+  -moz-columns: 3 300px;
+  columns: 3 300px;
+  padding: 10px;
+}
+
+.columns img {
+  width: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .img-content {

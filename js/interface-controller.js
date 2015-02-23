@@ -207,16 +207,45 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	this.loadContent = function() {
-		//TODO don't forget chapters
-		var path = 'data/' + currentExpedition + '/pois/' + currentPoi + '.html';
-
+		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
 			//do nothing
 		} else {
-			contentSwiper.removeAllSlides();
 
-			//fetch article from Wikipedia
-			fetchWikiExcerpt('Alfoeren');
+			if (currentExpedition === "vening meinesz") {
+				//TODO: load pois in this object
+				var poi = poisList[currentPoi - 1];
+				var path = 'data/' + currentExpedition + '/pois/' + poi[5] + ' ' + poi[1] + '.htm';
+
+				$.get(path, function(data) {
+					var columns = $('<div class="columns"></div>');
+					var $data = $(data);
+					var images = $data.find('img');
+
+					$.each(images, function(index, value) {
+						var pieces = $(value).prop('src').split('/');
+						var imageUrl = 'data/' + currentExpedition + '/pois/' + pieces[3] + '/' + pieces[4];
+
+						$(value).prop('src', imageUrl);
+						// $(value).prop('height', '');
+
+						var height = $(value).prop('height');
+						var width = $(value).prop('width');
+						var ratio = height/width;
+						var newHeight = 250 * ratio;
+						$(value).prop('height', newHeight);
+
+					});
+
+					columns.append($data);
+
+
+					var slide = contentSwiper.createSlide(columns[0].outerHTML);
+					slide.append();
+				});
+			} else {
+				fetchWikiExcerpt('Alfoeren');
+			}
 		}
 	};
 
@@ -264,7 +293,8 @@ var InterfaceController = function(ExpeditionController) {
 				poi[0].title,
 				poi[0].summary,
 				poi[0].Afbeelding,
-				poi[0]['Wikipedia link']
+				poi[0]['Wikipedia link'],
+				poi[0].type
 			]);
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
