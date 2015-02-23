@@ -224,7 +224,9 @@ var InterfaceController = function(ExpeditionController) {
 
 					$.each(images, function(index, value) {
 						var pieces = $(value).prop('src').split('/');
-						var imageUrl = 'data/' + currentExpedition + '/pois/' + pieces[3] + '/' + pieces[4];
+						var folder = pieces[pieces.length - 2];
+						var file = pieces[pieces.length - 1];
+						var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
 						$(value).prop('src', imageUrl);
 						// $(value).prop('height', '');
