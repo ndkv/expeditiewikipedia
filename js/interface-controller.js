@@ -109,7 +109,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
-			var $el = item.children().first();
+			var $el = item; //.children().first();
 
 			$el.click(function() {
 				that.togglePreviewItem(index);
@@ -123,7 +123,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	this.registerMapEventsPois = function() {
 		$.each(previewItems, function(index, item) {
-			var $el = item.children().first();
+			var $el = item; //.children().first();
 
 			$el.click(function(e) {
 				e.preventDefault();
@@ -192,7 +192,11 @@ var InterfaceController = function(ExpeditionController) {
 			$expeditionTitle.appendTo($expeditionContent);
 
 			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
-			$readMore.appendTo($expeditionItem);
+			// $readMore.appendTo($expeditionItem);
+
+			var $container = $('<div class="expeditionItemContainer"></div>');
+			$container.append($expeditionItem);
+			$container.append($readMore);
 			
 			$readMore.click(function () {
 				currentPreviewItem = index;
@@ -203,7 +207,8 @@ var InterfaceController = function(ExpeditionController) {
 			// $('.swiper-slide').width(width);
 			// $expeditionItem.appendTo($('.swiper-slide'));
 			$('#previewSwiper .swiper-slide').width(width);
-			$expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
+			// $expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
+			$container.appendTo($('#previewSwiper .swiper-slide'));
 
 			if (value.image !== "") {
 				var imageUrl = fetchWikiImage(value.image, $expeditionItem);
@@ -214,13 +219,13 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
-
 	};
 
 	this.loadContent = function() {
 		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
-			//do nothing
+			var expedition = expeditions[currentPreviewItem];
+			fetchWikiExcerpt(expedition.link, expedition.words, false);
 		} else {
 
 			if (currentExpedition === "vening meinesz") {
@@ -259,9 +264,9 @@ var InterfaceController = function(ExpeditionController) {
 					slide.append();
 				});
 			} else {
-				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'].split('/');
+				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl[wikiUrl.length - 1]);
+					fetchWikiExcerpt(wikiUrl, 20000, true);
 				}
 			}
 		}
@@ -345,9 +350,6 @@ var InterfaceController = function(ExpeditionController) {
 						currentPreviewItem = index;
 						currentPoi = value[0];
 						
-						// var url = $expeditionItem.css('background-image');
-						// url = url.substr(4, url.length-5);
-
 						//fetch wikiImageUrl
 						var imageName = afbeelding.split('File:')[1];
 						var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
@@ -372,10 +374,15 @@ var InterfaceController = function(ExpeditionController) {
 				}
 			}
 
-			$expeditionItem.append($readMore);
+			//$expeditionItem.after($readMore);
+			// $expeditionItem.append($readMore);
+
+			var $container = $('<div class="expeditionItemContainer"></div>');
+			$container.append($expeditionItem);
+			$container.append($readMore);
 
 			previewItems.push($expeditionItem);
-			$swiperSlide.append($expeditionItem);
+			$swiperSlide.append($container);
 		});
 
 		var margin = 20;
@@ -443,13 +450,18 @@ var InterfaceController = function(ExpeditionController) {
 		return 'http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&' + title + height;
 	};
 
-	var fetchWikiExcerpt = function(title) {
-		var wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
-	    numOfChars = 'exchars=' + 3000 + '&',
-	    articleTitle ='titles=' + title,
-	    requestUrl = wikiApiUrl + numOfChars + articleTitle;
+	var fetchWikiExcerpt = function(url, numWords, columns) {
+		var contentElem = $('<div></div>');
+		
+		try {
+			wikiUrl = url.split('/');
+			title = wikiUrl[wikiUrl.length - 1];
+			var wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
+		    numOfChars = 'exchars=' + numWords + '&',
+		    articleTitle ='titles=' + title,
+		    requestUrl = wikiApiUrl + numOfChars + articleTitle;
 
-	    $.ajax({
+		    $.ajax({
    				url: requestUrl,
  			    jsonp: "callback",
 			    dataType: "jsonp",
@@ -457,16 +469,32 @@ var InterfaceController = function(ExpeditionController) {
 			    	// put spinner on slide page
 			    },
 			    success: function(data) {
-					var content = data.query.pages;
-					for (var page in content) { break; }
+					var pages = data.query.pages;
+					for (var page in pages) { break; }
+					
 
-					var columns = $('<div class="columns"></div>');
-					columns.append($(content[page].extract));
+					contentElem.append($(pages[page].extract));
 
-					var slide = contentSwiper.createSlide(columns[0].outerHTML);
+					if (columns) {
+						contentElem.addClass('columns');
+					} else {
+						contentElem.addClass('columns-none');
+					}
+
+					var slide = contentSwiper.createSlide(contentElem[0].outerHTML);
 					slide.append();
 			    }
-			});
+			});			
+		}
+		catch (err) {
+			var message = "<div>Deze expeditie heeft nog geen Wikipedia lemma. \n Help mee en schrijf er &eacute&eacuten!</div>";
+			contentElem.addClass('columns-none');
+			contentElem.css('font-size', '1.5em');
+			contentElem.append(message);
+			var slide = contentSwiper.createSlide(contentElem[0].outerHTML);
+			slide.append();
+		}
+
 	};
 };
 
