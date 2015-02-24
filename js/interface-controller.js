@@ -227,42 +227,8 @@ var InterfaceController = function(ExpeditionController) {
 			var expedition = expeditions[currentPreviewItem];
 			fetchWikiExcerpt(expedition.link, expedition.words, false);
 		} else {
-
 			if (currentExpedition === "vening meinesz") {
-				//TODO: load pois in this object
-				var poi = poisList[currentPoi - 1];
-				var path = 'data/' + currentExpedition + '/pois/' + poi[1].type + ' ' + poi[1].title + '.htm';
-
-				$.get(path, function(data) {
-					var columns = $('<div class="columns"></div>');
-					var $data = $(data);
-					var images = $data.find('img');
-
-					$.each(images, function(index, value) {
-						var urlPieces = $(value).prop('src').split('/'),
-							folder = urlPieces[urlPieces.length - 2],
-							file = urlPieces[urlPieces.length - 1],
-							imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
-
-						$image = $(value);
-						$image.prop('src', imageUrl);
-
-						var height = $image.prop('height'),
-							width = $image.prop('width'),
-							ratio = height/width;
-						
-						$image.prop('height', 300 * ratio);
-
-						var $fancybox = $('<a class="fancybox" href="' + imageUrl + '"></a>');
-						$fancybox.appendTo($image.parent());
-						$image.detach().appendTo($fancybox);
-					});
-
-					columns.append($data);
-
-					var slide = contentSwiper.createSlide(columns[0].outerHTML);
-					slide.append();
-				});
+				loadVMExpedition();
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
@@ -326,9 +292,11 @@ var InterfaceController = function(ExpeditionController) {
 		poisList = sortable;
 
 		$.each(sortable, function(index, value) {
+			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].Intro);
+
 			var $expeditionContent = $('<div></div>')
 			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1].title))
-			.append($('<div class="expeditionPreviewSummary"></div>').html(value[1].summary));
+			.append($expeditionPreviewSummary);
 
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
 			.append($expeditionContent);
@@ -342,6 +310,7 @@ var InterfaceController = function(ExpeditionController) {
 			});
 
 			var afbeelding = value[1].Afbeelding;
+			//TODO change to type check of POI
 			if (afbeelding !== "") {
 				if (afbeelding !== undefined) {
 					fetchWikiImage(afbeelding, $expeditionItem);
@@ -361,7 +330,7 @@ var InterfaceController = function(ExpeditionController) {
 						    	try {
 									var bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
 									$.fancybox.open([{
-										href:bigViewUrl , title: 'Test'
+										href:bigViewUrl , title: value[1].Intro
 									}]);
 						    	}
 						    	catch (err) {
@@ -370,7 +339,9 @@ var InterfaceController = function(ExpeditionController) {
 						    	}
 						    }
 						});
-					});	
+					});
+					//hack, fix
+					$expeditionPreviewSummary.empty();
 				}
 			}
 
@@ -448,6 +419,43 @@ var InterfaceController = function(ExpeditionController) {
 			height = 'iiurlheight=' + h;
 
 		return 'http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&' + title + height;
+	};
+
+	var loadVMExpedition = function() {
+		var poi = poisList[currentPoi - 1];
+		var path = 'data/' + currentExpedition + '/pois/' + poi[1].type + ' ' + poi[1].title + '.htm';
+
+		$.get(path, function(data) {
+			var columns = $('<div class="columns"></div>');
+			var $data = $(data);
+			var images = $data.find('img');
+
+			$.each(images, function(index, value) {
+				var urlPieces = $(value).prop('src').split('/'),
+					folder = urlPieces[urlPieces.length - 2],
+					file = urlPieces[urlPieces.length - 1],
+					imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
+
+				$image = $(value);
+				$image.prop('src', imageUrl);
+
+				var height = $image.prop('height'),
+					width = $image.prop('width'),
+					ratio = height/width,
+					columnWidth = 300;
+				
+				$image.prop('height', columnWidth * ratio);
+
+				var $fancybox = $('<a class="fancybox" href="' + imageUrl + '"></a>');
+				$fancybox.appendTo($image.parent());
+				$image.detach().appendTo($fancybox);
+			});
+
+			columns.append($data);
+
+			var slide = contentSwiper.createSlide(columns[0].outerHTML);
+			slide.append();
+		});
 	};
 
 	var fetchWikiExcerpt = function(url, numWords, columns) {

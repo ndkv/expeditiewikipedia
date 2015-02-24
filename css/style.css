@@ -261,9 +261,13 @@ p {
 }
 
 .expeditionPreviewTitle {
-  cursor: pointer;
   color: black;
   font-size: 0.9em;
+  background: -webkit-linear-gradient(top, white, rgba(255, 255, 255, 0));
+  background: -moz-linear-gradient(top, white, rgba(255, 255, 255, 0));
+  background: -0-linear-gradient(top, white, rgba(255, 255, 255, 0));
+  background: linear-gradient(top, white, rgba(255, 255, 255, 0));
+  padding-bottom: 40px;
 }
 
 .expeditionPreviewSummary {

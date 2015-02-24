@@ -78,9 +78,9 @@ var MapController = function() {
 			});
 
 			var feature = L.polyline(coordinates, {
-				weight: 6,
+				weight: 3,
 				opacity: 0.9, 
-				color: '#a00', 
+				color: '#d00', 
 				dashArray: '10, 5',
 				lineCap: 'butt',
 				lineJoin: 'round'
