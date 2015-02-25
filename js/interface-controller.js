@@ -72,6 +72,8 @@ var InterfaceController = function(ExpeditionController) {
 
 		if (hash === '#afbeelding' || hash === '#artikel')
 			window.location.hash = currentExpedition;
+
+		console.log(window.history);
 	}); 
 
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
@@ -226,7 +228,7 @@ var InterfaceController = function(ExpeditionController) {
 			//hack, fix
 			$expeditionTitle.css('padding-bottom', '40px');
 
-			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
+			var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');
 			// $readMore.appendTo($expeditionItem);
 
 			var $container = $('<div class="expeditionItemContainer"></div>');
@@ -338,7 +340,7 @@ var InterfaceController = function(ExpeditionController) {
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
 			.append($expeditionContent);
 
-	        var $readMore = $('<div class="readMore"><a href="#artikel">Lees meer</a></div>');			
+	        var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');			
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				currentPoi = value[0];
@@ -351,7 +353,7 @@ var InterfaceController = function(ExpeditionController) {
 			if (afbeelding !== "") {
 				if (afbeelding !== undefined) {
 					fetchWikiImage(afbeelding, $expeditionItem);
-					$readMore = $('<div class="readMore"><a href="#afbeelding">Bekijk afbeelding</a></div>');			
+					$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
 					$readMore.click(function () {
 						currentPreviewItem = index;
 						currentPoi = value[0];
