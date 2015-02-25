@@ -63,13 +63,15 @@ var InterfaceController = function(ExpeditionController) {
 			console.log('opening map drawer'); 
 		});
 
-	$(window).on('hashchange', function() { 
+	$(window).on('hashchange', function() {
+		var hash = window.location.hash;
+		//emulate push of back button as it removes the hash
 		if (mode === 'expedition' && window.location.hash === '') {
-			window.location.href = window.location.href.substr(0, window.location.hash.length - 1);
+			window.location.href = window.location.href.substr(0, window.location.href.length - 1);
 		}
-		// } else {
-		// 	location.reload();
-		// }
+
+		if (hash === '#afbeelding' || hash === '#artikel')
+			window.location.hash = currentExpedition;
 	}); 
 
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
@@ -336,7 +338,7 @@ var InterfaceController = function(ExpeditionController) {
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
 			.append($expeditionContent);
 
-	        var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');			
+	        var $readMore = $('<div class="readMore"><a href="#artikel">Lees meer</a></div>');			
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				currentPoi = value[0];
@@ -349,7 +351,7 @@ var InterfaceController = function(ExpeditionController) {
 			if (afbeelding !== "") {
 				if (afbeelding !== undefined) {
 					fetchWikiImage(afbeelding, $expeditionItem);
-					$readMore = $('<div class="readMore"><a href="#">Bekijk afbeelding</a></div>');			
+					$readMore = $('<div class="readMore"><a href="#afbeelding">Bekijk afbeelding</a></div>');			
 					$readMore.click(function () {
 						currentPreviewItem = index;
 						currentPoi = value[0];
