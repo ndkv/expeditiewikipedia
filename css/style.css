@@ -27,6 +27,10 @@ a.menu {
   color: black;
 }
 
+a.menu.hidden {
+  opacity: 0;
+}
+
 a.menu span {
   font-size:1.6em;
   vertical-align: -0.15em;
@@ -267,13 +271,14 @@ p {
   background: -moz-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: -0-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: linear-gradient(top, white, rgba(255, 255, 255, 0));
-  padding-bottom: 40px;
+  /*padding-bottom: 10px;*/
 }
 
 .expeditionPreviewSummary {
   /*font-family: "Blokk";*/
   font-size: 0.7em;
   cursor: pointer;
+  padding: 10px;
 }
 
 .readMore {

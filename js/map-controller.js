@@ -1,5 +1,5 @@
 var MapController = function() {
-	var features = [],
+	var features = {},
 		poisList = [],
 		overlays = [],
 		currentExpedition,
@@ -10,16 +10,14 @@ var MapController = function() {
 	map.setView([0.0, 55.0], 3);
 
 	this.registerInterfaceEvents = function(InterfaceController) {
-		$.each(features, function(index, feature) {
+		$.each(features, function(id, feature) {
 			var handler = function () {
-				//InterfaceController.openDetailView(index);
-				InterfaceController.togglePreviewItem(index);
+				InterfaceController.togglePreviewItemLanding(id);
 			};
 
 			listeners.push(handler);
 			feature.on('click', handler);
 		});
-
 
 		var $swiper = $('.swiper-wrapper'),
 			swiperOffset = $swiper.offset().left,
@@ -32,6 +30,8 @@ var MapController = function() {
 		$.each(poisList, function (index, poi) {
 			var handler = function () { 
 				InterfaceController.togglePreviewItem(index);
+
+				//center menu, should be in won function
 				var docWidth = $(document).width(),
 					docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth - spacerLeftWidth;
 
@@ -69,24 +69,47 @@ var MapController = function() {
 
 	this.buildLandingView = function(feats) {
 		$.each(feats, function(index, value) {
-			var geometry = value.geometry.coordinates;
-			var coordinates = [];
+			var geometry = value.geometry.coordinates,
+				type = value.geometry.type,
+				coordinates = [],
+				feature;
 
 			//reverse geojson.io's lat/lng order
-			$.each(geometry, function(i, v) {
-				coordinates.push([v[1], v[0]]);
-			});
+			
 
-			var feature = L.polyline(coordinates, {
-				weight: 3,
-				opacity: 0.9, 
-				color: '#d00', 
-				dashArray: '10, 5',
-				lineCap: 'butt',
-				lineJoin: 'round'
-			});
+			if (type === 'LineString') {
+				$.each(geometry, function(i, v) {
+					coordinates.push([v[1], v[0]]);
+				});
+
+				feature = L.polyline(coordinates, {
+					weight: 3,
+					opacity: 0.9, 
+					color: '#d00', 
+					dashArray: '10, 5',
+					lineCap: 'butt',
+					lineJoin: 'round'
+				});
+			}
+
+			if (type === "Polygon") {
+				$.each(geometry[0], function(i, v) {
+					coordinates.push([v[1], v[0]]);
+				});
+
+				feature = L.polygon(coordinates, {
+					weight: 3,
+					opacity: 0.9, 
+					color: '#d00', 
+					dashArray: '10, 5',
+					lineCap: 'butt',
+					lineJoin: 'round'
+				});
+			}
+
 			feature.addTo(map);
-			features.push(feature);
+
+			features[value.properties.id] = feature;
 		});
 
 		var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
@@ -187,7 +210,7 @@ var MapController = function() {
 	//this.destroyExpeditionView
 
 	var zoomToRoute = function(e) {
-		var index = e.vmIndex;
+		var index = e.expeditionId;
 		map.fitBounds(features[index].getBounds());
 	};
 

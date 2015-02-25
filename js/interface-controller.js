@@ -55,12 +55,22 @@ var InterfaceController = function(ExpeditionController) {
 		})
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
+			window.location.hash = expeditions[currentPreviewItem].id;
 		})
 		.on('click', '#btnBack', function(e) { that.toggleDetailView(); })
 		.on('click', '#btnMapDrawer', function(e) { 
 			$('#lstMap').toggleClass('active');
 			console.log('opening map drawer'); 
 		});
+
+	$(window).on('hashchange', function() { 
+		if (mode === 'expedition' && window.location.hash === '') {
+			window.location.href = window.location.href.substr(0, window.location.hash.length - 1);
+		}
+		// } else {
+		// 	location.reload();
+		// }
+	}); 
 
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
 	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
@@ -89,11 +99,10 @@ var InterfaceController = function(ExpeditionController) {
 	});
 		
     this.toggleDetailView = function() {    	
-    	//display different data based on currently selected 
-
     	$contentSwiper.toggleClass('active');
     	$(".detailedDrawer").toggleClass('high');
-    	//$previewSwiper.toggleClass('hidden');
+    	//hack, fix
+    	$('#toggleTopDrawer').toggleClass('hidden');
 
     	$swiperMenu.toggleClass('hidden');
     };
@@ -107,16 +116,34 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 	};
 
+	this.togglePreviewItemLanding = function(id) {
+		if (currentPreviewItem !== undefined) {
+			previewItems[currentPreviewItem].removeClass("previewItemActive");
+		}
+
+		//hack, fix
+		var index;
+		$.each(expeditions, function(i, value) {
+			if (value.id === id) { index = i; }
+		});
+
+		currentPreviewItem = index;
+		previewItems[index].addClass("previewItemActive");	
+	};
+
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
 			var $el = item; //.children().first();
 
 			$el.click(function() {
-				that.togglePreviewItem(index);
-				$el.trigger({
-					type: 'mapZoomToRoute',
-					vmIndex: index
-				});			
+				if (swiperStill()) {
+					that.togglePreviewItem(index);
+					$el.trigger({
+						type: 'mapZoomToRoute',
+					//vmIndex: index
+						expeditionId: expeditions[index].id
+					});			
+				}
 			});
 		});
 	};
@@ -126,12 +153,14 @@ var InterfaceController = function(ExpeditionController) {
 			var $el = item; //.children().first();
 
 			$el.click(function(e) {
-				e.preventDefault();
-				that.togglePreviewItem(index);
-				$el.trigger({
-					type: 'mapZoomToPoI',
-					vmIndex: index
-				});
+				if (swiperStill()) {
+					e.preventDefault();
+					that.togglePreviewItem(index);
+					$el.trigger({
+						type: 'mapZoomToPoI',
+						vmIndex: index
+					});					
+				}
 			});
 		});
 	};
@@ -166,8 +195,9 @@ var InterfaceController = function(ExpeditionController) {
 		// swiper = new Swiper('.swiper-container', {
 		swiper = new Swiper('#previewSwiper', {
 			mode: 'horizontal',
-			scrollContainer: true
-			//slidesPerView: 1
+			scrollContainer: true,
+			preventClicks: true,
+			// onTransitionStart: function() { console.log('swiping') ;}
 		});
 	};
 
@@ -191,6 +221,9 @@ var InterfaceController = function(ExpeditionController) {
 			$expeditionTitle.html(value.title);
 			$expeditionTitle.appendTo($expeditionContent);
 
+			//hack, fix
+			$expeditionTitle.css('padding-bottom', '40px');
+
 			var $readMore = $('<div class="readMore"><a href="#">Lees meer</a></div>');
 			// $readMore.appendTo($expeditionItem);
 
@@ -202,6 +235,7 @@ var InterfaceController = function(ExpeditionController) {
 				currentPreviewItem = index;
 				that.loadContent();
 				that.toggleDetailView();
+				console.log(swiper.progress);
 			});
 
 			// $('.swiper-slide').width(width);
@@ -292,10 +326,11 @@ var InterfaceController = function(ExpeditionController) {
 		poisList = sortable;
 
 		$.each(sortable, function(index, value) {
-			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].Intro);
+			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].summary),
+				$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
 
 			var $expeditionContent = $('<div></div>')
-			.append($('<div class="expeditionPreviewTitle"></div>').html(value[1].title))
+			.append($expeditionPreviewTitle)
 			.append($expeditionPreviewSummary);
 
 			var $expeditionItem = $('<div class="expeditionItem"></div>')
@@ -328,9 +363,11 @@ var InterfaceController = function(ExpeditionController) {
 			    			dataType: "jsonp",
 			    			success: function(data) {
 						    	try {
+						    		var title = value[1].summary + ' ' + value[1].Datum + ' (' + value[1].Instelling + ')';
+
 									var bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
 									$.fancybox.open([{
-										href:bigViewUrl , title: value[1].Intro
+										href:bigViewUrl , title: title
 									}]);
 						    	}
 						    	catch (err) {
@@ -340,7 +377,9 @@ var InterfaceController = function(ExpeditionController) {
 						    }
 						});
 					});
-					//hack, fix
+
+					//hacks, fix
+					$expeditionPreviewTitle.css('padding-bottom', '40px');
 					$expeditionPreviewSummary.empty();
 				}
 			}
@@ -503,6 +542,11 @@ var InterfaceController = function(ExpeditionController) {
 			slide.append();
 		}
 
+	};
+
+	var swiperStill = function() {
+		var touches = swiper.touches;
+		return touches.start === touches.current;
 	};
 };
 

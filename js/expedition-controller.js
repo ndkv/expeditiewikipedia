@@ -27,7 +27,17 @@ var ExpeditionController = function() {
 			//call InterfaceController()
 		//} else {
 		//goto landing page
-			buildLandingView();
+
+			console.log('checking hash on entry');
+			var hash = location.hash;
+			if (hash === '') {
+				buildLandingView();
+			} else {
+				$.each(that.expeditions, function(index, value) {
+					if (value.id === hash.substr(1)) { that.startExpedition(index); }
+				});
+			}
+
 		//}
 
 	});
@@ -57,15 +67,14 @@ var ExpeditionController = function() {
 		//load expedition information
 
 		if (mode === "landing") {
-			InterfaceController.destroyLandingView();
-			MapController.destroyLandingView();
-
-
-			if (expedition.id === 'vening meinesz') {
-
+			try {
+				InterfaceController.destroyLandingView();
+				MapController.destroyLandingView();
 			}
-			// readSAE()
-			// readVM()
+			catch (err) {
+				console.log("Failed to destroy expedition assets.");
+				console.log("Assuming expedition launch through hash");
+			}
 
 			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
 			.done(function(exp, geometries) {
