@@ -10,6 +10,7 @@ var InterfaceController = function(ExpeditionController) {
 		currentPreviewItem,
 		currentPoi,
 		currentExpedition,
+		currentExpeditionIndex,
 		swiper,
 		mode = "landing",
 		poisList;
@@ -285,16 +286,18 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems = [];
 	};
 
-	this.buildExpeditionView = function(maps, expedition, pois) {
+	this.buildExpeditionView = function(expedition, expeditionIndex, pois) {
 		//read expedition texts and place them on interface
 		mode = "expedition";
 		currentExpedition = expedition;
+		currentExpeditionIndex = expeditionIndex;
+
 		var expeditionAttributes = expeditions[expeditionsHash[expedition]];
 
 		$('#btnMapDrawer').toggleClass('active');
 
 		buildPoIList(pois);
-		loadMaps(maps);
+		buildMapsList();
 
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
@@ -402,11 +405,11 @@ var InterfaceController = function(ExpeditionController) {
 		buildSwiper();
 	};
 
-	var loadMaps = function(maps) {
+	var buildMapsList = function() {
 		var $mapList = $('#lstMap');
 
 		try {
-			$.each(maps, function(index, value) {
+			$.each(expeditions[currentExpeditionIndex].maps, function(index, value) {
 				$mapList.append('<div></div>');
 
 				var $checkbox = $('<input type="checkbox">');
@@ -416,7 +419,7 @@ var InterfaceController = function(ExpeditionController) {
 
 				var label = $('<label></label>')
 				.append($checkbox) 
-				.append($('<div>' + value + '</div>'))
+				.append($('<div>' + value.title + '</div>'))
 				.appendTo($mapList.children().last());
 			});
 		}

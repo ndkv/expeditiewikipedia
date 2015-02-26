@@ -19,7 +19,11 @@
 		"blurp": "",
 		"zoomto": {"lat": 1.0, "lon": 1.0},
 		"link": "https://nl.wikipedia.org/wiki/Ceram-expeditie",
-		"words": 20000
+		"words": 20000,
+		"maps": [{
+			"id": "geo-schetskaart",
+			"title": "Geologische schetskaart van Nederlandsch Oost-Indië"
+			}]
 	},
 	{
 		"id": "nieuw-guinea",
@@ -30,7 +34,17 @@
 		"blurp": "",
 		"zoomto": {"lat": 1.0, "lon": 1.0},
 		"link": "https://nl.wikipedia.org/wiki/Noord_Nieuw-Guinea_Expeditie", 
-		"words": 20000
+		"words": 20000,
+		"maps": [
+			{
+				"id":"geelvink-busens",
+				"title":"Kaart van de Geelvinckbaai"
+			},
+			{
+				"id":"sentani-meer",
+				"title":"Geologische kaart van het Sentani meer"
+			}
+		]
 	},
 	{
 		"id": "reisboeken",
@@ -57,6 +71,15 @@
 		"summary": "Felix Andries Vening Meinesz (30 juli 1887 – 10 augustus 1966) was een Nederlands geofysicus en geodeet die baanbrekend werk voor de geofysica en geodesie verricht heeft",
 		"image": "http://commons.wikimedia.org/wiki/File:Hr._Ms._K_XVIII_(11_July_1935).jpg",
 		"blurp": "Fantastische reis door de zwaartekracht",
-		"zoomto": {"lat": 1.0, "lon": 1.0}
+		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"maps": [
+			{
+				"id": "atlantic",
+				"title": "Bathymetric chart of the Atlantic Ocean"
+			},
+			{
+				"id": "indian",
+				"title": "Bathymetric chart of the Atlantic and Indian Ocean"
+				}]
 	}
 ]

@@ -143,13 +143,14 @@ var MapController = function() {
 			$('.leaflet-layer').css('transition', 'opacity .45s');
 			$('.leaflet-tile-container').css('transition', 'opacity .45s');
 			basemap.setOpacity(1);
-			basemaps[0].setOpacity(0);
+			if (basemaps.length > 0) { basemaps[0].setOpacity(0); }
+
  	
 			setTimeout(function() {
 				$('.leaflet-tile-pane').css('transition', '');
 				$('.leaflet-layer').css('transition', '');
 				$('.leaflet-tile-container').css('transition', '');
-				map.removeLayer(basemaps[0]);
+				if (basemaps.length > 0) { map.removeLayer(basemaps[0]); }
 				basemap.off('load', handler);
 			}, 350);
 		};
@@ -196,14 +197,14 @@ var MapController = function() {
 	var loadMaps = function(maps) {
 		try {
 				$.each(maps, function(index, value) {
-				var path = 'data/' + currentExpedition + '/maps/' + value + '/{z}/{x}/{y}.png';
+				var path = 'data/' + currentExpedition + '/maps/' + value.id + '/{z}/{x}/{y}.png';
 				var overlay = L.tileLayer(path, { tms: true, updateWhenIdle: true });
 				//overlay.addTo(map);
 				overlays.push(overlay);
 			});
 		}
 		catch (e) {
-			console.log('no maps');
+			console.log('Warning: failed to fetch map' + value.id);
 		}
 	};
 	

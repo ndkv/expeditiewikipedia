@@ -61,7 +61,8 @@ var ExpeditionController = function() {
 	};
 
 	this.startExpedition = function(index) {
-		var expedition = that.expeditions[index].id;
+		var expedition = that.expeditions[index].id,
+			expeditionIndex = index;
 		console.log(expedition);
 
 		//load expedition information
@@ -76,10 +77,8 @@ var ExpeditionController = function() {
 				console.log("Assuming expedition launch through hash");
 			}
 
-			$.when($.getJSON("data/" + expedition + "/expedition.json"), $.getJSON("data/" + expedition + "/geometries.json"))
-			.done(function(exp, geometries) {
-				var expeditionAttributes = exp[0];
-				var features = geometries[0].features,
+			$.getJSON("data/" + expedition + "/geometries.json", function(geometries) {
+				var features = geometries.features,
 					route,
 					pois = [];
 					// geoms = $.parseJSON(expedition);
@@ -92,10 +91,10 @@ var ExpeditionController = function() {
 					}
 				});
 
-				InterfaceController.buildExpeditionView(expeditionAttributes.maps, expedition, pois);
+				InterfaceController.buildExpeditionView(expedition, expeditionIndex, pois);
 				
 				setTimeout(function () { 
-					MapController.buildExpeditionView(expedition, expeditionAttributes.maps, route, pois);
+					MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois);
 					InterfaceController.registerMapEventsPois();
 					MapController.registerInterfaceEvents(InterfaceController);
 				}, 1500);
