@@ -69,11 +69,6 @@ var InterfaceController = function(ExpeditionController) {
 		if (mode === 'expedition' && window.location.hash === '') {
 			window.location.href = window.location.href.substr(0, window.location.href.length - 1);
 		}
-
-		if (hash === '#afbeelding' || hash === '#artikel')
-			window.location.hash = currentExpedition;
-
-		console.log(window.history);
 	}); 
 
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
