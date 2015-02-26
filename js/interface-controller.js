@@ -426,7 +426,8 @@ var InterfaceController = function(ExpeditionController) {
 		catch (e) {
 			$('#btnMapDrawer').css('opacity', 0);
 			console.log("Warning, this expedition does not have any maps.");
-		}		
+		}
+		$mapList.find('input')[0].checked = true;
 	};
 
 	var fetchWikiImage = function(url, elem) {

@@ -67,7 +67,9 @@ var MapController = function() {
 
 	//VIEWING MODE 
 
-	this.buildLandingView = function(feats) {
+	this.buildLandingView = function(feats, expeditions) {
+		//display one historical map per expedition
+
 		$.each(feats, function(index, value) {
 			var geometry = value.geometry.coordinates,
 				type = value.geometry.type,
@@ -115,6 +117,10 @@ var MapController = function() {
 		var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
 		basemap.addTo(map);
 		basemaps.push(basemap);
+
+		$.each(expeditions, function(index, value) {
+			loadMaps(value.id, value.maps);
+		});
 	};
 
 	this.destroyLandingView = function() {
@@ -122,21 +128,19 @@ var MapController = function() {
 			//feature.off('click', listeners.pop(index));
 			map.removeLayer(feature);
 		});
-
 		features = [];
+
+		$.each(overlays, function(index, overlay) {
+			map.removeLayer(overlay);
+		});
+		overlays = [];
 		
 	};
 
 	this.buildExpeditionView = function(expedition, maps, route, pois) {
 		currentExpedition = expedition;
-		loadMaps(maps);
-		buildExpeditionGeometries(route, pois);
-
-		// $('.leaflet-tile-pane').css('-webkit-transition', 'opacity 3s');
-		// $('.leaflet-layer').css('-webkit-transition', 'opacity 3s');
-		// $('.leaflet-tile-container').css('-webkit-transition', 'opacity 3s');
-		
 		var basemap = L.tileLayer.provider('Esri.OceanBasemap', {opacity: 0});
+		buildExpeditionGeometries(route, pois);
 		
 		var handler = function() {
 			$('.leaflet-tile-pane').css('transition', 'opacity .45s');
@@ -152,6 +156,8 @@ var MapController = function() {
 				$('.leaflet-tile-container').css('transition', '');
 				if (basemaps.length > 0) { map.removeLayer(basemaps[0]); }
 				basemap.off('load', handler);
+
+				loadMaps(expedition, maps);
 			}, 350);
 		};
 
@@ -194,17 +200,32 @@ var MapController = function() {
 		});
 	};
 
-	var loadMaps = function(maps) {
+	var loadMaps = function(currentExpedition, maps) {
+		var initialMap = overlays.length;
 		try {
+				var overlay;
 				$.each(maps, function(index, value) {
-				var path = 'data/' + currentExpedition + '/maps/' + value.id + '/{z}/{x}/{y}.png';
-				var overlay = L.tileLayer(path, { tms: true, updateWhenIdle: true });
-				//overlay.addTo(map);
-				overlays.push(overlay);
+					var latLngBounds;
+					try {
+						latLngBounds = L.latLngBounds(value.bounds.southWest, value.bounds.northEast);
+					}
+					catch (err) {
+						console.log('Warning, no bounds defined for map ' + value.id);
+					}
+
+					var path = 'data/' + currentExpedition + '/maps/' + value.id + '/{z}/{x}/{y}.png';
+					overlay = L.tileLayer(path, { 
+						tms: true, 
+						updateWhenIdle: true,
+						bounds: latLngBounds
+					});
+					overlays.push(overlay);
 			});
+				overlays[initialMap].addTo(map);
 		}
 		catch (e) {
-			console.log('Warning: failed to fetch map' + value.id);
+			console.log('Warning: failed to fetch map.');
+			if (maps === undefined) { console.log('This expedition does not have any maps.'); }
 		}
 	};
 	

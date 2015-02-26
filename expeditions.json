@@ -22,8 +22,12 @@
 		"words": 20000,
 		"maps": [{
 			"id": "geo-schetskaart",
-			"title": "Geologische schetskaart van Nederlandsch Oost-Indië"
-			}]
+			"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
+			"bounds": {
+				"southWest": [-12.97, 92.04],
+				"northEast": [12.00, 144.07]
+			}
+		}]
 	},
 	{
 		"id": "nieuw-guinea",
@@ -38,11 +42,19 @@
 		"maps": [
 			{
 				"id":"geelvink-busens",
-				"title":"Kaart van de Geelvinckbaai"
+				"title":"Kaart van de Geelvinckbaai",
+				"bounds": {
+					"southWest": [-3.99, 133.09],
+					"northEast": [-0.12, 138.16]
+				}
 			},
 			{
 				"id":"sentani-meer",
-				"title":"Geologische kaart van het Sentani meer"
+				"title":"Geologische kaart van het Sentani meer",
+				"bounds": {
+					"southWest": [-2.76, 140.28],
+					"northEast": [-2.44, 140.74]
+				}
 			}
 		]
 	},
@@ -75,11 +87,19 @@
 		"maps": [
 			{
 				"id": "atlantic",
-				"title": "Bathymetric chart of the Atlantic Ocean"
+				"title": "Bathymetric chart of the Atlantic Ocean",
+				"bounds": {
+					"southWest": [-11.09, -90.86],
+					"northEast": [53.76, 0.25]
+				}
 			},
 			{
 				"id": "indian",
-				"title": "Bathymetric chart of the Atlantic and Indian Ocean"
-				}]
+				"title": "Bathymetric chart of the Atlantic and Indian Ocean",
+				"bounds": {
+					"southWest": [-41.86, -61.84],
+					"northEast": [7.62, 141.14]
+				}
+			}]
 	}
 ]

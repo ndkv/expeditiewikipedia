@@ -54,7 +54,7 @@ var ExpeditionController = function() {
 	var buildLandingView = function() {
 		mode = "landing";
 		InterfaceController.buildLandingView();
-		MapController.buildLandingView(features);
+		MapController.buildLandingView(features, that.expeditions);
 
 		InterfaceController.registerMapEventsRoute();
 		MapController.registerInterfaceEvents(InterfaceController);
