@@ -105,6 +105,18 @@ var InterfaceController = function(ExpeditionController) {
     	$('#toggleTopDrawer').toggleClass('hidden');
 
     	$swiperMenu.toggleClass('hidden');
+
+    	//hack, in landing mode currentExpedition is undefined
+    	if (mode === 'landing') {
+    		$('.spacer-right').toggleClass('active');
+			$('.wiki-leesmeer').toggleClass('active');    		
+    	} else {
+    		if (currentExpedition !== "vening meinesz") {	
+    			$('.spacer-right').toggleClass('active');
+				$('.wiki-leesmeer').toggleClass('active');    		
+    		}
+    	}
+
     };
     
 	this.togglePreviewItem = function(index) {
@@ -165,22 +177,6 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	var populatePreviewList = function() {
-
-	};
-
-	var populateDetailsList = function() {
-
-	};
-
-	this.changeViewingMode = function() {
-		//stuff to do when moving from landing page to expedition page
-	};
-
-	var emptyTopDrawer = function() {
-
-	};
-
 	this.loadExpedition = function() {
 		populatePreviewList();
 		populateDetailsList();
@@ -233,9 +229,10 @@ var InterfaceController = function(ExpeditionController) {
 			
 			$readMore.click(function () {
 				currentPreviewItem = index;
+				currentExpedition = expeditions[index].id;
 				that.loadContent();
 				that.toggleDetailView();
-				console.log(swiper.progress);
+
 			});
 
 			// $('.swiper-slide').width(width);
@@ -260,6 +257,7 @@ var InterfaceController = function(ExpeditionController) {
 		if (mode == 'landing') {
 			var expedition = expeditions[currentPreviewItem];
 			fetchWikiExcerpt(expedition.link, expedition.words, false);
+			$('.wiki-leesmeer a').prop('href', expedition.link);
 		} else {
 			if (currentExpedition === "vening meinesz") {
 				loadVMExpedition();
@@ -267,6 +265,7 @@ var InterfaceController = function(ExpeditionController) {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
 					fetchWikiExcerpt(wikiUrl, 20000, true);
+					$('.wiki-leesmeer a').prop('href', wikiUrl);
 				}
 			}
 		}
