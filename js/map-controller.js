@@ -114,7 +114,11 @@ var MapController = function() {
 			features[value.properties.id] = feature;
 		});
 
-		var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+		// var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
+		var basemap = L.tileLayer('data/basemap/{z}/{x}/{y}.png', {
+			tms: false
+		});
+
 		basemap.addTo(map);
 		basemaps.push(basemap);
 
