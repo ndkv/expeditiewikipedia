@@ -4,9 +4,18 @@ var MapController = function() {
 		overlays = [],
 		currentExpedition,
 		listeners = [],
-		basemaps = [];
-	
-	var map = new L.Map('map', {zoomControl: false, zoomAnimation: true, touchZoom: true});
+		basemaps = [],
+		southWest = L.latLng(-70, -175),
+		northEast = L.latLng(90, 180),
+		bounds = L.latLngBounds(southWest, northEast);
+
+	var map = new L.Map('map', {
+		zoomControl: false,
+		zoomAnimation: true,
+		touchZoom: true,
+		maxBounds: bounds,
+		minZoom: 2
+	});
 	map.setView([0.0, 55.0], 3);
 
 	this.registerInterfaceEvents = function(InterfaceController) {
@@ -116,7 +125,8 @@ var MapController = function() {
 
 		// var basemap = L.tileLayer("https://{s}.tiles.mapbox.com/v2/simeon.ifbdh3of/{z}/{x}/{y}.png");
 		var basemap = L.tileLayer('data/basemap/{z}/{x}/{y}.png', {
-			tms: false
+			tms: false,
+			maxNativeZoom: 5
 		});
 
 		basemap.addTo(map);
