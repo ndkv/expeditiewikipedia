@@ -520,3 +520,12 @@ p {
   background-color: black;
   opacity: .7;
 }
+
+
+a.commons {
+  color: white;
+}
+
+a.commons:visited {
+  color: white;
+}

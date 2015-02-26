@@ -365,11 +365,15 @@ var InterfaceController = function(ExpeditionController) {
 			    			dataType: "jsonp",
 			    			success: function(data) {
 						    	try {
-						    		var title = value[1].summary + ' ' + value[1].Datum + ' (' + value[1].Instelling + ')';
-
-									var bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+						    		var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.',
+						    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+						    		
+						    		var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
+						    		var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
+						    		var caption = title + instelling + commons;
+						    			
 									$.fancybox.open([{
-										href:bigViewUrl , title: title
+										href:bigViewUrl , title: caption
 									}]);
 						    	}
 						    	catch (err) {
