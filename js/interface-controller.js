@@ -47,12 +47,15 @@ var InterfaceController = function(ExpeditionController) {
     var $previewList = $('#previewList');
   
 	$(document)
-		.on('click', '#toggleTopDrawer', function(e) {
-			// e.preventDefault();
+		.on('click', '#btnToggleTopDrawer', function(e) {
 			$('.detailedDrawer').toggleClass('active');
 			$swiperMenu.toggleClass('hidden');
 
-			this.text = (this.text === "x") ? "+" : "x";
+			var image = $(this).find('img');
+			var src = (image.prop('src').split('/').pop() === 'close.svg') ? 'images/icons/open.svg' : 'images/icons/close.svg';
+			image.prop('src', src);
+
+			// this.text = (this.text === "x") ? "+" : "x";
 		})
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
@@ -75,6 +78,30 @@ var InterfaceController = function(ExpeditionController) {
 	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
 	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
 
+	$('#btnMenuScrollRight').click(function() {
+		var $swiper = $('.swiper-wrapper');
+		var spacerRightWidth = 50;
+		var spacerLeftWidth = 150;
+		var docWidth = $(document).width();
+		var docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth;
+		console.log(docSwiperDiff);
+
+		var move = $swiper.position().left - 200;
+		if (Math.abs($swiper.position().left) >= $swiper.width()) { move = -$swiper.width(); }
+		console.log(move);
+		console.log($swiper.width());
+
+		var translate = 'translate3d(' + move + 'px, 0px, 0px';
+		
+		$swiper.css('transition', 'transform .5s');
+		$swiper.css('transform', translate);
+		$swiper.css('-webkit-transition', '-webkit-transform .5s');
+		$swiper.css('-webkit-transform', translate);
+		$swiper.css('-moz-transition', '-moz-transform .5s');
+		$swiper.css('-moz-transform', translate);
+		$swiper.css('-o-transition', '-o-transform .5s');
+		$swiper.css('-o-transform', translate);
+	});
 
 	var $menuContentContainer = $('#menuContentContainer'),
 		$menuContainer = $('#menuContainer'),
@@ -102,7 +129,7 @@ var InterfaceController = function(ExpeditionController) {
     	$contentSwiper.toggleClass('active');
     	$(".detailedDrawer").toggleClass('high');
     	//hack, fix
-    	$('#toggleTopDrawer').toggleClass('hidden');
+    	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	$swiperMenu.toggleClass('hidden');
 

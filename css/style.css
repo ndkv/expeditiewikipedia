@@ -17,24 +17,7 @@
   right: 0;
   z-index: 2;
 }
-a.menu {
-  position: absolute;
-  z-index: 3;
-  text-decoration: none;
-  bottom: 0px;
-  right: 20px;
-  font-size: 1.5em;
-  color: black;
-}
 
-a.menu.hidden {
-  opacity: 0;
-}
-
-a.menu span {
-  font-size:1.6em;
-  vertical-align: -0.15em;
-}
 
 /*Menu animations*/
 
@@ -441,7 +424,7 @@ p {
 
 #btnMenu {
   position: fixed;
-  right: 25px;
+  right: 22px;
   top: 15px;
 }
 
@@ -558,4 +541,26 @@ a.commons:visited {
 
 .fancybox-title-float-wrap .child {
   white-space: normal !important;
+}
+
+.menu-scroll-button {
+  margin-top: 60px;
+}
+
+.menu-scroll-button > img {
+  width: 25px;
+  opacity: 0.9;
+}
+
+.menu-close-button {
+  /*z-index: 3;*/
+  margin-top: 52px;
+}
+
+.menu-close-button > img {
+  width: 25px;
+}
+
+.menu.close-button.hidden {
+  opacity: 0;
 }
