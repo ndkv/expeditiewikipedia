@@ -15,6 +15,17 @@ var InterfaceController = function(ExpeditionController) {
 		mode = "landing",
 		poisList;
 
+
+	 $('#introduction')
+    .css('opacity', 1)
+    .fancybox({	
+    	autoSize: false,
+    	width: 500,
+    	height: 250,
+    	openEffect: 'none'
+    })
+    .trigger('click');
+
 	$('.fancybox').fancybox({
         helpers: {
             overlay: {

@@ -576,3 +576,11 @@ a.commons:visited {
 }
 
 
+#introduction {
+  /*position: absolute;*/
+  background: white;
+  /*border-radius: 10px;*/
+  padding: 30px;
+  opacity: 0;
+  text-align: center;
+}

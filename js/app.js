@@ -9,6 +9,17 @@ Papa =  require('papaparse');
 require('fancybox')($);
 
 window.onload = function() {
+
+	 $('#introduction')
+    .css('opacity', 1)
+    .fancybox({	
+    	autoSize: false,
+    	width: 500,
+    	height: 250,
+    	openEffect: 'none'
+    })
+    .trigger('click');
+
 	var EC = require('./expedition-controller.js');
 
 	//implement data loader?
