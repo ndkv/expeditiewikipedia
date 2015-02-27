@@ -4,19 +4,19 @@ var MapController = function() {
 		overlays = [],
 		currentExpedition,
 		listeners = [],
-		basemaps = [];
-		// southWest = L.latLng(-70, -175),
-		// northEast = L.latLng(90, 180),
-		// bounds = L.latLngBounds(southWest, northEast);
+		basemaps = [],
+		southWest = L.latLng(-70, -175),
+		northEast = L.latLng(90, 180),
+		bounds = L.latLngBounds(southWest, northEast);
 
 	var map = new L.Map('map', {
 		zoomControl: false,
 		zoomAnimation: true,
 		touchZoom: true,
-		// maxBounds: bounds,
+		maxBounds: bounds,
 		minZoom: 2
 	});
-	map.setView([0.0, 55.0], 3);
+	map.setView([0.0, 55.0], 2);
 
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(id, feature) {
