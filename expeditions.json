@@ -1,5 +1,31 @@
 [
 	{
+		"id": "vening meinesz",
+		"title": "Vening Meinesz",
+		"subtitle": "In een duikboot de wereld rond",
+		"summary": "Felix Andries Vening Meinesz (30 juli 1887 – 10 augustus 1966) was een Nederlands geofysicus en geodeet die baanbrekend werk voor de geofysica en geodesie verricht heeft",
+		"image": "http://commons.wikimedia.org/wiki/File:Hr._Ms._K_XVIII_(11_July_1935).jpg",
+		"blurp": "Fantastische reis door de zwaartekracht",
+		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"maps": [
+			{
+				"id": "atlantic",
+				"title": "Bathymetric chart of the Atlantic Ocean",
+				"bounds": {
+					"southWest": [-11.09, -90.86],
+					"northEast": [53.76, 0.25]
+				}
+			},
+			{
+				"id": "indian",
+				"title": "Bathymetric chart of the Atlantic and Indian Ocean",
+				"bounds": {
+					"southWest": [-41.86, -61.84],
+					"northEast": [7.62, 141.14]
+				}
+			}]
+	},
+	{
 		"id": "siboga",
 		"title": "De Siboga Expeditie",
 		"subtitle": "",
@@ -75,31 +101,5 @@
 		"image": "https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",
 		"blurp": "",
 		"zoomto": {"lat": 1.0, "lon": 1.0}
-	},
-	{
-		"id": "vening meinesz",
-		"title": "Vening Meinesz",
-		"subtitle": "In een duikboot de wereld rond",
-		"summary": "Felix Andries Vening Meinesz (30 juli 1887 – 10 augustus 1966) was een Nederlands geofysicus en geodeet die baanbrekend werk voor de geofysica en geodesie verricht heeft",
-		"image": "http://commons.wikimedia.org/wiki/File:Hr._Ms._K_XVIII_(11_July_1935).jpg",
-		"blurp": "Fantastische reis door de zwaartekracht",
-		"zoomto": {"lat": 1.0, "lon": 1.0},
-		"maps": [
-			{
-				"id": "atlantic",
-				"title": "Bathymetric chart of the Atlantic Ocean",
-				"bounds": {
-					"southWest": [-11.09, -90.86],
-					"northEast": [53.76, 0.25]
-				}
-			},
-			{
-				"id": "indian",
-				"title": "Bathymetric chart of the Atlantic and Indian Ocean",
-				"bounds": {
-					"southWest": [-41.86, -61.84],
-					"northEast": [7.62, 141.14]
-				}
-			}]
 	}
 ]

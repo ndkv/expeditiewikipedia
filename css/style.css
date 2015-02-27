@@ -545,22 +545,34 @@ a.commons:visited {
 
 .menu-scroll-button {
   margin-top: 60px;
+  opacity: 0.9;
+  transition: opacity .2s 1s;
+
 }
 
 .menu-scroll-button > img {
   width: 25px;
-  opacity: 0.9;
+
+}
+
+.menu-scroll-button.hidden{
+  opacity: 0;
+  transition: opacity .2s;
 }
 
 .menu-close-button {
-  /*z-index: 3;*/
+  opacity: 0.9;
   margin-top: 52px;
+  transition: opacity .2s 1s;
+}
+
+.menu-close-button.hidden {
+  opacity: 0;
+  transition: opacity .2s;
 }
 
 .menu-close-button > img {
   width: 25px;
 }
 
-.menu.close-button.hidden {
-  opacity: 0;
-}
+

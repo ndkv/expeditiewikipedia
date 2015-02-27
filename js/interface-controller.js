@@ -129,9 +129,11 @@ var InterfaceController = function(ExpeditionController) {
     	$contentSwiper.toggleClass('active');
     	$(".detailedDrawer").toggleClass('high');
     	//hack, fix
-    	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	$swiperMenu.toggleClass('hidden');
+
+    	$('#btnMenuScrollRight').toggleClass('hidden');
+    	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	//hack, in landing mode currentExpedition is undefined
     	if (mode === 'landing') {
