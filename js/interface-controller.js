@@ -21,7 +21,7 @@ var InterfaceController = function(ExpeditionController) {
     .fancybox({	
     	autoSize: false,
     	width: 500,
-    	height: 250,
+    	height: 300,
     	openEffect: 'none'
     })
     .trigger('click');

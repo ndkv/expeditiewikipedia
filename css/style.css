@@ -584,3 +584,8 @@ a.commons:visited {
   opacity: 0;
   text-align: center;
 }
+
+#introductionContent img {
+  height: 50px;
+  margin-top: 30px;
+}
