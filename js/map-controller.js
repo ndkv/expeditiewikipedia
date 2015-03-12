@@ -274,7 +274,7 @@ var MapController = function() {
 
 	var togglePoiSelection = function(poi) {
 		var baseUrl = window.location.origin;
-		if (window.location.path !== undefined) { baseUrl += window.location.path; }
+		if (window.location.pathname !== undefined) { baseUrl += window.location.pathname; }
 		if (selectedPoi !== undefined) {
 			selectedPoi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon.png'}));
 			poi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon-selected.png'}));
