@@ -7,7 +7,8 @@ var MapController = function() {
 		basemaps = [],
 		southWest = L.latLng(-70, -175),
 		northEast = L.latLng(90, 180),
-		bounds = L.latLngBounds(southWest, northEast);
+		bounds = L.latLngBounds(southWest, northEast), 
+		selectedPoi;
 
 	var map = new L.Map('map', {
 		zoomControl: false,
@@ -61,7 +62,10 @@ var MapController = function() {
 				$swiper.css('-webkit-transition', 'transform .5s ease-out');
 				$swiper.css('-moz-transform', translate);
 				$swiper.css('-moz-transition', 'transform .5s ease-out');
+				$swiper.css('-transform', translate);
+				$swiper.css('-transition', 'transform .5s ease-out');
 
+				togglePoiSelection(poi);
 			};
 	
 			listeners.push(handler);
@@ -253,7 +257,10 @@ var MapController = function() {
 	var zoomToPoi = function(e) {
 		console.log('catchintg zoomToPoi trigger');
 		var index = e.vmIndex;
-		map.panTo(poisList[index].getLatLng());
+		var poi = poisList[index];
+		map.panTo(poi.getLatLng());
+
+		togglePoiSelection(poi);
 	};
 
 	var toggleLayer = function(event, index) {
@@ -262,6 +269,17 @@ var MapController = function() {
 			map.removeLayer(layer);
 		} else {
 			map.addLayer(layer);
+		}
+	};
+
+	var togglePoiSelection = function(poi) {
+		if (selectedPoi !== undefined) {
+			selectedPoi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon.png'}));
+			poi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon-selected.png'}));
+			selectedPoi = poi;
+		} else {
+			poi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon-selected.png'}));
+			selectedPoi = poi;
 		}
 	};
 
