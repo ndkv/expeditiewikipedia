@@ -10,15 +10,19 @@ require('fancybox')($);
 
 window.onload = function() {
 
-	$('#introduction')
-    .css('opacity', 1)
-    .fancybox({	
-    	autoSize: false,
-    	width: 500,
-    	height: 300,
-    	openEffect: 'none'
-    })
-    .trigger('click');
+	if (document.cookie === "") {
+		$('#introduction')
+	    .css('opacity', 1)
+	    .fancybox({	
+	    	autoSize: false,
+	    	width: 500,
+	    	height: 300,
+	    	openEffect: 'none'
+	    })
+	    .trigger('click');		
+
+	    document.cookie = 'introwindow=true';
+	}
 
 	var EC = require('./expedition-controller.js');
 
@@ -26,7 +30,4 @@ window.onload = function() {
 	var ExpeditionController = new EC();
 
 	//check whether URL contains specific expedition
-
-	console.log("loaded");
-
 };
