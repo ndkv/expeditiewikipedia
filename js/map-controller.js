@@ -15,7 +15,8 @@ var MapController = function() {
 		zoomAnimation: true,
 		touchZoom: true,
 		maxBounds: bounds,
-		minZoom: 2
+		minZoom: 2,
+		maxZoom: 10
 	});
 	map.setView([0.0, 55.0], 2);
 
@@ -208,7 +209,7 @@ var MapController = function() {
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
 		sortable.map(function(pois) {
-			var icon = new L.Icon.Default();
+			var icon = new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg'});
 			icon.options.shadowSize = [0,0];
 			var coords = pois[1];
 			var marker = L.marker([coords[1], coords[0]], {icon: icon});
@@ -273,16 +274,23 @@ var MapController = function() {
 	};
 
 	var togglePoiSelection = function(poi) {
-		var baseUrl = window.location.origin;
-		if (window.location.pathname !== undefined) { baseUrl += window.location.pathname; }
+		var baseUrl = getMarkerImageUrl();
+		
 		if (selectedPoi !== undefined) {
-			selectedPoi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon.png'}));
-			poi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon-selected.png'}));
+			selectedPoi.setIcon(new L.Icon({iconUrl: baseUrl + 'marker-icon.svg'}));
+			poi.setIcon(new L.Icon({iconUrl: baseUrl + 'marker-icon-selected.svg'}));
 			selectedPoi = poi;
 		} else {
-			poi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon-selected.png'}));
+			poi.setIcon(new L.Icon({iconUrl: baseUrl + 'marker-icon-selected.svg'}));
 			selectedPoi = poi;
 		}
+	};
+
+	var getMarkerImageUrl = function() {
+		var baseUrl = window.location.origin;
+		if (window.location.pathname !== undefined) { baseUrl += window.location.pathname; }
+		baseUrl += 'dist/images/icons/';
+		return baseUrl;
 	};
 
 	$(document).bind('mapZoomToRoute', zoomToRoute);

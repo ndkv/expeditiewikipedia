@@ -345,6 +345,7 @@ p {
 
 .map-list {
   opacity: 0;
+  z-index: -1;
   position: fixed;
   bottom: 50px;
   border-style: solid;
@@ -361,6 +362,7 @@ p {
 .map-list.active {
   opacity: 1;
   transition: opacity .3s;
+  z-index: 2;
 }
 
 .spacer-left {
