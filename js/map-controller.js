@@ -273,12 +273,14 @@ var MapController = function() {
 	};
 
 	var togglePoiSelection = function(poi) {
+		var baseUrl = window.location.origin;
+		if (window.location.path !== undefined) { baseUrl += window.location.path; }
 		if (selectedPoi !== undefined) {
-			selectedPoi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon.png'}));
-			poi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon-selected.png'}));
+			selectedPoi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon.png'}));
+			poi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon-selected.png'}));
 			selectedPoi = poi;
 		} else {
-			poi.setIcon(new L.Icon({iconUrl: '/images/icons/marker-icon-selected.png'}));
+			poi.setIcon(new L.Icon({iconUrl: baseUrl + '/dist/images/icons/marker-icon-selected.png'}));
 			selectedPoi = poi;
 		}
 	};
