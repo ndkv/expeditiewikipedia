@@ -11,6 +11,7 @@ var InterfaceController = function(ExpeditionController) {
 		currentPoi,
 		currentExpedition,
 		currentExpeditionIndex,
+		currentLanguage = "NL",
 		swiper,
 		mode = "landing",
 		poisList;
@@ -112,6 +113,14 @@ var InterfaceController = function(ExpeditionController) {
 		this.toggleClass('active');
 	});
 
+	$('.language').click(function() {
+		var lang = this.innerHTML;
+		currentLanguage = lang;
+
+		changeInterfaceLanguage(lang);
+
+	});
+
 
 	$('.menu-item').click(function() {
 		$menuContainer.toggleClass('active');
@@ -136,15 +145,15 @@ var InterfaceController = function(ExpeditionController) {
     	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	//hack, in landing mode currentExpedition is undefined
-    	if (mode === 'landing') {
-    		$('.spacer-right').toggleClass('active');
-			$('.wiki-leesmeer').toggleClass('active');    		
-    	} else {
-    		if (currentExpedition !== "vening meinesz") {	
-    			$('.spacer-right').toggleClass('active');
-				$('.wiki-leesmeer').toggleClass('active');    		
-    		}
-    	}
+   //  	if (mode === 'landing') {
+   //  		$('.spacer-right').toggleClass('active');
+			// $('.wiki-leesmeer').toggleClass('active');    		
+   //  	} else {
+   //  		if (currentExpedition !== "vening meinesz") {	
+   //  			$('.spacer-right').toggleClass('active');
+			// 	$('.wiki-leesmeer').toggleClass('active');    		
+   //  		}
+   //  	}
 
     };
     
@@ -249,6 +258,7 @@ var InterfaceController = function(ExpeditionController) {
 			//hack, fix
 			$expeditionTitle.css('padding-bottom', '40px');
 
+			//tweetaligheid
 			var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');
 			// $readMore.appendTo($expeditionItem);
 
@@ -285,16 +295,20 @@ var InterfaceController = function(ExpeditionController) {
 		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
 			var expedition = expeditions[currentPreviewItem];
-			fetchWikiExcerpt(expedition.link, expedition.words, false);
-			$('.wiki-leesmeer a').prop('href', expedition.link);
+			
+			//fetch introteskt from Excelsheet
+			loadIntroTexts();
+
+			//fetchWikiExcerpt(expedition.link, expedition.words, false);
+			//$('.wiki-leesmeer a').prop('href', expedition.link);
 		} else {
 			if (currentExpedition === "vening meinesz") {
 				loadVMExpedition();
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl, 20000, true);
-					$('.wiki-leesmeer a').prop('href', wikiUrl);
+					fetchWikiExcerpt(wikiUrl, 750, true);
+					// $('.wiki-leesmeer a').prop('href', wikiUrl);
 				}
 			}
 		}
@@ -329,6 +343,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
+		$('#btnLanguage').css('transform', 'translate3d(0px, -500px, 0px)');
 		$('#btnStartExpedition').css('display', 'none');
 
 		$('.spacer-left-title').html(expeditionAttributes.title);
@@ -377,8 +392,10 @@ var InterfaceController = function(ExpeditionController) {
 			var afbeelding = value[1].Afbeelding;
 			//TODO change to type check of POI
 			if (afbeelding !== "") {
+				//VM expedition doesn't have images, hence this check
 				if (afbeelding !== undefined) {
 					fetchWikiImage(afbeelding, $expeditionItem);
+					
 					$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
 					$readMore.click(function () {
 						currentPreviewItem = index;
@@ -427,6 +444,20 @@ var InterfaceController = function(ExpeditionController) {
 
 			previewItems.push($expeditionItem);
 			$swiperSlide.append($container);
+
+
+			//change interface language
+			//hack, fix
+			if (currentExpedition === 'vening meinesz') {
+				$.each($readMore, function(index, value) {
+					value.firstChild.innerHTML = 'Read more';
+				});
+
+				$('#btnBack').text('Back');
+			} else {
+				$('#btnBack').text('Terug');
+			}
+			
 		});
 
 		var margin = 20;
@@ -533,7 +564,7 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	var fetchWikiExcerpt = function(url, numWords, columns) {
-		var contentElem = $('<div></div>');
+		// var contentElem = $('<div></div>');
 		
 		try {
 			wikiUrl = url.split('/');
@@ -554,17 +585,21 @@ var InterfaceController = function(ExpeditionController) {
 					var pages = data.query.pages;
 					for (var page in pages) { break; }
 					
+					var $content = $('<div class="intro-text-content"></div>'), 
+						$contentElem = $('<div></div>'),
+						$contentImage = $('<div class="intro-text-image"></div>');
 
-					contentElem.append($(pages[page].extract));
+					$content.append($(pages[page].extract).filter('p'));
+					//add link to article
+					$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
+					$contentImage.append('<img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/COLLECTIE_TROPENMUSEUM_S.S._Van_Goens_langs_een_steiger_met_op_de_achtergrond_Poelau_Maitara_TMnr_60010092.jpg">');
 
-					if (columns) {
-						contentElem.addClass('columns');
-					} else {
-						contentElem.addClass('columns-none');
-					}
+					$contentElem.append($content);
+					$contentElem.append($contentImage);
 
-					var slide = contentSwiper.createSlide(contentElem[0].outerHTML);
+					var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 					slide.append();
+
 			    }
 			});			
 		}
@@ -583,6 +618,61 @@ var InterfaceController = function(ExpeditionController) {
 		var touches = swiper.touches;
 		return touches.start === touches.current;
 	};
+
+
+	var changeInterfaceLanguage = function (lang) {
+		var $readMore = $('.readMore');
+
+		if (lang === 'EN') {
+			$.each($readMore, function(index, value) {
+				value.firstChild.innerHTML = 'Read more';
+			});
+
+			$('#btnBack').text('Back');
+			$('#btnStartExpedition').text('Start expedition!');
+
+		} else {
+			$.each($readMore, function(index, value) {
+				value.firstChild.innerHTML = 'Lees meer';
+			});
+
+			$('#btnBack').text('Terug');
+			$('#btnStartExpedition').text('Start expeditie!');
+		}
+
+		if (mode === "landing") {
+			//reload content in correct language
+			that.loadContent();	
+		}
+
+		//if introtext pane open, change language there too
+	};
+
+	var changeIntroLanguage = function() {
+
+	};
+
+	var loadIntroTexts = function() {
+		// contentSwiper.removeAllSlides();
+		var $content = $('<div class="intro-text-content"></div>'), 
+			$contentElem = $('<div></div>'),
+			$contentImage = $('<div class="intro-text-image"></div>');
+
+		$contentImage.append('<img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/COLLECTIE_TROPENMUSEUM_S.S._Van_Goens_langs_een_steiger_met_op_de_achtergrond_Poelau_Maitara_TMnr_60010092.jpg">');
+
+		if (currentLanguage === 'EN') {
+			$content.html('Introduction text from Excel sheet');
+		} else {
+			$content.html('Introductie tekst uit Excel sheet');
+		}
+
+		$contentElem.append($content);
+		$contentElem.append($contentImage);
+
+		var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
+		slide.append();
+	};
+
 };
 
 

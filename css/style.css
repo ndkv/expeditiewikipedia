@@ -505,10 +505,10 @@ a.commons:visited {
 }
 
 .wiki-leesmeer {
-  position: absolute;
+  /*position: absolute;
   bottom: 60px;
   right: -200px;
-  transition: transform .4s .1s;
+  transition: transform .4s .1s;*/
 }
 
 .wiki-leesmeer.active {
@@ -588,4 +588,44 @@ a.commons:visited {
 #introductionContent img {
   height: 50px;
   margin-top: 30px;
+}
+
+#btnLanguage {
+  float: right;
+  position: fixed;
+  right: 70px;
+  top: 15px;
+  font-size: .9em;
+  color: #999;
+  cursor: pointer;
+}
+
+.language:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.intro-text-content {
+  /*background-color: black;*/
+  float: left;
+  width: 50%;
+  padding-top: 45px;
+  text-align: center;
+}
+
+.intro-text-image {
+  float: right;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+
+.intro-text-image img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  max-height: 360px;
+  width: 100%;
+  display: block;
+  max-width: 600px;
 }
