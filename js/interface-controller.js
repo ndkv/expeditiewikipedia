@@ -307,7 +307,7 @@ var InterfaceController = function(ExpeditionController) {
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl, 750, true);
+					fetchWikiExcerpt(wikiUrl, 500, true);
 					// $('.wiki-leesmeer a').prop('href', wikiUrl);
 				}
 			}
