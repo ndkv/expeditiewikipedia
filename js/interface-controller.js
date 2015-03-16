@@ -588,8 +588,10 @@ var InterfaceController = function(ExpeditionController) {
 					var $content = $('<div class="intro-text-content"></div>'), 
 						$contentElem = $('<div></div>'),
 						$contentImage = $('<div class="intro-text-image"></div>');
+						$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
+						$wikiText.append($(pages[page].extract).filter('p'));
 
-					$content.append($(pages[page].extract).filter('p'));
+					$content.append($wikiText);
 					//add link to article
 					$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
 					$contentImage.append('<img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/COLLECTIE_TROPENMUSEUM_S.S._Van_Goens_langs_een_steiger_met_op_de_achtergrond_Poelau_Maitara_TMnr_60010092.jpg">');

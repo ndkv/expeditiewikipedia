@@ -521,6 +521,9 @@ a.commons:visited {
 .wiki-leesmeer img {
   /*width: 75px;*/
   height: 40px;
+  /*float: left;*/
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 .spacer-right.active {
@@ -627,7 +630,11 @@ a.commons:visited {
   margin-right: auto;
   margin-top: 20px;
   max-height: 360px;
-  width: 100%;
+  width: 95%;
   display: block;
   max-width: 600px;
+}
+
+.wiki-attribution {
+  text-align: left;
 }
