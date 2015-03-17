@@ -75,7 +75,7 @@
 }
 
 #contentSwiper .swiper-slide {
-  overflow-y: auto;
+  /*overflow-y: auto;*/
 }
 
 #contentSwiper.active {
@@ -631,7 +631,7 @@ a.commons:visited {
   margin-right: auto;
   margin-top: 20px;
   /*max-height: 360px;*/
-  width: 95%;
+  width: 100%;
   display: block;
   /*max-width: 600px;*/
 }
