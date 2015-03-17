@@ -453,9 +453,9 @@ var InterfaceController = function(ExpeditionController) {
 					value.firstChild.innerHTML = 'Read more';
 				});
 
-				$('#btnBack').text('Back');
+				// $('#btnBack').text('Back');
 			} else {
-				$('#btnBack').text('Terug');
+				// $('#btnBack').text('Terug');
 			}
 			
 		});
@@ -590,9 +590,9 @@ var InterfaceController = function(ExpeditionController) {
 					var pages = data.query.pages;
 					for (var page in pages) { break; }
 					
-					var $content = $('<div class="intro-text-content"></div>'), 
+					var $content = $('<div class="expedition-text-content"></div>'), 
 						$contentElem = $('<div></div>'),
-						$contentImage = $('<div class="intro-text-image"></div>');
+						$contentImage = $('<div class="expedition-text-image"></div>');
 						$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
 						$wikiText.append($(pages[page].extract).filter('p'));
 
@@ -635,7 +635,7 @@ var InterfaceController = function(ExpeditionController) {
 				value.firstChild.innerHTML = 'Read more';
 			});
 
-			$('#btnBack').text('Back');
+			// $('#btnBack').text('Back');
 			$('#btnStartExpedition').text('Start expedition!');
 
 		} else {
@@ -643,7 +643,7 @@ var InterfaceController = function(ExpeditionController) {
 				value.firstChild.innerHTML = 'Lees meer';
 			});
 
-			$('#btnBack').text('Terug');
+			// $('#btnBack').text('Terug');
 			$('#btnStartExpedition').text('Start expeditie!');
 		}
 
@@ -672,6 +672,8 @@ var InterfaceController = function(ExpeditionController) {
 		} else {
 			$content.html('Introductie tekst uit Excel sheet');
 		}
+
+		$content.append($('<button class="btnDetailedDrawer" id="btnStartExpedition">Start Expeditie!</button>'));
 
 		$contentElem.append($content);
 		$contentElem.append($contentImage);
