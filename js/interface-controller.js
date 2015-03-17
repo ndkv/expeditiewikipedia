@@ -371,7 +371,7 @@ var InterfaceController = function(ExpeditionController) {
 		poisList = sortable;
 
 		$.each(sortable, function(index, value) {
-			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].summary),
+			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].Summary),
 				$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
 
 			var $expeditionContent = $('<div></div>')
@@ -528,7 +528,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	var loadVMExpedition = function() {
 		var poi = poisList[currentPoi - 1];
-		var path = 'data/' + currentExpedition + '/pois/' + poi[1].type + ' ' + poi[1].title + '.htm';
+		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title + '.htm';
 
 		$.get(path, function(data) {
 			var columns = $('<div class="columns"></div>');
@@ -536,10 +536,12 @@ var InterfaceController = function(ExpeditionController) {
 			var images = $data.find('img');
 
 			$.each(images, function(index, value) {
+				//resize images so they fit in column width
 				var urlPieces = $(value).prop('src').split('/'),
 					folder = urlPieces[urlPieces.length - 2],
-					file = urlPieces[urlPieces.length - 1],
-					imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
+					file = urlPieces[urlPieces.length - 1];
+
+				var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
 				$image = $(value);
 				$image.prop('src', imageUrl);
@@ -551,7 +553,10 @@ var InterfaceController = function(ExpeditionController) {
 				
 				$image.prop('height', columnWidth * ratio);
 
-				var $fancybox = $('<a class="fancybox" href="' + imageUrl + '"></a>');
+				console.log(file);
+				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.png';
+				var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
+				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
 				$fancybox.appendTo($image.parent());
 				$image.detach().appendTo($fancybox);
 			});

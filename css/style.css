@@ -57,7 +57,7 @@
 /*dragend container*/
 #contentSwiper {
   width: auto;
-  height: 400px;
+  height: 380px;
   margin: 0px;
   /*background: #457;*/
   cursor: -moz-grab;
@@ -101,6 +101,7 @@
 .btnDetailedDrawer {
   width: 150px;
   margin-left: 5px;
+  margin-top: 15px;
   height: 30px;
   border: 0;
   background-color: black;
@@ -159,7 +160,7 @@ body {
   -moz-columns: 3 400px;
   columns: 3 400px;
   padding: 10px;
-  padding-right: 150px;
+  /*padding-right: 150px;*/
 }
 
 .columns h2, h3 {
