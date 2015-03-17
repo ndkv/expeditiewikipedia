@@ -371,7 +371,7 @@ var InterfaceController = function(ExpeditionController) {
 		poisList = sortable;
 
 		$.each(sortable, function(index, value) {
-			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].Summary),
+			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].summary),
 				$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
 
 			var $expeditionContent = $('<div></div>')
