@@ -613,16 +613,16 @@ a.commons:visited {
 
 .intro-text-content {
   /*background-color: black;*/
-  float: left;
-  width: 50%;
-  padding-top: 45px;
+  /*float: left;*/
+  /*width: 50%;*/
+  padding-top: 20px;
   text-align: center;
 }
 
 .intro-text-image {
-  float: right;
-  width: 50%;
-  height: 100%;
+  /*float: right;*/
+  /*width: 50%;*/
+  /*height: 100%;*/
   text-align: center;
 }
 
@@ -630,10 +630,10 @@ a.commons:visited {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  max-height: 360px;
+  /*max-height: 360px;*/
   width: 95%;
   display: block;
-  max-width: 600px;
+  /*max-width: 600px;*/
 }
 
 .wiki-attribution {
