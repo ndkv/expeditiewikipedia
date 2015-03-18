@@ -74,7 +74,11 @@
 /*  padding-left: 30px;
   padding-right: 30px;
   padding- top: 20px;*/
-  /*overflow-y: scroll;*/
+}
+
+#contentSwiper.scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #contentSwiper .swiper-slide {
@@ -298,6 +302,12 @@ p {
 .swiper-free-mode > .swiper-wrapper {
   /*width: 500px;*/
   margin: 0px !important;
+}
+
+.swiper-wrapper.scroll {
+  height: 440px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .expedition-logo img {
@@ -684,6 +694,16 @@ a.commons:visited {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 23px;
   cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s;
+}
+
+#btnBack.active {
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.4s 0.4s;
 }
 
 #btnStartExpedition {

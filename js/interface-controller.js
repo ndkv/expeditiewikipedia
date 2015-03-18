@@ -136,6 +136,7 @@ var InterfaceController = function(ExpeditionController) {
 		
     this.toggleDetailView = function() {    	
     	$contentSwiper.toggleClass('active');
+    	//contentSwiper.updateContainerSize();
     	$(".detailedDrawer").toggleClass('high');
     	//hack, fix
 
@@ -143,6 +144,8 @@ var InterfaceController = function(ExpeditionController) {
 
     	$('#btnMenuScrollRight').toggleClass('hidden');
     	$('#btnToggleTopDrawer').toggleClass('hidden');
+
+    	$('#btnBack').toggleClass('active');
 
     	//hack, in landing mode currentExpedition is undefined
    //  	if (mode === 'landing') {
@@ -289,7 +292,6 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
-
 		buildMapsList();
 	};
 
@@ -354,6 +356,8 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('.spacer-left-title').html(expeditionAttributes.title);
 		$('.spacer-left-summary').html(expeditionAttributes.summary);
+
+		$('#contentSwiper').addClass('scroll');
 	};
 
 	var buildPoIList = function (pois) {
