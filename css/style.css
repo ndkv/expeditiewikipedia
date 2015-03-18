@@ -163,11 +163,18 @@ body {
 }
 
 .columns {
-  -webkit-columns: 3 400px;
-  -moz-columns: 3 400px;
-  columns: 3 400px;
+  -webkit-columns: 2 300px;
+  -moz-columns: 2 300px;
+  -o-columns: 2 300px;
+  columns: 2 300px;
+  -webkit-column-gap: 4em;
+  -moz-column-gap: 4em;
+  -o-column-gap: 4em;
+  column-gap: 4em;
   padding: 10px;
   padding-right: 100px;
+  padding-left: 100px;
+
   /*padding-right: 150px;*/
 }
 
