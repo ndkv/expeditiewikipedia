@@ -2,7 +2,7 @@ var MapController = function() {
 	var features = {},
 		featureMarkers = {},
 		poisList = [],
-		overlays = [],
+		overlays = {},
 		currentExpedition,
 		listeners = [],
 		basemaps = [],
@@ -155,21 +155,28 @@ var MapController = function() {
 		basemaps.push(basemap);
 
 		$.each(expeditions, function(index, value) {
-			loadMaps(value.id, value.maps);
+			loadMaps(value.id, value.maps, 'landing');
 		});
 	};
 
 	this.destroyLandingView = function() {
 		$.each(features, function(index, feature) {
-			//feature.off('click', listeners.pop(index));
 			map.removeLayer(feature);
 		});
-		features = [];
+		features = {};
 
 		$.each(overlays, function(index, overlay) {
 			map.removeLayer(overlay);
 		});
 		overlays = [];
+
+		$.each(featureMarkers, function(index, markers) {
+			$.each(markers, function(index, marker) {
+				map.removeLayer(marker);				
+			});
+		});
+		featureMarkers = {};
+
 		
 	};
 
@@ -193,7 +200,7 @@ var MapController = function() {
 				if (basemaps.length > 0) { map.removeLayer(basemaps[0]); }
 				basemap.off('load', handler);
 
-				loadMaps(expedition, maps);
+				loadMaps(expedition, maps, 'expedition');
 			}, 350);
 		};
 
@@ -236,30 +243,34 @@ var MapController = function() {
 		});
 	};
 
-	var loadMaps = function(currentExpedition, maps) {
+	var loadMaps = function(currentExpedition, maps, mode) {
 		var initialMap = overlays.length;
 		try {
-				var overlay;
-				$.each(maps, function(index, value) {
-					var latLngBounds;
-					try {
-						latLngBounds = L.latLngBounds(value.bounds.southWest, value.bounds.northEast);
-					}
-					catch (err) {
-						console.log('Warning, no bounds defined for map ' + value.id);
-					}
+			var overlay;
+			$.each(maps, function(index, value) {
+				var latLngBounds;
+				try {
+					latLngBounds = L.latLngBounds(value.bounds.southWest, value.bounds.northEast);
+				}
+				catch (err) {
+					console.log('Warning, no bounds defined for map ' + value.id);
+				}
 
-					var path = 'data/' + currentExpedition + '/maps/' + value.id + '/{z}/{x}/{y}.png';
-					overlay = L.tileLayer(path, { 
-						tms: true, 
-						updateWhenIdle: true,
-						bounds: latLngBounds
-					});
-					overlays.push(overlay);
+				var path = 'data/' + currentExpedition + '/maps/' + value.id + '/{z}/{x}/{y}.png';
+				overlay = L.tileLayer(path, { 
+					tms: true, 
+					updateWhenIdle: true,
+					bounds: latLngBounds
+				});
+				overlays[value.id] = overlay;
 
-					if (value.visible === true) { overlay.addTo(map); }
+				if (mode === 'landing' && value.visibleIntro === true) {
+					overlay.addTo(map);
+				} else if (mode === 'expedition' && value.visibleExpedition === true) {
+					overlay.addTo(map);
+				}
+
 			});
-				overlays[initialMap].addTo(map);
 		}
 		catch (e) {
 			console.log('Warning: failed to fetch map.');
@@ -283,8 +294,8 @@ var MapController = function() {
 		togglePoiSelection(poi);
 	};
 
-	var toggleLayer = function(event, index) {
-		var layer = overlays[index];
+	var toggleLayer = function(event, id) {
+		var layer = overlays[id];
 		if (map.hasLayer(layer)) {
 			map.removeLayer(layer);
 		} else {

@@ -289,6 +289,8 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
+
+		buildMapsList();
 	};
 
 	this.loadContent = function() {
@@ -324,6 +326,10 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('.spacer-left-title').html("");
 		$('.spacer-left-summary').html("");
+
+		//empty maps list
+		$('#lstMap').empty();
+
 
 		previewItems = [];
 	};
@@ -471,29 +477,45 @@ var InterfaceController = function(ExpeditionController) {
 	var buildMapsList = function() {
 		var $mapList = $('#lstMap');
 
-		try {
-			$.each(expeditions[currentExpeditionIndex].maps, function(index, value) {
+		var maps = [];
+		if (mode === 'landing') {
+			$.each(expeditions, function(index, expedition) {
+				maps.push.apply(maps, expedition.maps);
+			});
+		} else {
+			maps = expeditions[currentExpeditionIndex].maps;
+		}
+
+		//try {
+			$.each(maps, function(index, value) {
 				$mapList.append('<div></div>');
 
 				var $checkbox = $('<input type="checkbox">');
 				$checkbox.click(function() {
-					$checkbox.trigger('_toggleOverlayVisibility', [index]);
+					$checkbox.trigger('_toggleOverlayVisibility', [value.id]);
 				});
-				if (value.visible === true) {
-					$checkbox[0].checked = true;
-				}
-
+				
 				var label = $('<label></label>')
 				.append($checkbox) 
-				.append($('<div>' + value.title + '</div>'))
-				.appendTo($mapList.children().last());
+				.append($('<div>' + value.title + '</div>'));
+
+				if (mode === 'landing' && value.visibleIntro === true) {
+					$checkbox[0].checked = true;
+					label.appendTo($mapList.children().last());
+				} else if (mode === 'expedition') {
+					label.appendTo($mapList.children().last());
+
+					if (value.visibleExpedition === true) {
+						$checkbox[0].checked = true;
+					}
+				}				
 			});
-		}
-		catch (e) {
-			$('#btnMapDrawer').css('opacity', 0);
-			console.log("Warning, this expedition does not have any maps.");
-		}
-		$mapList.find('input')[0].checked = true;
+		//}
+		//catch (e) {
+		//	$('#btnMapDrawer').css('opacity', 0);
+		//	console.log("Warning, this expedition does not have any maps.");
+		//}
+		//$mapList.find('input')[0].checked = true;
 	};
 
 	var fetchWikiImage = function(url, elem) {

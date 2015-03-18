@@ -10,7 +10,8 @@
 		"maps": [
 			{
 				"id": "atlantic",
-				"visible": true,
+				"visibleIntro": true,
+				"visibleExpedition": true,
 				"title": "Bathymetric chart of the Atlantic Ocean",
 				"bounds": {
 					"southWest": [-11.09, -90.86],
@@ -19,7 +20,8 @@
 			},
 			{
 				"id": "indian",
-				"visible": false,
+				"visibleIntro": false,
+				"visibleExpedition": false,
 				"title": "Bathymetric chart of the Atlantic and Indian Ocean",
 				"bounds": {
 					"southWest": [-41.86, -61.84],
@@ -28,7 +30,8 @@
 			},
 			{
 				"id": "route",
-				"visible": true,
+				"visibleIntro": false,
+				"visibleExpedition": true,
 				"title": "Expedition route",
 				"bounds": {
 					"southWest": [-41.51, -60.72],
@@ -37,7 +40,8 @@
 			},
 			{
 				"id": "snip",
-				"visible": false,
+				"visibleIntro": false,
+				"visibleExpedition": false,
 				"title": "The voyage of De Snip",
 				"bounds": {
 					"southWest": [2.01, -70.79],
@@ -70,7 +74,8 @@
 		"maps": [
 			{
 				"id": "geo-schetskaart",
-				"visible": false,
+				"visibleIntro": true,
+				"visibleExpedition": true,
 				"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
 				"bounds": {
 					"southWest": [-12.97, 92.04],
@@ -92,7 +97,8 @@
 		"maps": [
 			{
 				"id":"geelvink-busens",
-				"visible": false,
+				"visibleIntro": true,
+				"visibleExpedition": true,
 				"title":"Kaart van de Geelvinckbaai",
 				"bounds": {
 					"southWest": [-3.99, 133.09],
@@ -101,7 +107,8 @@
 			},
 			{
 				"id":"sentani-meer",
-				"visible": false,
+				"visibleIntro": false,
+				"visibleExpedition": false,
 				"title":"Geologische kaart van het Sentani meer",
 				"bounds": {
 					"southWest": [-2.76, 140.28],
