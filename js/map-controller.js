@@ -23,7 +23,7 @@ var MapController = function() {
 	map.on('click', function () {
 		console.log(map.getCenter());
 		console.log(map.getZoom());
-
+		console.log(map.latLngToContainerPoint(map.getCenter()));
 	});
 
 	this.registerInterfaceEvents = function(InterfaceController) {

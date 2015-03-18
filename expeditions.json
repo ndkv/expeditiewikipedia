@@ -10,7 +10,7 @@
 		"maps": [
 			{
 				"id": "atlantic",
-				"visibleIntro": true,
+				"visibleIntro": false,
 				"visibleExpedition": true,
 				"title": "Bathymetric chart of the Atlantic Ocean",
 				"bounds": {
@@ -74,7 +74,7 @@
 		"maps": [
 			{
 				"id": "geo-schetskaart",
-				"visibleIntro": true,
+				"visibleIntro": false,
 				"visibleExpedition": true,
 				"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
 				"bounds": {
@@ -97,7 +97,7 @@
 		"maps": [
 			{
 				"id":"geelvink-busens",
-				"visibleIntro": true,
+				"visibleIntro": false,
 				"visibleExpedition": true,
 				"title":"Kaart van de Geelvinckbaai",
 				"bounds": {

@@ -693,9 +693,11 @@ var InterfaceController = function(ExpeditionController) {
 		// contentSwiper.removeAllSlides();
 		var $content = $('<div class="intro-text-content"></div>'), 
 			$contentElem = $('<div></div>'),
-			$contentImage = $('<div class="intro-text-image"></div>');
+			$contentImage = $('<div class="intro-text-image"></div>'), 
+			$img = $('<img>');
 
-		$contentImage.append('<img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/COLLECTIE_TROPENMUSEUM_S.S._Van_Goens_langs_een_steiger_met_op_de_achtergrond_Poelau_Maitara_TMnr_60010092.jpg">');
+		$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
+		$contentImage.append($img);
 
 		if (currentLanguage === 'EN') {
 			$content.html('Introduction text from Excel sheet');

@@ -661,7 +661,8 @@ a.commons:visited {
   /*max-height: 360px;*/
   width: 100%;
   display: block;
-  /*max-width: 600px;*/
+  min-width: 768px;
+  max-height: 650px;
 }
 
 .expedition-text-content {
