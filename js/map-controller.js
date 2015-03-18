@@ -1,5 +1,6 @@
 var MapController = function() {
 	var features = {},
+		featureMarkers = {},
 		poisList = [],
 		overlays = [],
 		currentExpedition,
@@ -28,6 +29,10 @@ var MapController = function() {
 
 			listeners.push(handler);
 			feature.on('click', handler);
+
+			$.each(featureMarkers[id], function(index, value) {
+				value.on('click', handler);
+			});
 		});
 
 		var $swiper = $('.swiper-wrapper'),
@@ -38,6 +43,8 @@ var MapController = function() {
 			margin = 20,
 			offset;
 
+		//only available in expedition view
+		//fix
 		$.each(poisList, function (index, poi) {
 			var handler = function () { 
 				InterfaceController.togglePreviewItem(index);
@@ -83,12 +90,16 @@ var MapController = function() {
 
 	this.buildLandingView = function(feats, expeditions) {
 		//display one historical map per expedition
+		var icon = new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg', iconSize: [25, 25]});
 
 		$.each(feats, function(index, value) {
 			var geometry = value.geometry.coordinates,
 				type = value.geometry.type,
 				coordinates = [],
-				feature;
+				feature,
+				marker;
+
+			featureMarkers[value.properties.id] = [];
 
 			//reverse geojson.io's lat/lng order
 			
@@ -96,13 +107,16 @@ var MapController = function() {
 			if (type === 'LineString') {
 				$.each(geometry, function(i, v) {
 					coordinates.push([v[1], v[0]]);
+					marker = L.marker([v[1], v[0]], {icon: icon});
+					marker.addTo(map);
+					featureMarkers[value.properties.id].push(marker);
 				});
 
 				feature = L.polyline(coordinates, {
-					weight: 3,
+					weight: 2,
 					opacity: 0.9, 
-					color: '#d00', 
-					dashArray: '10, 5',
+					color: 'black', 
+					// dashArray: '10, 5',
 					lineCap: 'butt',
 					lineJoin: 'round'
 				});
@@ -111,13 +125,16 @@ var MapController = function() {
 			if (type === "Polygon") {
 				$.each(geometry[0], function(i, v) {
 					coordinates.push([v[1], v[0]]);
+					// var marker = L.marker([v[1], v[0]], {icon: new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg', iconSize: [20, 20]})});
+					// marker.addTo(map);
 				});
 
 				feature = L.polygon(coordinates, {
-					weight: 3,
+					weight: 2,
 					opacity: 0.9, 
-					color: '#d00', 
-					dashArray: '10, 5',
+					// color: '#d00', 
+					color: 'black',
+					// dashArray: '10, 5',
 					lineCap: 'butt',
 					lineJoin: 'round'
 				});
@@ -209,7 +226,7 @@ var MapController = function() {
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
 		sortable.map(function(pois) {
-			var icon = new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg'});
+			var icon = new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg', iconSize: [26, 26]});
 			icon.options.shadowSize = [0,0];
 			var coords = pois[1];
 			var marker = L.marker([coords[1], coords[0]], {icon: icon});
@@ -239,6 +256,8 @@ var MapController = function() {
 						bounds: latLngBounds
 					});
 					overlays.push(overlay);
+
+					if (value.visible === true) { overlay.addTo(map); }
 			});
 				overlays[initialMap].addTo(map);
 		}

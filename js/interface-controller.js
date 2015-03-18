@@ -479,6 +479,9 @@ var InterfaceController = function(ExpeditionController) {
 				$checkbox.click(function() {
 					$checkbox.trigger('_toggleOverlayVisibility', [index]);
 				});
+				if (value.visible === true) {
+					$checkbox[0].checked = true;
+				}
 
 				var label = $('<label></label>')
 				.append($checkbox) 

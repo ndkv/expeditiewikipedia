@@ -10,6 +10,7 @@
 		"maps": [
 			{
 				"id": "atlantic",
+				"visible": true,
 				"title": "Bathymetric chart of the Atlantic Ocean",
 				"bounds": {
 					"southWest": [-11.09, -90.86],
@@ -18,12 +19,32 @@
 			},
 			{
 				"id": "indian",
+				"visible": false,
 				"title": "Bathymetric chart of the Atlantic and Indian Ocean",
 				"bounds": {
 					"southWest": [-41.86, -61.84],
 					"northEast": [7.62, 141.14]
 				}
-			}]
+			},
+			{
+				"id": "route",
+				"visible": true,
+				"title": "Expedition route",
+				"bounds": {
+					"southWest": [-41.51, -60.72],
+					"northEast": [55.77, 128.27]
+				}
+			},
+			{
+				"id": "snip",
+				"visible": false,
+				"title": "The voyage of De Snip",
+				"bounds": {
+					"southWest": [2.01, -70.79],
+					"northEast": [53.92, 18.22]
+				}
+			}
+		]
 	},
 	{
 		"id": "siboga",
@@ -46,14 +67,17 @@
 		"zoomto": {"lat": 1.0, "lon": 1.0},
 		"link": "https://nl.wikipedia.org/wiki/Ceram-expeditie",
 		"words": 20000,
-		"maps": [{
-			"id": "geo-schetskaart",
-			"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
-			"bounds": {
-				"southWest": [-12.97, 92.04],
-				"northEast": [12.00, 144.07]
+		"maps": [
+			{
+				"id": "geo-schetskaart",
+				"visible": false,
+				"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
+				"bounds": {
+					"southWest": [-12.97, 92.04],
+					"northEast": [12.00, 144.07]
+				}
 			}
-		}]
+		]
 	},
 	{
 		"id": "nieuw-guinea",
@@ -68,6 +92,7 @@
 		"maps": [
 			{
 				"id":"geelvink-busens",
+				"visible": false,
 				"title":"Kaart van de Geelvinckbaai",
 				"bounds": {
 					"southWest": [-3.99, 133.09],
@@ -76,6 +101,7 @@
 			},
 			{
 				"id":"sentani-meer",
+				"visible": false,
 				"title":"Geologische kaart van het Sentani meer",
 				"bounds": {
 					"southWest": [-2.76, 140.28],
