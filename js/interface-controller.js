@@ -194,7 +194,8 @@ var InterfaceController = function(ExpeditionController) {
 					$el.trigger({
 						type: 'mapZoomToRoute',
 					//vmIndex: index
-						expeditionId: expeditions[index].id
+						expeditionId: expeditions[index].id,
+						zoomTo: expeditions[index].zoomto
 					});			
 				}
 			});

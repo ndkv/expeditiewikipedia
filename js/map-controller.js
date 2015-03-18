@@ -20,6 +20,11 @@ var MapController = function() {
 		maxZoom: 10
 	});
 	map.setView([0.0, 55.0], 2);
+	map.on('click', function () {
+		console.log(map.getCenter());
+		console.log(map.getZoom());
+
+	});
 
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(id, feature) {
@@ -180,7 +185,7 @@ var MapController = function() {
 		
 	};
 
-	this.buildExpeditionView = function(expedition, maps, route, pois) {
+	this.buildExpeditionView = function(expedition, maps, route, pois, zoomTo) {
 		currentExpedition = expedition;
 		var basemap = L.tileLayer.provider('Esri.OceanBasemap', {opacity: 0});
 		buildExpeditionGeometries(route, pois);
@@ -207,6 +212,7 @@ var MapController = function() {
 		basemap.on('load', handler);
 
 		basemap.addTo(map);
+		map.setView([zoomTo.lat, zoomTo.lon], zoomTo.zoom);
 	};
 
 	var buildExpeditionGeometries = function(route, pois) {
@@ -282,7 +288,8 @@ var MapController = function() {
 
 	var zoomToRoute = function(e) {
 		var index = e.expeditionId;
-		map.fitBounds(features[index].getBounds());
+		console.log('catching zoom to route trigger');
+		map.setView([e.zoomTo.lat, e.zoomTo.lon], e.zoomTo.zoom);
 	};
 
 	var zoomToPoi = function(e) {

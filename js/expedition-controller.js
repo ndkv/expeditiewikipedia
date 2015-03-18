@@ -94,7 +94,7 @@ var ExpeditionController = function() {
 				InterfaceController.buildExpeditionView(expedition, expeditionIndex, pois);
 				
 				setTimeout(function () { 
-					MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois);
+					MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
 					InterfaceController.registerMapEventsPois();
 					MapController.registerInterfaceEvents(InterfaceController);
 				}, 1500);

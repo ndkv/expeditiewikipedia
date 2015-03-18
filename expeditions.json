@@ -6,7 +6,7 @@
 		"summary": "Felix Andries Vening Meinesz (30 juli 1887 – 10 augustus 1966) was een Nederlands geofysicus en geodeet die baanbrekend werk voor de geofysica en geodesie verricht heeft",
 		"image": "http://commons.wikimedia.org/wiki/File:Hr._Ms._K_XVIII_(11_July_1935).jpg",
 		"blurp": "Fantastische reis door de zwaartekracht",
-		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"zoomto": {"lat": 37.0, "lon": 6.0, "zoom": 2},
 		"maps": [
 			{
 				"id": "atlantic",
@@ -57,7 +57,7 @@
 		"summary": "De Siboga-expeditie was een Nederlandse zoölogische, botanische, geologische en hydrografische expeditie naar Nederlands-Indië",
 		"image": "http://commons.wikimedia.org/wiki/File:Siboga,_gunboat_(1898).jpg",
 		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4},
 		"link": "http://nl.wikipedia.org/wiki/Siboga-expeditie",
 		"words": 20000
 	},
@@ -68,7 +68,7 @@
 		"summary": "De Ceram-expeditie van 1917-1919 was een expeditie naar Ceram, met als doel de geologie en delfstoffen van het eiland in kaart te brengen.",
 		"image": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Alfuren_uit_de_bergen_van_Ceram_TMnr_10005708.jpg",
 		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"zoomto": {"lat": 0.14, "lon": 127.43, "zoom": 6},
 		"link": "https://nl.wikipedia.org/wiki/Ceram-expeditie",
 		"words": 20000,
 		"maps": [
@@ -91,7 +91,7 @@
 		"summary": "De Noord Nieuw-Guinea Expeditie (1903) was een Nederlandse expeditie die de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea wetenschappelijk verkende.",
 		"image": "https://commons.wikimedia.org/wiki/File:Arthur_Wichmann_en_zijn_expeditieleden.jpg",
 		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0},
+		"zoomto": {"lat": -3.19, "lon": 141.49, "zoom": 5},
 		"link": "https://nl.wikipedia.org/wiki/Noord_Nieuw-Guinea_Expeditie", 
 		"words": 20000,
 		"maps": [
@@ -124,7 +124,7 @@
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
 		"image": "https://commons.wikimedia.org/wiki/File:Athanasius_Kircher_Portrait.jpg",
 		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0}
+		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4}
 	},
 	{
 		"id": "bestsellers",
@@ -133,6 +133,6 @@
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
 		"image": "https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",
 		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0}
+		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4}
 	}
 ]
