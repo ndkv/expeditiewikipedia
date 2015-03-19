@@ -61,6 +61,8 @@ var InterfaceController = function(ExpeditionController) {
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
 			window.location.hash = expeditions[currentPreviewItem].id;
+			//empy content window to stop youtube movie if running;
+			contentSwiper.removeAllSlides();
 		})
 		.on('click', '#btnBack', function(e) { that.toggleDetailView(); })
 		.on('click', '#btnMapDrawer', function(e) { 
@@ -146,6 +148,9 @@ var InterfaceController = function(ExpeditionController) {
     	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	$('#btnBack').toggleClass('active');
+
+    	$('.expedition-title').toggleClass('active');
+    	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
 
     	//hack, in landing mode currentExpedition is undefined
    //  	if (mode === 'landing') {
@@ -489,6 +494,8 @@ var InterfaceController = function(ExpeditionController) {
 			});
 		} else {
 			maps = expeditions[currentExpeditionIndex].maps;
+
+			if (maps === undefined) { maps = []; }
 		}
 
 		//try {
@@ -702,16 +709,23 @@ var InterfaceController = function(ExpeditionController) {
 		if (currentLanguage === 'EN') {
 			$content.html('Introduction text from Excel sheet');
 		} else {
-			$content.html('Introductie tekst uit Excel sheet');
+			// $content.html('Introductie tekst uit Excel sheet');
+			$content.html('<div id="slide-contentzz"></div>');
 		}
 
-		$content.append($('<button class="btnDetailedDrawer" id="btnStartExpedition">Start Expeditie!</button>'));
+		
+		$content.append($('<div><button class="btnDetailedDrawer" id="btnStartExpedition">Start Expeditie!</button></div>'));
 
 		$contentElem.append($content);
 		$contentElem.append($contentImage);
 
 		var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 		slide.append();
+
+		setTimeout(function() {
+					$('#slide-contentzz').html('<iframe width="560" height="280" src="https://www.youtube.com/embed/C_91XgjvqxA" frameborder="0" allowfullscreen></iframe>');
+		}, 300);
+
 	};
 
 };

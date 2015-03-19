@@ -317,13 +317,34 @@ p {
   overflow-x: hidden;
 }
 
-.expedition-logo img {
+#expedition-logo {
   /*background-image: url(../images/icons/wikipedialogo.jpg);*/
   height: 40px;
   margin-top: 5px;
   /*background-size: 103px 34px;*/
   /*background-repeat: no-repeat;*/
   /*background-position: 10px 8px;*/
+}
+
+.expedition-logo-container {
+  float: left;
+}
+
+.expedition-title {
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  text-align: center;
+  opacity: 0;
+  font-size: 35px;
+}
+
+.expedition-title.active {
+  opacity: 1;
+}
+
+.menu-stack {
+  float: right;
 }
 
 .map-controls {
@@ -638,12 +659,12 @@ a.commons:visited {
   /*width: 50%;*/
   text-align: center;
   position: absolute;
-  top: 50px;
+  top: 30px;
   left: 50px;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.7);
   /*padding-bottom: 200px;*/
-  width: 300px;
+  /*width: 300px;*/
   border-radius: 5px;
 }
 
@@ -716,7 +737,7 @@ a.commons:visited {
 
 #btnStartExpedition {
   /*position: absolute;*/
-  margin-top: 150px;
+  /*margin-top: 150px;*/
 
 }
 

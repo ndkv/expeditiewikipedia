@@ -89,6 +89,8 @@
 		"title": "Noord Nieuw-Guinea",
 		"subtitle": "",
 		"summary": "De Noord Nieuw-Guinea Expeditie (1903) was een Nederlandse expeditie die de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea wetenschappelijk verkende.",
+		"introNL": "De Noord Nieuw-Guinea Expeditie (1903), onder leiding van Arhur Wichman verkende de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea en was op zoek was naar exploiteerbare lagen steenkool.",
+		"introGB": "",
 		"image": "https://commons.wikimedia.org/wiki/File:Arthur_Wichmann_en_zijn_expeditieleden.jpg",
 		"blurp": "",
 		"zoomto": {"lat": -3.19, "lon": 141.49, "zoom": 5},
@@ -131,6 +133,8 @@
 		"title": "Reis-bestsellers in de Gouden Eeuw",
 		"subtitle": "",
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
+		"introNL": "Een selectie van 17de eeuwse reisboeken uit de collecties van de Universiteit Maastricht en Radboud Universiteit Nijmegen.",
+		"introGB": "",
 		"image": "https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",
 		"blurp": "",
 		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4}
