@@ -64,7 +64,14 @@ var InterfaceController = function(ExpeditionController) {
 			//empy content window to stop youtube movie if running;
 			contentSwiper.removeAllSlides();
 		})
-		.on('click', '#btnBack', function(e) { that.toggleDetailView(); })
+		.on('click', '#btnBack', function(e) { 
+			that.toggleDetailView();
+			//stop youtube movie
+			setTimeout(function() {
+				contentSwiper.removeAllSlides();				
+			}, 300);
+
+		})
 		.on('click', '#btnMapDrawer', function(e) { 
 			$('#lstMap').toggleClass('active');
 			console.log('opening map drawer'); 
@@ -723,7 +730,7 @@ var InterfaceController = function(ExpeditionController) {
 		slide.append();
 
 		setTimeout(function() {
-					$('#slide-contentzz').html('<iframe width="560" height="280" src="https://www.youtube.com/embed/C_91XgjvqxA" frameborder="0" allowfullscreen></iframe>');
+					$('#slide-contentzz').html('<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1"><img src="images/intro/vm-youtube.png" height="299"></a>');
 		}, 300);
 
 	};
