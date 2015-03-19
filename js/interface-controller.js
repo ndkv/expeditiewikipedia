@@ -371,6 +371,8 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html(expeditionAttributes.summary);
 
 		$('#contentSwiper').addClass('scroll');
+		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
+		$('.expedition-title').addClass('active');
 	};
 
 	var buildPoIList = function (pois) {
@@ -708,16 +710,19 @@ var InterfaceController = function(ExpeditionController) {
 		var $content = $('<div class="intro-text-content"></div>'), 
 			$contentElem = $('<div></div>'),
 			$contentImage = $('<div class="intro-text-image"></div>'), 
-			$img = $('<img>');
+			$img = $('<img>'),
+			expedition = expeditions[expeditionsHash[currentExpedition]];
 
 		$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
 		$contentImage.append($img);
 
 		if (currentLanguage === 'EN') {
-			$content.html('Introduction text from Excel sheet');
+			// $content.html('Introduction text from Excel sheet');
+			$content.html(expedition.introGB);
 		} else {
 			// $content.html('Introductie tekst uit Excel sheet');
-			$content.html('<div id="slide-contentzz"></div>');
+			// $content.html('<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1"><img src="images/intro/vm-youtube.png" height="299"></a>');
+			$content.html(expedition.introNL);
 		}
 
 		
@@ -728,11 +733,6 @@ var InterfaceController = function(ExpeditionController) {
 
 		var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 		slide.append();
-
-		setTimeout(function() {
-					$('#slide-contentzz').html('<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1"><img src="images/intro/vm-youtube.png" height="299"></a>');
-		}, 300);
-
 	};
 
 };

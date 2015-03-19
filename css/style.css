@@ -336,7 +336,8 @@ p {
   width: 450px;
   text-align: center;
   opacity: 0;
-  font-size: 35px;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 .expedition-title.active {
@@ -664,7 +665,7 @@ a.commons:visited {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.7);
   /*padding-bottom: 200px;*/
-  /*width: 300px;*/
+  width: 413px;
   border-radius: 5px;
 }
 
