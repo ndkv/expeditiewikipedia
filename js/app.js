@@ -16,7 +16,7 @@ window.onload = function() {
 	    .fancybox({	
 	    	autoSize: false,
 	    	width: 500,
-	    	height: 300,
+	    	height: 500,
 	    	openEffect: 'none'
 	    })
 	    .trigger('click');		
