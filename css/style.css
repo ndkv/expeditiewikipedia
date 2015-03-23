@@ -605,9 +605,10 @@ a.commons:visited {
 }
 
 .menu-scroll-button {
-  margin-top: 60px;
+  /*margin-top: 60px;*/
   opacity: 0.9;
   transition: opacity .2s 1s;
+  cursor: pointer;
 
 }
 
@@ -621,9 +622,17 @@ a.commons:visited {
   transition: opacity .2s;
 }
 
+#btnMenuScrollLeft {
+  margin-top: 60px;
+}
+
+#btnMenuScrollRight {
+  margin-top: 5px;
+}
+
 .menu-close-button {
   opacity: 0.9;
-  margin-top: 52px;
+  margin-top: 35px;
   transition: opacity .2s 1s;
 }
 

@@ -89,28 +89,11 @@ var InterfaceController = function(ExpeditionController) {
 	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
 
 	$('#btnMenuScrollRight').click(function() {
-		var $swiper = $('.swiper-wrapper');
-		var spacerRightWidth = 50;
-		var spacerLeftWidth = 150;
-		var docWidth = $(document).width();
-		var docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth;
-		console.log(docSwiperDiff);
+		scrollMenu('right');
+	});
 
-		var move = $swiper.position().left - 200;
-		if (Math.abs($swiper.position().left) >= $swiper.width()) { move = -$swiper.width(); }
-		console.log(move);
-		console.log($swiper.width());
-
-		var translate = 'translate3d(' + move + 'px, 0px, 0px';
-		
-		$swiper.css('transition', 'transform .5s');
-		$swiper.css('transform', translate);
-		$swiper.css('-webkit-transition', '-webkit-transform .5s');
-		$swiper.css('-webkit-transform', translate);
-		$swiper.css('-moz-transition', '-moz-transform .5s');
-		$swiper.css('-moz-transform', translate);
-		$swiper.css('-o-transition', '-o-transform .5s');
-		$swiper.css('-o-transform', translate);
+	$('#btnMenuScrollLeft').click(function () {
+		scrollMenu('left');
 	});
 
 	var $menuContentContainer = $('#menuContentContainer'),
@@ -152,6 +135,7 @@ var InterfaceController = function(ExpeditionController) {
     	$swiperMenu.toggleClass('hidden');
 
     	$('#btnMenuScrollRight').toggleClass('hidden');
+    	$('#btnMenuScrollRLeft').toggleClass('hidden');
     	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	$('#btnBack').toggleClass('active');
@@ -739,6 +723,33 @@ var InterfaceController = function(ExpeditionController) {
 			$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
 			$('.intro-text-image').append($img);
 		}, 200);
+	};
+
+	var scrollMenu = function(direction) {
+
+		var moveDirection = (direction === 'right') ? -300 : 300;
+
+		var $swiper = $('.swiper-wrapper');
+		var spacerRightWidth = 50;
+		var spacerLeftWidth = 150;
+		var docWidth = $(document).width();
+		var docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth;
+
+		var move = $swiper.position().left + moveDirection;
+		// if (Math.abs($swiper.position().left) >= $swiper.width()) { move = -$swiper.width(); }
+		if ($swiper.position().left + moveDirection > 0) { move = 0; }
+		console.log('test move');
+
+		var translate = 'translate3d(' + move + 'px, 0px, 0px';
+		
+		$swiper.css('transition', 'transform .5s');
+		$swiper.css('transform', translate);
+		$swiper.css('-webkit-transition', '-webkit-transform .5s');
+		$swiper.css('-webkit-transform', translate);
+		$swiper.css('-moz-transition', '-moz-transform .5s');
+		$swiper.css('-moz-transform', translate);
+		$swiper.css('-o-transition', '-o-transform .5s');
+		$swiper.css('-o-transform', translate);
 	};
 
 };
