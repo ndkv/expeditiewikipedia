@@ -309,6 +309,7 @@ p {
   /* margin-top: 2px; */
   border-radius: 5px;
   font-size: .8em;
+  text-decoration: none;
 }
 
 /*.swiper-container .swiper-slide {
@@ -337,6 +338,19 @@ p {
 
 .expedition-logo-container {
   float: left;
+}
+
+#overview {
+  float: left;
+  margin-top: 26px;
+  display: none;
+}
+
+#overview > a {
+  color: #999;
+  font-size: 0.8em;
+  margin-left: 10px;
+  text-decoration: none;
 }
 
 .expedition-title {
@@ -649,7 +663,7 @@ a.commons:visited {
 #introduction {
   background: white;
   padding: 30px;
-  /*opacity: 0;*/
+  opacity: 0;
   text-align: center;
   z-index: -1;
 }

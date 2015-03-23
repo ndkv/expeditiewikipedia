@@ -283,6 +283,7 @@ var InterfaceController = function(ExpeditionController) {
 			}
 		});
 
+		//change language
 		$('.spacer-left-title').html('kies een reis');
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
@@ -355,6 +356,10 @@ var InterfaceController = function(ExpeditionController) {
 		$('#contentSwiper').addClass('scroll');
 		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
 		$('.expedition-title').addClass('active');
+
+		$('#overview').css('display', 'block');
+		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
+		console.log(currentLanguage);
 	};
 
 	var buildPoIList = function (pois) {
@@ -456,13 +461,11 @@ var InterfaceController = function(ExpeditionController) {
 			//change interface language
 			//hack, fix
 			if (currentExpedition === 'vening meinesz') {
-				$.each($readMore, function(index, value) {
-					value.firstChild.innerHTML = 'Read more';
-				});
-
-				// $('#btnBack').text('Back');
-			} else {
-				// $('#btnBack').text('Terug');
+				currentLanguage = 'EN';
+				changeInterfaceLanguage('EN');
+				// $.each($readMore, function(index, value) {
+				// 	value.firstChild.innerHTML = 'Read more';
+				// });
 			}
 			
 		});
