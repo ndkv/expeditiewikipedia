@@ -385,15 +385,15 @@ p {
 }
 
 #btnMapDrawer {
-  /*position: absolute;
-  bottom: -100px;*/
-  /*opacity: .5;*/
+  position: absolute;
+  bottom: -100px;
+  opacity: 0;
   /*cursor: not-allowed;*/
 
 }
 
 #btnMapDrawer.active {
-  /*position: static;*/
+  position: static;
   cursor: pointer;
   opacity: 1;
 }

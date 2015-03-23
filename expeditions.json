@@ -13,7 +13,7 @@
 			{
 				"id": "atlantic",
 				"visibleIntro": false,
-				"visibleExpedition": true,
+				"visibleExpedition": false,
 				"title": "Bathymetric chart of the Atlantic Ocean",
 				"bounds": {
 					"southWest": [-11.09, -90.86],
@@ -106,7 +106,7 @@
 			{
 				"id":"geelvink-busens",
 				"visibleIntro": false,
-				"visibleExpedition": true,
+				"visibleExpedition": false,
 				"title":"Kaart van de Geelvinckbaai",
 				"bounds": {
 					"southWest": [-3.99, 133.09],

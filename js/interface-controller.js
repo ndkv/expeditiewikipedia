@@ -14,7 +14,8 @@ var InterfaceController = function(ExpeditionController) {
 		currentLanguage = "NL",
 		swiper,
 		mode = "landing",
-		poisList;
+		poisList,
+		menuFolded = false;
 
 	$('.fancybox').fancybox({
         helpers: {
