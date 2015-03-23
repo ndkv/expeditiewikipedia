@@ -682,7 +682,8 @@ var InterfaceController = function(ExpeditionController) {
 			});
 
 			// $('#btnBack').text('Back');
-			$('#btnStartExpedition').text('Start expedition!');
+			// $('#btnStartExpedition').text('Start expedition!');
+			// console.log('change lang');
 
 		} else {
 			$.each($readMore, function(index, value) {
@@ -713,26 +714,31 @@ var InterfaceController = function(ExpeditionController) {
 			$img = $('<img>'),
 			expedition = expeditions[expeditionsHash[currentExpedition]];
 
-		$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
-		$contentImage.append($img);
-
+		var buttonText;
 		if (currentLanguage === 'EN') {
 			// $content.html('Introduction text from Excel sheet');
 			$content.html(expedition.introGB);
+			buttonText = 'Start expedition!';
 		} else {
 			// $content.html('Introductie tekst uit Excel sheet');
 			// $content.html('<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1"><img src="images/intro/vm-youtube.png" height="299"></a>');
 			$content.html(expedition.introNL);
+			buttonText = 'Start expeditie!';
 		}
 
 		
-		$content.append($('<div><button class="btnDetailedDrawer" id="btnStartExpedition">Start Expeditie!</button></div>'));
+		$content.append($('<div><button class="btnDetailedDrawer" id="btnStartExpedition">'+ buttonText +'</button></div>'));
 
 		$contentElem.append($content);
 		$contentElem.append($contentImage);
 
 		var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 		slide.append();
+
+		setTimeout(function() {
+			$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
+			$('.intro-text-image').append($img);
+		}, 200);
 	};
 
 };

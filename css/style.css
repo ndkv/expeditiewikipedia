@@ -34,7 +34,7 @@
   transition: transform 0.2s linear, height .30s 0.7s;
   width: 100%;
   -webkit-overflow-scrolling: touch;
-  height: 170px;
+  height: 190px;
   background-color: rgba(255, 255, 255, 0.9);
   overflow: hidden;
   margin: 0px;
@@ -242,7 +242,7 @@ p {
 
 .expeditionItem {
   width: 190px;
-  height: 150px;
+  height: 170px;
   border-style: solid;
   border-color: white;
   border-width: 2px;
@@ -284,22 +284,31 @@ p {
 }
 
 .readMore {
-  text-align: right;
-  font-size: .8em;
-  border-radius: 3px;
-  padding: 2px;
-  position: absolute;
-  top: 135px;
-  display: inline;
-  margin-left: 20px;
+  text-align: center;
+  /* border-radius: 3px; */
+  /* padding: 3px; */
+  /* position: absolute; */
+  /* top: 135px; */
+  /* display: inline; */
+  /* margin-left: 70px; */
+  /* background-color: black; */
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 100px; */
+  margin-top: -30px;
 }
 
 .readMore > span {
-  color: gray;
-  margin-right: 5px;
+  color: rgba(240, 240, 240, 1);
+  /* margin-right: 5px; */
   text-align: center;
   cursor: pointer;
   text-decoration: underline;
+  background-color: black;
+  padding: 4px 6px;
+  /* margin-top: 2px; */
+  border-radius: 5px;
+  font-size: .8em;
 }
 
 /*.swiper-container .swiper-slide {
@@ -451,6 +460,7 @@ p {
   position: absolute;
   left: 175px;
   right: 80px;
+  height: 100%;
 }
 
 #swiperMenu {
@@ -630,8 +640,9 @@ a.commons:visited {
 #introduction {
   background: white;
   padding: 30px;
-  opacity: 0;
+  /*opacity: 0;*/
   text-align: center;
+  z-index: -1;
 }
 
 #introductionContent img {
