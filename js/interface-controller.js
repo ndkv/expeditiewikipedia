@@ -49,16 +49,7 @@ var InterfaceController = function(ExpeditionController) {
     var $previewList = $('#previewList');
   
 	$(document)
-		.on('click', '#btnToggleTopDrawer', function(e) {
-			$('.detailedDrawer').toggleClass('active');
-			$swiperMenu.toggleClass('hidden');
-
-			var image = $(this).find('img');
-			var src = (image.prop('src').split('/').pop() === 'close.svg') ? 'images/icons/open.svg' : 'images/icons/close.svg';
-			image.prop('src', src);
-
-			// this.text = (this.text === "x") ? "+" : "x";
-		})
+		.on('click', '#btnToggleTopDrawer', function() { toggleTopDrawer(); })
 		.on('click', '#btnStartExpedition', function(e) {
 			ExpeditionController.startExpedition(currentPreviewItem);
 			window.location.hash = expeditions[currentPreviewItem].id;
@@ -127,7 +118,7 @@ var InterfaceController = function(ExpeditionController) {
 		$('#menuBlackout').removeClass('active');
 	});
 		
-    this.toggleDetailView = function() {    	
+    this.toggleDetailView = function() { 	
     	$contentSwiper.toggleClass('active');
     	//contentSwiper.updateContainerSize();
     	$(".detailedDrawer").toggleClass('high');
@@ -164,6 +155,9 @@ var InterfaceController = function(ExpeditionController) {
 
 		currentPreviewItem = index;
 		previewItems[index].addClass("previewItemActive");
+
+		if (menuFolded === true) { toggleTopDrawer(); }
+		console.log(menuFolded);
 	};
 
 	this.togglePreviewItemLanding = function(id) {
@@ -178,7 +172,10 @@ var InterfaceController = function(ExpeditionController) {
 		});
 
 		currentPreviewItem = index;
-		previewItems[index].addClass("previewItemActive");	
+		previewItems[index].addClass("previewItemActive");
+
+		if (menuFolded === true) { toggleTopDrawer(); }
+		console.log(menuFolded);
 	};
 
 	this.registerMapEventsRoute = function() {
@@ -751,6 +748,17 @@ var InterfaceController = function(ExpeditionController) {
 		$swiper.css('-moz-transform', translate);
 		$swiper.css('-o-transition', '-o-transform .5s');
 		$swiper.css('-o-transform', translate);
+	};
+
+	var toggleTopDrawer = function() {
+		$('.detailedDrawer').toggleClass('active');
+		$swiperMenu.toggleClass('hidden');
+
+		var image = $('#btnToggleTopDrawer').find('img');
+		var src = (image.prop('src').split('/').pop() === 'close.svg') ? 'images/icons/open.svg' : 'images/icons/close.svg';
+		image.prop('src', src);
+
+		menuFolded = (menuFolded === false) ? true : false;
 	};
 
 };
