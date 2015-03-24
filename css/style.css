@@ -579,6 +579,9 @@ a.commons:visited {
   bottom: 60px;
   right: -200px;
   transition: transform .4s .1s;*/
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
 }
 
 .wiki-leesmeer.active {
@@ -726,6 +729,8 @@ a.commons:visited {
   float: left;
   width: 50%;
   text-align: center;
+  height: 440px;
+  position: absolute;
   /*padding: 20px;*/
 }
 
@@ -739,14 +744,15 @@ a.commons:visited {
   margin-left: auto;
   margin-right: auto;
   /*margin-top: 20px;*/
-  max-height: 360px;
-  width: 100%;
+  max-height: 440px;
+  /*width: 100%;*/
   display: block;
-  max-width: 600px;
+  /*max-width: 600px;*/
 }
 
 .wiki-attribution {
   text-align: left;
+  padding: 30px;
 }
 
 #btnBack {
