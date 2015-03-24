@@ -5,12 +5,10 @@ var InterfaceController = function(ExpeditionController) {
 		expeditionsHash = {},
 		previewItems = [],
 		that = this,
-		detailedViewDirect = false,
-		detailedView = false,
-		currentPreviewItem,
 		currentPoi,
 		currentExpedition,
 		currentExpeditionIndex,
+		currentPreviewItem,
 		currentLanguage = "NL",
 		swiper,
 		mode = "landing",
@@ -28,7 +26,7 @@ var InterfaceController = function(ExpeditionController) {
         }
     });
 
-	$.each(ExpeditionController.expeditions, function(index, value) {
+	$.each(expeditions, function(index, value) {
 		expeditionsHash[value.id] = index;
 	});
 
@@ -41,16 +39,15 @@ var InterfaceController = function(ExpeditionController) {
 			slidesPerView: 1
 		});
 	
-	var $contentSwiper = $("#contentSwiper");
-	var $previewSwiper = $("#previewSwiper");
-	var $swiperMenu = $('#swiperMenu');
-
-
-    var $previewList = $('#previewList');
+	var $contentSwiper = $("#contentSwiper"),
+		$previewSwiper = $("#previewSwiper"),
+		$swiperMenu = $('#swiperMenu'),
+		$previewList = $('#previewList');
   
 	$(document)
 		.on('click', '#btnToggleTopDrawer', function() { toggleTopDrawer(); })
 		.on('click', '#btnStartExpedition', function(e) {
+			//trigger startExpedition through trigger/bind
 			ExpeditionController.startExpedition(currentPreviewItem);
 			window.location.hash = expeditions[currentPreviewItem].id;
 			//empy content window to stop youtube movie if running;
@@ -134,18 +131,6 @@ var InterfaceController = function(ExpeditionController) {
 
     	$('.expedition-title').toggleClass('active');
     	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
-
-    	//hack, in landing mode currentExpedition is undefined
-   //  	if (mode === 'landing') {
-   //  		$('.spacer-right').toggleClass('active');
-			// $('.wiki-leesmeer').toggleClass('active');    		
-   //  	} else {
-   //  		if (currentExpedition !== "vening meinesz") {	
-   //  			$('.spacer-right').toggleClass('active');
-			// 	$('.wiki-leesmeer').toggleClass('active');    		
-   //  		}
-   //  	}
-
     };
     
 	this.togglePreviewItem = function(index) {
@@ -157,7 +142,6 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 
 		if (menuFolded === true) { toggleTopDrawer(); }
-		console.log(menuFolded);
 	};
 
 	this.togglePreviewItemLanding = function(id) {
@@ -183,11 +167,11 @@ var InterfaceController = function(ExpeditionController) {
 			var $el = item; //.children().first();
 
 			$el.click(function() {
+				//check if user is not dragging menu
 				if (swiperStill()) {
 					that.togglePreviewItem(index);
 					$el.trigger({
 						type: 'mapZoomToRoute',
-					//vmIndex: index
 						expeditionId: expeditions[index].id,
 						zoomTo: expeditions[index].zoomto
 					});			
@@ -213,16 +197,11 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	this.loadExpedition = function() {
-		populatePreviewList();
-		populateDetailsList();
-
-	};
-
 	//
 	//VIEWING MODE
 	// 
 
+	//TODO change name to reflect control in css/html
 	var buildSwiper = function() {
 		// swiper = new Swiper('.swiper-container', {
 		swiper = new Swiper('#previewSwiper', {
@@ -236,7 +215,6 @@ var InterfaceController = function(ExpeditionController) {
 	this.buildLandingView = function() {
 		mode = "landing";
 		var $previewListContent = $('<div id="previewListContent"></div>');
-		//TODO pass expeditions as a variable
 
 		var width = (expeditions.length * 195) + 4*20;
 		$previewListContent.width(width);
@@ -288,19 +266,14 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
-		buildMapsList();
+		// buildMapsList();
 	};
 
 	this.loadContent = function() {
 		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
-			var expedition = expeditions[currentPreviewItem];
-			
 			//fetch introteskt from Excelsheet
 			loadIntroTexts();
-
-			//fetchWikiExcerpt(expedition.link, expedition.words, false);
-			//$('.wiki-leesmeer a').prop('href', expedition.link);
 		} else {
 			if (currentExpedition === "vening meinesz") {
 				loadVMExpedition();
@@ -318,16 +291,15 @@ var InterfaceController = function(ExpeditionController) {
 		//console.log("destroy LandingView");
 		swiper.destroy();
 		$('#previewSwiper .swiper-wrapper').empty();		//cleans event listeners too
-		//$('swiper-slide').empty();		//cleans event listeners too
-		$('<div class="swiper-slide"></div>').appendTo($('#previewSwiper .swiper-wrapper')); //
+		
+		//prepare a new swier slide
+		$('<div class="swiper-slide"></div>').appendTo($('#previewSwiper .swiper-wrapper'));
 		that.toggleDetailView();
 
 		$('.spacer-left-title').html("");
 		$('.spacer-left-summary').html("");
 
-		//empty maps list
-		$('#lstMap').empty();
-
+		// $('#lstMap').empty();
 
 		previewItems = [];
 	};
@@ -471,6 +443,7 @@ var InterfaceController = function(ExpeditionController) {
 		});
 
 		var margin = 20;
+
 		var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2;
 		$swiperSlide.width(width);
 		$previewListContent.width(width);
@@ -585,11 +558,13 @@ var InterfaceController = function(ExpeditionController) {
 				$image.prop('height', columnWidth * ratio);
 
 				console.log(file);
-				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.png';
+				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
 				var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
 				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
 				$fancybox.appendTo($image.parent());
 				$image.detach().appendTo($fancybox);
+
+
 			});
 
 			columns.append($data);

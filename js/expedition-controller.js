@@ -2,7 +2,7 @@ var ExpeditionController = function() {
 	this.expeditions = [];
 	var features,
 		that = this,
-		mode = "landing",
+		mode,
 		IC = require('./interface-controller.js'),
 		InterfaceController,
 		MapController,
@@ -21,35 +21,17 @@ var ExpeditionController = function() {
 		InterfaceController = new IC(that);
 		MapController = new MC();
 
-		//read hash from URL and direct to correct expedition
-		//if urlParameters !== null {
-			//go to specific expedition
-			//call InterfaceController()
-		//} else {
-		//goto landing page
-
-			console.log('checking hash on entry');
-			var hash = location.hash;
-			if (hash === '') {
-				buildLandingView();
-			} else {
-				$.each(that.expeditions, function(index, value) {
-					if (value.id === hash.substr(1)) { that.startExpedition(index); }
-				});
-			}
-
-		//}
-
+		//check hash on entry and start individual expedition if necessary
+		var hash = location.hash;
+		if (hash === '') {
+			mode = 'landing';
+			buildLandingView();
+		} else {
+			$.each(that.expeditions, function(index, value) {
+				if (value.id === hash.substr(1)) { that.startExpedition(index); }
+			});
+		}
 	});
-
-	this.changeViewingMode = function() {
-		//do stuff needed to transition from one mode to another
-		  // change URL
-		  // delete stuff from map
-		  // destroy interface elements
-
-		  //call constructors for new viewingMode
-	};
 
 	var buildLandingView = function() {
 		mode = "landing";
@@ -60,58 +42,43 @@ var ExpeditionController = function() {
 		MapController.registerInterfaceEvents(InterfaceController);
 	};
 
+	//uncouple from InterfaceController and use trigger/bind
 	this.startExpedition = function(index) {
 		var expedition = that.expeditions[index].id,
 			expeditionIndex = index;
-		console.log(expedition);
 
 		//load expedition information
-
 		if (mode === "landing") {
-			try {
-				InterfaceController.destroyLandingView();
-				MapController.destroyLandingView();
-			}
-			catch (err) {
-				console.log("Failed to destroy expedition assets.");
-				console.log("Assuming expedition launch through hash");
-			}
+			InterfaceController.destroyLandingView();
+			MapController.destroyLandingView();
+		}
 
-			$.getJSON("data/" + expedition + "/geometries.json", function(geometries) {
-				var features = geometries.features,
-					route,
-					pois = [];
-					// geoms = $.parseJSON(expedition);
+		$.getJSON("data/" + expedition + "/geometries.json", function(geometries) {
+			var features = geometries.features,
+				route,
+				pois = [];
+				// geoms = $.parseJSON(expedition);
 
-				$.each(features, function(index, value) {
-					if (value.properties.type === "route") {
-						route = value;
-					} else {
-						pois.push([value.properties, value.geometry.coordinates]);
-					}
-				});
-
-				InterfaceController.buildExpeditionView(expedition, expeditionIndex, pois);
-				
-				setTimeout(function () { 
-					MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
-					InterfaceController.registerMapEventsPois();
-					MapController.registerInterfaceEvents(InterfaceController);
-				}, 1500);
-
+			$.each(features, function(index, value) {
+				if (value.properties.type === "route") {
+					route = value;
+				} else {
+					pois.push([value.properties, value.geometry.coordinates]);
+				}
 			});
 
-			mode = "expedition";
-		} else {
-			//destroy current expedition if in viewing mode
-			//destroy expeditions if on landing page
+			InterfaceController.buildExpeditionView(expedition, expeditionIndex, pois);
 
-			//call InterfaceController
-			//call MapController
-			//register events in both
+			//wait a bot to prevent too much flickering			
+			setTimeout(function () { 
+				MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
+				InterfaceController.registerMapEventsPois();
+				MapController.registerInterfaceEvents(InterfaceController);
+			}, 1500);
 
+		});
 
-		}
+		mode = "expedition";
 	};
 };
 

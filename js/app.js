@@ -26,8 +26,5 @@ window.onload = function() {
 
 	var EC = require('./expedition-controller.js');
 
-	//implement data loader?
 	var ExpeditionController = new EC();
-
-	//check whether URL contains specific expedition
 };
