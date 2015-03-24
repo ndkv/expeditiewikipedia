@@ -87,7 +87,7 @@
 
 #contentSwiper.active {
   opacity: 1;
-  transition: opacity .3s .35s linear;
+  transition: opacity .4s .45s linear;
   transform: translate3d(0px, 0px, 0px);
   z-index: 1;
 }
@@ -741,13 +741,8 @@ a.commons:visited {
 }
 
 .expedition-text-image img {
-  margin-left: auto;
-  margin-right: auto;
-  /*margin-top: 20px;*/
-  max-height: 440px;
-  /*width: 100%;*/
-  display: block;
-  /*max-width: 600px;*/
+  min-height: 440px;
+  width: 100%;
 }
 
 .wiki-attribution {

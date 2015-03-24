@@ -124,7 +124,7 @@ var InterfaceController = function(ExpeditionController) {
     	$swiperMenu.toggleClass('hidden');
 
     	$('#btnMenuScrollRight').toggleClass('hidden');
-    	$('#btnMenuScrollRLeft').toggleClass('hidden');
+    	$('#btnMenuScrollLeft').toggleClass('hidden');
     	$('#btnToggleTopDrawer').toggleClass('hidden');
 
     	$('#btnBack').toggleClass('active');
@@ -134,6 +134,7 @@ var InterfaceController = function(ExpeditionController) {
     };
     
 	this.togglePreviewItem = function(index) {
+		console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
 		}
@@ -245,9 +246,8 @@ var InterfaceController = function(ExpeditionController) {
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				currentExpedition = expeditions[index].id;
-				that.loadContent();
 				that.toggleDetailView();
-
+				setTimeout(function() { that.loadContent(); }, 500);
 			});
 
 			// $('.swiper-slide').width(width);
@@ -325,13 +325,16 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-title').html(expeditionAttributes.title);
 		$('.spacer-left-summary').html(expeditionAttributes.summary);
 
-		$('#contentSwiper').addClass('scroll');
 		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
 		$('.expedition-title').addClass('active');
 
 		$('#overview').css('display', 'block');
 		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
 		console.log(currentLanguage);
+
+		if (currentExpedition === 'vening meinesz') {
+			$('#contentSwiper').addClass('scroll');
+		}
 	};
 
 	var buildPoIList = function (pois) {
@@ -370,7 +373,9 @@ var InterfaceController = function(ExpeditionController) {
 				currentPreviewItem = index;
 				currentPoi = value[0];
 				that.toggleDetailView();
-				that.loadContent();
+				// that.togglePreviewItem(index);
+
+				setTimeout(function() { that.loadContent(); }, 300);				
 			});
 
 			var afbeelding = value[1].Afbeelding;
