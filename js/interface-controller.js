@@ -16,7 +16,7 @@ var InterfaceController = function(ExpeditionController) {
 		menuFolded = false;
 
 	$('.fancybox').fancybox({
-		fitToView: false,
+		// fitToView: false,
         helpers: {
             overlay: {
                 css: {
@@ -283,7 +283,7 @@ var InterfaceController = function(ExpeditionController) {
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl, 500, true);
+					fetchWikiExcerpt(wikiUrl, 600, true);
 					// $('.wiki-leesmeer a').prop('href', wikiUrl);
 				}
 			}
@@ -560,12 +560,13 @@ var InterfaceController = function(ExpeditionController) {
 				$image = $(value);
 				$image.prop('src', imageUrl);
 
-				var height = $image.prop('height'),
-					width = $image.prop('width'),
-					ratio = height/width,
-					columnWidth = 300;
+				// var height = $image.prop('height'),
+				// 	width = $image.prop('width'),
+				// 	ratio = height/width,
+				// 	columnWidth = 300;
 				
-				$image.prop('height', columnWidth * ratio);
+				// $image.prop('height', columnWidth * ratio);
+				// $image.prop('width', columnWidth);
 
 				console.log(file);
 				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
