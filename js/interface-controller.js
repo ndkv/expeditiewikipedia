@@ -387,7 +387,16 @@ var InterfaceController = function(ExpeditionController) {
 			//TODO change to type check of POI
 			if (type === 'Beeld' || type === 'kaart') {
 				//VM expedition doesn't have images, hence this check
-					var callback = function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); };
+					// var callback = function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); };
+					var callback = function(imageUrl) { 
+						$expeditionItem.css('background-image', "url('" + imageUrl + "')");
+						// $expeditionPreviewTitle.find('img').prop('src', imageUrl);
+
+						//$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+						//.insertAfter($expeditionPreviewTitle);
+
+						console.log('menu image');
+					};
 					fetchWikiImage(afbeelding, 100, callback);
 					
 					$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			

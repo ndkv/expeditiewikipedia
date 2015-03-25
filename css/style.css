@@ -287,6 +287,12 @@ p {
   padding: 10px;
 }
 
+.expedition-preview-image {
+  position: relative;
+  top: -35px;
+  height: 110px;
+}
+
 .readMore {
   text-align: center;
   /* border-radius: 3px; */
