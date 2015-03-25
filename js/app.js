@@ -12,7 +12,7 @@ window.onload = function() {
 
 	if (document.cookie === "") {
 		$('#introduction')
-	    .css('opacity', 1)
+	    .css('display', 'block')
 	    .fancybox({	
 	    	autoSize: false,
 	    	width: 600,

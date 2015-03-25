@@ -260,7 +260,7 @@ var InterfaceController = function(ExpeditionController) {
 			$container.appendTo($('#previewSwiper .swiper-slide'));
 
 			if (value.image !== "") {
-				var imageUrl = fetchWikiImage(value.image, $expeditionItem);
+				var imageUrl = fetchWikiImage(value.image, 100, function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); });
 			}
 		});
 
@@ -282,8 +282,9 @@ var InterfaceController = function(ExpeditionController) {
 				loadVMExpedition();
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
+				var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
 				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl, 600, true);
+					fetchWikiExcerpt(wikiUrl, imageUrl, 600, true);
 					// $('.wiki-leesmeer a').prop('href', wikiUrl);
 				}
 			}
@@ -381,12 +382,13 @@ var InterfaceController = function(ExpeditionController) {
 				setTimeout(function() { that.loadContent(); }, 300);				
 			});
 
-			var afbeelding = value[1].Afbeelding;
+			var afbeelding = value[1].Afbeelding,
+				type = value[1].type;
 			//TODO change to type check of POI
-			if (afbeelding !== "") {
+			if (type === 'Beeld' || type === 'kaart') {
 				//VM expedition doesn't have images, hence this check
-				if (afbeelding !== undefined) {
-					fetchWikiImage(afbeelding, $expeditionItem);
+					var callback = function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); };
+					fetchWikiImage(afbeelding, 100, callback);
 					
 					$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
 					$readMore.click(function () {
@@ -395,29 +397,37 @@ var InterfaceController = function(ExpeditionController) {
 						
 						//fetch wikiImageUrl
 						var imageName = afbeelding.split('File:')[1];
+
+						var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
+						var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
+						var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
+						var caption = title + instelling + commons;
+
 						var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
 						$.ajax({
    							url: requestUrl,
  			    			jsonp: "callback",
-			    			dataType: "jsonp",
+			    			dataType: "jsonp", 
 			    			success: function(data) {
-						    	try {
-						    		var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.',
+						    	try {						    		
 						    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-						    		
-						    		var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
-						    		var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
-						    		var caption = title + instelling + commons;
-						    			
 									$.fancybox.open([{
 										href:bigViewUrl,
 										title: caption,
-										fitToView: false
+										fitToView: true
 									}]);
 						    	}
 						    	catch (err) {
 						    		console.log('Warning, failed to load big image');
 						    		console.log(err);
+						    		console.log('Assuming local image');
+
+						    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
+						    		$.fancybox.open([{
+										href:bigViewUrl,
+										title: caption,
+										fitToView: true
+									}]);
 						    	}
 						    }
 						});
@@ -426,7 +436,6 @@ var InterfaceController = function(ExpeditionController) {
 					//hacks, fix
 					$expeditionPreviewTitle.css('padding-bottom', '40px');
 					$expeditionPreviewSummary.empty();
-				}
 			}
 
 			//$expeditionItem.after($readMore);
@@ -507,9 +516,9 @@ var InterfaceController = function(ExpeditionController) {
 		//$mapList.find('input')[0].checked = true;
 	};
 
-	var fetchWikiImage = function(url, elem) {
+	var fetchWikiImage = function(url, size, callback) {
 		var imageName = url.split("File:")[1];
-		var requestUrl = constructWikiImageUrl(imageName, 100) + '&format=json';
+		var requestUrl = constructWikiImageUrl(imageName, size) + '&format=json';
 		var imageUrl;
 
 		$.ajax({
@@ -524,11 +533,16 @@ var InterfaceController = function(ExpeditionController) {
 						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;			    		
 			    	}
 			    	catch (err) {
-			    		console.log("warning, failed to fetch Wikipedia Image");
-			    		console.log(url);
+			    		console.log("Warning, failed to fetch Wikipedia Image");
+			    		console.log("Assuming local image...");
+
+			    		imageUrl = 'data/' + currentExpedition + '/images/' + url;
+
 			    	}
 
-					elem.css('background-image', 'url(' + imageUrl + ')');
+					// $elem.css('background-image', "url('" + imageUrl + "')");
+
+					callback(imageUrl);
 			    }
 		});
 	};
@@ -585,8 +599,14 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	var fetchWikiExcerpt = function(url, numWords, columns) {
-		// var contentElem = $('<div></div>');
+	var fetchWikiExcerpt = function(url, imageUrl, numWords, columns) {
+		$contentImage = $('<div class="expedition-text-image"></div>');
+		fetchWikiImage(imageUrl, 1000, function(imageUrl) { 
+			// $contentImage.css('background-image', "url('" + imageUrl + "')");
+			// $('.expedition-text-image').css('background-image', "url('" + imageUrl + "')");
+			// console.log(imageUrl);
+			$contentImage.append('<img src="' + imageUrl + '">');
+		 });
 		
 		try {
 			wikiUrl = url.split('/');
@@ -595,6 +615,14 @@ var InterfaceController = function(ExpeditionController) {
 		    numOfChars = 'exchars=' + numWords + '&',
 		    articleTitle ='titles=' + title,
 		    requestUrl = wikiApiUrl + numOfChars + articleTitle;
+
+		    var $content = $('<div class="expedition-text-content"></div>'), 
+		    	$contentElem = $('<div></div>'),
+		    	$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
+		    	$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
+
+		    	$contentElem.append($content);
+		    	$contentElem.append($contentImage);
 
 		    $.ajax({
    				url: requestUrl,
@@ -606,24 +634,12 @@ var InterfaceController = function(ExpeditionController) {
 			    success: function(data) {
 					var pages = data.query.pages;
 					for (var page in pages) { break; }
-					
-					var $content = $('<div class="expedition-text-content"></div>'), 
-						$contentElem = $('<div></div>'),
-						$contentImage = $('<div class="expedition-text-image"></div>');
-						$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
-						$wikiText.append($(pages[page].extract).filter('p'));
-
+									
+					$wikiText.append($(pages[page].extract).filter('p'));
 					$content.append($wikiText);
-					//add link to article
-					$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
-					$contentImage.append('<img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/COLLECTIE_TROPENMUSEUM_S.S._Van_Goens_langs_een_steiger_met_op_de_achtergrond_Poelau_Maitara_TMnr_60010092.jpg">');
-
-					$contentElem.append($content);
-					$contentElem.append($contentImage);
-
+					
 					var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 					slide.append();
-
 			    }
 			});			
 		}
@@ -636,6 +652,10 @@ var InterfaceController = function(ExpeditionController) {
 			slide.append();
 		}
 
+	};
+
+	var appendImageToPoI = function(imageUrl) {
+		// $('.expedition-text-image').append('<img src="' +  imageUrl +'"">');
 	};
 
 	var swiperStill = function() {

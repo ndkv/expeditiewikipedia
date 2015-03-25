@@ -1,4 +1,4 @@
-Soort	order	title	summary	Instelling	Datum	Bodytekst	latitude	longitude	Afbeelding	Wikipedia link
+type	order	title	summary	Instelling	Datum	Bodytekst	latitude	longitude	Afbeelding	Wikipedia link
 Artikel	1	Noord Nieuw-Guinea Expeditie	De Noord Nieuw-Guinea Expeditie (1903), onder leiding van Arhur Wichman verkende de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea en was op zoek was naar exploiteerbare lagen steenkool.		1903		-2.599027	140.708878		https://nl.wikipedia.org/wiki/Noord_Nieuw-Guinea_Expeditie
 kaart	11	Kaart van Ternate	Kaart van Ternate	UB Utrecht	1903				https://commons.wikimedia.org/wiki/File:UB_Utrecht_-_Nova_Guinea_Vol_4_-_Karte_1_-_Ternate.jpg	
 kaart	12	Kaart van de Geelvinckbaai	Kaart van de Geelvinckbaai	UB Utrecht	1903				https://commons.wikimedia.org/wiki/File:UB_Utrecht_-_Nova_Guinea_Vol_4_-_Karte_2_-_Karte_des_Geelvink-Busens.jpg	
