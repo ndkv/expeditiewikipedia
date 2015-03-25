@@ -10,19 +10,20 @@ require('fancybox')($);
 
 window.onload = function() {
 
-	if (document.cookie === "") {
+	// if (document.cookie === "") {
 		$('#introduction')
 	    .css('opacity', 1)
 	    .fancybox({	
 	    	autoSize: false,
-	    	width: 500,
-	    	height: 500,
-	    	openEffect: 'none'
+	    	width: 600,
+	    	height: 600,
+	    	openEffect: 'none',
+	    	padding: 0
 	    })
 	    .trigger('click');		
 
-	    document.cookie = 'introwindow=true';
-	}
+	    // document.cookie = 'introwindow=true';
+	// }
 
 	var EC = require('./expedition-controller.js');
 

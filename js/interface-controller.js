@@ -91,7 +91,7 @@ var InterfaceController = function(ExpeditionController) {
 
 	$('#btnMenu').click(function() { 
 		$menuContainer.toggleClass('active');
-		this.toggleClass('active');
+		// this.toggleClass('active');
 	});
 
 	$('.language').click(function() {
@@ -104,10 +104,12 @@ var InterfaceController = function(ExpeditionController) {
 
 
 	$('.menu-item').click(function() {
-		$menuContainer.toggleClass('active');
-		$menuContentContainer.toggleClass('active');
-		$menuContent.html(this.innerHTML);
-		$('#menuBlackout').addClass('active');
+		el = this.id + currentLanguage;
+
+		$('#'+el).fancybox({
+			maxWidth: 500
+		})
+		.trigger('click');
 	});
 
 	$('#btnMenuClose').click(function() {
@@ -642,21 +644,30 @@ var InterfaceController = function(ExpeditionController) {
 		var $readMore = $('.readMore');
 
 		if (lang === 'EN') {
+			currentLanguage = 'EN';
 			$.each($readMore, function(index, value) {
 				value.firstChild.innerHTML = 'Read more';
 			});
 
-			// $('#btnBack').text('Back');
-			// $('#btnStartExpedition').text('Start expedition!');
-			// console.log('change lang');
+			$('#introTitleNL').removeClass('active');
+			$('#introTitleEN').addClass('active');
+			$('#introNL').removeClass('active');
+			$('#introEN').addClass('active');
 
 		} else {
+			currentLanguage = 'NL';
+
 			$.each($readMore, function(index, value) {
 				value.firstChild.innerHTML = 'Lees meer';
 			});
 
 			// $('#btnBack').text('Terug');
 			$('#btnStartExpedition').text('Start expeditie!');
+
+			$('#introTitleNL').addClass('active');
+			$('#introTitleEN').removeClass('active');
+			$('#introEN').removeClass('active');
+			$('#introNL').addClass('active');			
 		}
 
 		if (mode === "landing") {

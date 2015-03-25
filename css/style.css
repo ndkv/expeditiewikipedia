@@ -402,6 +402,7 @@ p {
   position: absolute;
   bottom: -100px;
   opacity: 0;
+  display: none;
   /*cursor: not-allowed;*/
 
 }
@@ -530,7 +531,17 @@ p {
   cursor: pointer;
 }
 
-#menuContentContainer {
+#menuContent {
+  position: absolute;
+  left: -1000px;
+  opacity: 0;
+}
+
+.menu-content-item {
+  padding: 50px;
+}
+
+/*#menuContentContainer {
   position: absolute;
   background-color: white;
   z-index: 3;
@@ -539,20 +550,20 @@ p {
   display: block;
   left: 100px;
   right: 100px;
-}
+}*/
 
-#menuContentContainer.active {
+/*#menuContentContainer.active {
   top: 80px;
   bottom: 80px;
-}
+}*/
 
 #menuContent {
   padding: 10px;
 }
 
-#btnMenuClose {
+/*#btnMenuClose {
   float: right;
-}
+}*/
 
 #menuBlackout.active {
   position: absolute;
@@ -664,16 +675,57 @@ a.commons:visited {
 
 
 #introduction {
-  background: white;
   padding: 30px;
   opacity: 0;
-  text-align: center;
   z-index: -1;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/UvA-Artis_300.002_-_Siboga_-_laboratorium_aan_boord_van_de_Siboga.jpg/615px-UvA-Artis_300.002_-_Siboga_-_laboratorium_aan_boord_van_de_Siboga.jpg');
+  background-size: cover;
+  background-position-x: -148px;
+  height: 540px;
 }
 
-#introductionContent img {
+.intro-title {
+  color: black;
+  text-shadow: 0px 0px 15px white;
+  text-align: center;
+  display: none;
+}
+
+.intro-title.active {
+  display: block;
+}
+
+#introduction img {
   height: 50px;
   margin-top: 30px;
+}
+
+.introduction-content {
+  background-color: rgba(255, 255, 255, 0.7);
+  font-size: .9em;
+  position: absolute;
+  top: 345px;
+  left: 65px;
+  right: 65px;
+  padding: 30px;
+  border-radius: 4px;
+  text-align: center;
+  display: none;
+}
+
+.introduction-content.active {
+  display: block;
+}
+
+.intro-language-switch {
+  color: rgb(50, 50, 50);
+  margin-top: 7px;
+  font-weight: bold;
+  position: absolute;
+  top: 340px;
+  right: 30px;
+  text-shadow: 0px 0px 5px white;
+  font-size: 1.2em;
 }
 
 #btnLanguage {

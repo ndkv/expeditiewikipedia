@@ -38,20 +38,85 @@
 
 <div id="menuContainer">
       <ul>
-            <li class="menu-item" id="menu-about-wiki">About Wikipedia Expedities</li>
-            <li class="menu-item" id="menu-about-app">About this app</li>
-            <li class="menu-item" id="menu-sponsors">Sponsors</li>
-            <li class="menu-item" id="menu-references">References</li>
-            <li class="menu-item" id="menu-contact">Contact us</li>
+            <li class="menu-item" id="menuAbout">About Wikipedia Expedities</li>
+            <li class="menu-item" id="menuAboutApp">About this app</li>
+            <li class="menu-item" id="menuColofon">Colofon</li>
+            <li class="menu-item" id="menuColofon">Colofon</li>
+            <li class="menu-item" id="menuSponsors">Sponsors</li>
+            <li class="menu-item" id="menuContact">Contact us</li>
       </ul>
 </div>
 
-<div id="menuContentContainer">
+<div id="menuContent">
+      <div id="menuAboutNL" class="menu-content-item">
+            <h3>Over Expeditie Wikipedia</h3>
+
+            <p>In 2014 stelden en een aantal universiteiten (onder begeleiding van de Stichting Academisch Erfgoed) samen met het Tropenmuseum erfgoedmateriaal beschikbaar via Wikipedia, binnen het project Expeditie Wikipedia. Het ging om gedigitaliseerd materiaal afkomstig van wetenschappelijke expedities en onderzoeksreizen aanwezig in de collecties van de deelnemende instellingen. Samen met de Wikipediagemeenschap en de instellingen werden de scans of andere opnamen beschikbaar gesteld op Wikimedia Commons. In een gezamenlijk proces werd dit materiaal voorzien van contextuele (geografische, historische etc.) informatie en worden er encyclopedische artikelen bij geschreven.</p>
+
+            <p>Een Wikipedian-in-Residence begeleide de instellingen en vormde de schakel met de Wikimedia-gemeenschap.</p>
+            
+            <p>Lees meer over het project op <a href="https://nl.wikipedia.org/wiki/Wikipedia:GLAM/Expedities">Wkipedia</a> </p>
+            
+      </div>
+      <div id="menuAboutEN" class="menu-content-item">
+            <h3>About Expedition Wikipedia</h3>
+
+            <p>The project Expedition Wikipedia took place in 2014. Under guidance of the Dutch Foundation for Academic Heritage(SAE), several Dutch Universities and the Tropenmuseum donated digitized materials from their collections to Wikipedia and Wikimedia Commons. These digitized objects, mainly related to (historic) scientific expeditions, were offered for (historical, geographical...) contextualization and for use in encyclopedic articles on Wikipedia.</p>
+            
+            <p>A Wikipedian in Residence supported the participating institutions.</p>
+            
+            <p>More information on the project on <a href="https://en.wikipedia.org/wiki/Wikipedia:GLAM/Expeditions ">Wikipedia</a>.</p>
+
+            
+      </div>
+      <div id="menuAboutAppNL">
+            <h3>Over deze applicatie</h3>
+
+            <p>Deze applicatie toont de resultaten van het project Expeditie Wikipedia zoals zie te vinden zijn op Wikipedia en Wikimedia commons. De expedities en onderzoeksreizen zijn, voor zover mogelijk, op een kaart weergegeven en linken naar artikelen op Wikipedia of naar afbeeldingen op Wikimedia Commons.</p> 
+
+            <p>Deze app biedt een selectie van de projectresultaten. Een volledig overzicht is te vinden op de projectpagina van Expeditie Wikipedia. </p>
+
+
+            <p><strong>Copyrights</strong></p>
+
+            <p><strong>Content</strong></p>
+            
+            <p>Deze app gebruikt, voor zover beschikbaar, tekst en beeld afkomstig van Wikipedia en Wikimedia Commons. Deze fragmenten en beelden zijn voorzien van bronvermelding en links naar de oorspronkelijke bestanden. </p>
+            
+            <p><strong>Uitzonderingen</strong></p>
+            <p>Ceram Expeditie: [link] Lantarenplaatjes van Fred Rutte, collectie Universiteitsmuseum Utrecht.</p> 
+            
+            <p>Delft?</p>
+
+
+            <p><strong>Software</strong></p>
+            <p>De software voor deze applicatie is open source en te vinden op <a href="https://github.com/ndkv/vm">GitHub</a>.</p>            
+
+      </div>
+      <div id="menuAboutAppEN"></div>
+
+      <div id="menuColofonNL">
+            <h3>Colofon</h3>
+
+            <p>Deze applicatie is ontwikkeld door NDKV in het kader van het project Expeditie Wikipedia.</p> 
+            
+            <p>Opdrachtgever: <a href="www.academischerfgoed.nl">Stichting Academisch Erfgoed</a></p> 
+
+            <p>Redactie en teksten: Sandra Fauconnier, Bart Root, …</p>
+
+            <p>Vormgeving: ….</p>
+      </div>
+      <div id="menuColofonEN">
+            <h3>Colofon</h3>
+      </div>
+</div>
+
+<!-- <div id="menuContentContainer">
       <div id="btnMenuClose">Close</div>
       <div id="menuContent"></div>
 </div>
 
-<div id="menuBlackout"></div>
+<div id="menuBlackout"></div> -->
 
 <div class="detailedDrawer active">
       <div id="swiperMenu">
@@ -103,16 +168,24 @@
 </div>
 
 <div id="introduction">
-      <div id="introductionContent">
-            <h3>Welkom!</h3>
-            <div id="into-nl">
+            <h1 class='intro-title' id="introTitleEN">Expedition Wikipedia</h1>
+            <h1 class='intro-title active' id="introTitleNL">Expeditie Wikipedia</h1>
+            <div class='intro-language-switch'>
+                  <div class="language">NL</div>
+                  <!-- <span> / </span>  -->
+                  <div class="language">EN</div>
+            </div>
+
+            <div class='introduction-content active' id="introNL">
                   Eeuwenlang zijn wetenschappers, kunstenaars en avonturiers op reis gegaan om de grenzen van het bekende te zoeken. De resultaten van veel van deze expedities liggen in de depots van universiteiten en musea. Sinds kort is een deel gedigitaliseerd en ondergebracht op Wikimedia Commons.  Ontdek ze hier en lees de bijbehorende verhalen op Wikipedia.
             </div>
-            <div id="intro-gb">
+
+            <div class='introduction-content' id="introEN">
                   For centuries, scientists, artists and adventurers traveled the wold seeking new frontiers. Te results of theze so called expeditions are found in the depots of universities an museums. Recenty part of this collecyion was digitized and donated to Wikimidia Commons. Find out more of thes travels an read the articles on Wikipedia.
             </div>
-            <div><img src="images/icons/wikipedialogo.jpg" alt=""></div>
+            <!-- <div><img src="images/icons/wikipedialogo.jpg" alt=""></div>       -->
       </div>
+      
 </div>
 
 </body>
