@@ -16,6 +16,7 @@ var InterfaceController = function(ExpeditionController) {
 		menuFolded = false;
 
 	$('.fancybox').fancybox({
+		fitToView: false,
         helpers: {
             overlay: {
                 css: {
@@ -409,7 +410,9 @@ var InterfaceController = function(ExpeditionController) {
 						    		var caption = title + instelling + commons;
 						    			
 									$.fancybox.open([{
-										href:bigViewUrl , title: caption
+										href:bigViewUrl,
+										title: caption,
+										fitToView: false
 									}]);
 						    	}
 						    	catch (err) {

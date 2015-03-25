@@ -10,7 +10,7 @@ require('fancybox')($);
 
 window.onload = function() {
 
-	// if (document.cookie === "") {
+	if (document.cookie === "") {
 		$('#introduction')
 	    .css('opacity', 1)
 	    .fancybox({	
@@ -22,8 +22,8 @@ window.onload = function() {
 	    })
 	    .trigger('click');		
 
-	    // document.cookie = 'introwindow=true';
-	// }
+	    document.cookie = 'introwindow=true';
+	}
 
 	var EC = require('./expedition-controller.js');
 
