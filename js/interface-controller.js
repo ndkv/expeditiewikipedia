@@ -379,7 +379,8 @@ var InterfaceController = function(ExpeditionController) {
 				that.toggleDetailView();
 				// that.togglePreviewItem(index);
 
-				setTimeout(function() { that.loadContent(); }, 300);				
+				setTimeout(function() { that.loadContent(); }, 300);
+				// that.loadContent();		
 			});
 
 			var afbeelding = value[1].Afbeelding,
@@ -551,6 +552,8 @@ var InterfaceController = function(ExpeditionController) {
 
 					// $elem.css('background-image', "url('" + imageUrl + "')");
 
+
+
 					callback(imageUrl);
 			    }
 		});
@@ -609,13 +612,18 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	var fetchWikiExcerpt = function(url, imageUrl, numWords, columns) {
-		$contentImage = $('<div class="expedition-text-image"></div>');
-		fetchWikiImage(imageUrl, 1000, function(imageUrl) { 
+		var $contentImage = $('<div class="expedition-text-image"></div>');
 			// $contentImage.css('background-image', "url('" + imageUrl + "')");
 			// $('.expedition-text-image').css('background-image', "url('" + imageUrl + "')");
 			// console.log(imageUrl);
-			$contentImage.append('<img src="' + imageUrl + '">');
-		 });
+
+			// $image.load(function() { console.log('image loaded correctly'); })
+			// .error(function() { console.log('image failed to load'); })
+			// .prop('src', imageUrl);
+			// console.log(imageUrl);
+
+			// document.getElementById('tessst').setAttribute('src', imageUrl);
+		 // });
 		
 		try {
 			wikiUrl = url.split('/');
@@ -629,27 +637,31 @@ var InterfaceController = function(ExpeditionController) {
 		    	$contentElem = $('<div></div>'),
 		    	$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
 		    	$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
-
 		    	$contentElem.append($content);
 		    	$contentElem.append($contentImage);
+		    	$image = $('<img src="">');
+		    	$image.appendTo($contentImage);
+
 
 		    $.ajax({
    				url: requestUrl,
  			    jsonp: "callback",
-			    dataType: "jsonp",
-			    beforeSend: function() {
-			    	// put spinner on slide page
-			    },
-			    success: function(data) {
+			    dataType: "jsonp"
+			})
+			.done(function(data) {
 					var pages = data.query.pages;
 					for (var page in pages) { break; }
 									
 					$wikiText.append($(pages[page].extract).filter('p'));
 					$content.append($wikiText);
 					
-					var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
-					slide.append();
-			    }
+					var callback = function (imageUrl) {
+						$image.attr('src', imageUrl);
+						var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
+						slide.append();
+					};
+
+					fetchWikiImage(imageUrl, 1000, callback);
 			});			
 		}
 		catch (err) {
