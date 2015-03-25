@@ -390,11 +390,11 @@ var InterfaceController = function(ExpeditionController) {
 				//VM expedition doesn't have images, hence this check
 					// var callback = function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); };
 					var callback = function(imageUrl) { 
-						$expeditionItem.css('background-image', "url('" + imageUrl + "')");
+						// $expeditionItem.css('background-image', "url('" + imageUrl + "')");
 						// $expeditionPreviewTitle.find('img').prop('src', imageUrl);
 
-						//$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
-						//.insertAfter($expeditionPreviewTitle);
+						$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+						.insertAfter($expeditionPreviewSummary);
 
 						console.log('menu image');
 					};
@@ -473,7 +473,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		var margin = 20;
 
-		var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2;
+		var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2 - 150;
 		$swiperSlide.width(width);
 		$previewListContent.width(width);
 
@@ -540,7 +540,7 @@ var InterfaceController = function(ExpeditionController) {
 			    },
 			    success: function(data) {
 			    	try {
-						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;			    		
+						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
 			    	}
 			    	catch (err) {
 			    		console.log("Warning, failed to fetch Wikipedia Image");
@@ -549,12 +549,7 @@ var InterfaceController = function(ExpeditionController) {
 			    		imageUrl = 'data/' + currentExpedition + '/images/' + url;
 
 			    	}
-
-					// $elem.css('background-image', "url('" + imageUrl + "')");
-
-
-
-					callback(imageUrl);
+			    	callback(imageUrl);
 			    }
 		});
 	};
@@ -639,8 +634,7 @@ var InterfaceController = function(ExpeditionController) {
 		    	$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
 		    	$contentElem.append($content);
 		    	$contentElem.append($contentImage);
-		    	$image = $('<img src="">');
-		    	$image.appendTo($contentImage);
+		    	
 
 
 		    $.ajax({
@@ -655,13 +649,20 @@ var InterfaceController = function(ExpeditionController) {
 					$wikiText.append($(pages[page].extract).filter('p'));
 					$content.append($wikiText);
 					
-					var callback = function (imageUrl) {
-						$image.attr('src', imageUrl);
+					console.log(imageUrl);
+					if (imageUrl !== '') {
+						fetchWikiImage(imageUrl, 1000, function(url) {
+							$('<img>')
+							.attr('src', url)
+		    				.appendTo($contentImage);
+							
+							var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
+							slide.append();	
+						});
+					} else {
 						var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 						slide.append();
-					};
-
-					fetchWikiImage(imageUrl, 1000, callback);
+					}
 			});			
 		}
 		catch (err) {

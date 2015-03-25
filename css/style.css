@@ -242,6 +242,8 @@ p {
 
 .expeditionItemContainer {
   float: left;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .expeditionItem {
@@ -253,8 +255,6 @@ p {
   background-color: white;
   border-radius: 5px;
   color: black;
-  margin-left: 10px;
-  margin-top: 10px;
   text-align: center;
   cursor: pointer;
   background-repeat: no-repeat;
@@ -272,12 +272,15 @@ p {
 
 .expeditionPreviewTitle {
   color: black;
+  position: absolute;
+  width: 190px;
   font-size: 0.9em;
   background: -webkit-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: -moz-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: -0-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: linear-gradient(top, white, rgba(255, 255, 255, 0));
   /*padding-bottom: 10px;*/
+  /*padding-bottom: 120px;*/
 }
 
 .expeditionPreviewSummary {
@@ -285,38 +288,30 @@ p {
   font-size: 0.7em;
   cursor: pointer;
   padding: 10px;
+  padding-top: 30px;
 }
 
 .expedition-preview-image {
-  position: relative;
-  top: -35px;
-  height: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: -2px;
+  height: 100px;
+  max-width: 185px;
 }
 
 .readMore {
   text-align: center;
-  /* border-radius: 3px; */
-  /* padding: 3px; */
-  /* position: absolute; */
-  /* top: 135px; */
-  /* display: inline; */
-  /* margin-left: 70px; */
-  /* background-color: black; */
-  margin-left: auto;
-  margin-right: auto;
-  /* width: 100px; */
   margin-top: -30px;
 }
 
 .readMore > span {
   color: rgba(240, 240, 240, 1);
-  /* margin-right: 5px; */
   text-align: center;
   cursor: pointer;
   text-decoration: underline;
   background-color: black;
   padding: 4px 6px;
-  /* margin-top: 2px; */
   border-radius: 5px;
   font-size: .8em;
   text-decoration: none;
@@ -412,7 +407,7 @@ p {
   position: absolute;
   bottom: -100px;
   opacity: 0;
-  display: none;
+  /*display: none;*/
   /*cursor: not-allowed;*/
 
 }
