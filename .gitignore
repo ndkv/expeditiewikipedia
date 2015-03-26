@@ -1,3 +1,7 @@
 dist/
 node_modules/
 data/
+images/
+*.rar
+*.tmp
+.dropbox
