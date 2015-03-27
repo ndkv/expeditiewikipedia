@@ -19,6 +19,7 @@ var ExpeditionController = function() {
 		}
 
 		InterfaceController = new IC(that);
+		InterfaceController.initializeEvents();
 		MapController = new MC();
 
 		//check hash on entry and start individual expedition if necessary

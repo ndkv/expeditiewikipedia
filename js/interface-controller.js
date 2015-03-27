@@ -13,7 +13,20 @@ var InterfaceController = function(ExpeditionController) {
 		swiper,
 		mode = "landing",
 		poisList,
-		menuFolded = false;
+		menuFolded = false,
+		$contentSwiper = $("#contentSwiper"),
+		$previewSwiper = $("#previewSwiper"),
+		$swiperMenu = $('#swiperMenu'),
+		$previewList = $('#previewList'),
+		$menuContentContainer = $('#menuContentContainer'),
+		$menuContainer = $('#menuContainer'),
+		$menuContent = $('#menuContent');
+
+
+	//map expeditions integer ids to string ids
+	$.each(expeditions, function(index, value) {
+		expeditionsHash[value.id] = index;
+	});
 
 	$('.fancybox').fancybox({
 		// fitToView: false,
@@ -27,10 +40,6 @@ var InterfaceController = function(ExpeditionController) {
         }
     });
 
-	$.each(expeditions, function(index, value) {
-		expeditionsHash[value.id] = index;
-	});
-
 	var attachFastClick = require("fastclick");
 	attachFastClick(document.body);
 	
@@ -38,105 +47,34 @@ var InterfaceController = function(ExpeditionController) {
 			mode: 'horizontal',
 			//scrollContainer: true,
 			slidesPerView: 1
+	});
+
+	function buildSwiper() {
+		// swiper = new Swiper('.swiper-container', {
+		swiper = new Swiper('#previewSwiper', {
+			mode: 'horizontal',
+			scrollContainer: true,
+			preventClicks: true,
+			// onTransitionStart: function() { console.log('swiping') ;}
 		});
+	};
 	
-	var $contentSwiper = $("#contentSwiper"),
-		$previewSwiper = $("#previewSwiper"),
-		$swiperMenu = $('#swiperMenu'),
-		$previewList = $('#previewList');
-  
-	$(document)
-		.on('click', '#btnToggleTopDrawer', function() { toggleTopDrawer(); })
-		.on('click', '#btnStartExpedition', function(e) {
-			//trigger startExpedition through trigger/bind
-			ExpeditionController.startExpedition(currentPreviewItem);
-			window.location.hash = expeditions[currentPreviewItem].id;
-			//empy content window to stop youtube movie if running;
-			contentSwiper.removeAllSlides();
-		})
-		.on('click', '#btnBack', function(e) { 
-			that.toggleDetailView();
-			//stop youtube movie
-			setTimeout(function() {
-				contentSwiper.removeAllSlides();				
-			}, 300);
-
-		})
-		.on('click', '#btnMapDrawer', function(e) { 
-			$('#lstMap').toggleClass('active');
-			console.log('opening map drawer'); 
-		});
-
-	$(window).on('hashchange', function() {
-		var hash = window.location.hash;
-		//emulate push of back button as it removes the hash
-		if (mode === 'expedition' && window.location.hash === '') {
-			window.location.href = window.location.href.substr(0, window.location.href.length - 1);
-		}
-	}); 
-
-	$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
-	$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
-
-	$('#btnMenuScrollRight').click(function() {
-		scrollMenu('right');
-	});
-
-	$('#btnMenuScrollLeft').click(function () {
-		scrollMenu('left');
-	});
-
-	var $menuContentContainer = $('#menuContentContainer'),
-		$menuContainer = $('#menuContainer'),
-		$menuContent = $('#menuContent');
-
-	$('#btnMenu').click(function() { 
-		$menuContainer.toggleClass('active');
-		// this.toggleClass('active');
-	});
-
-	$('.language').click(function() {
-		var lang = this.innerHTML;
-		currentLanguage = lang;
-
-		changeInterfaceLanguage(lang);
-
-	});
-
-
-	$('.menu-item').click(function() {
-		el = this.id + currentLanguage;
-
-		$('#'+el).fancybox({
-			maxWidth: 500
-		})
-		.trigger('click');
-	});
-
-	$('#btnMenuClose').click(function() {
-		$menuContentContainer.toggleClass('active');
-		$('#menuBlackout').removeClass('active');
-	});
-		
-    this.toggleDetailView = function() { 	
+    function toggleDetailView() {
     	$contentSwiper.toggleClass('active');
-    	//contentSwiper.updateContainerSize();
     	$(".detailedDrawer").toggleClass('high');
-    	//hack, fix
 
     	$swiperMenu.toggleClass('hidden');
 
     	$('#btnMenuScrollRight').toggleClass('hidden');
     	$('#btnMenuScrollLeft').toggleClass('hidden');
     	$('#btnToggleTopDrawer').toggleClass('hidden');
-
     	$('#btnBack').toggleClass('active');
 
     	$('.expedition-title').toggleClass('active');
     	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
     };
     
-	this.togglePreviewItem = function(index) {
+	function togglePreviewItem() {
 		console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
@@ -148,23 +86,22 @@ var InterfaceController = function(ExpeditionController) {
 		if (menuFolded === true) { toggleTopDrawer(); }
 	};
 
-	this.togglePreviewItemLanding = function(id) {
-		if (currentPreviewItem !== undefined) {
-			previewItems[currentPreviewItem].removeClass("previewItemActive");
-		}
+	// this.togglePreviewItemLanding = function(id) {
+	// 	if (currentPreviewItem !== undefined) {
+	// 		previewItems[currentPreviewItem].removeClass("previewItemActive");
+	// 	}
 
-		//hack, fix
-		var index;
-		$.each(expeditions, function(i, value) {
-			if (value.id === id) { index = i; }
-		});
+	// 	//hack, fix
+	// 	var index;
+	// 	$.each(expeditions, function(i, value) {
+	// 		if (value.id === id) { index = i; }
+	// 	});
 
-		currentPreviewItem = index;
-		previewItems[index].addClass("previewItemActive");
+	// 	currentPreviewItem = index;
+	// 	previewItems[index].addClass("previewItemActive");
 
-		if (menuFolded === true) { toggleTopDrawer(); }
-		console.log(menuFolded);
-	};
+	// 	if (menuFolded === true) { toggleTopDrawer(); }
+	// };
 
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
@@ -173,7 +110,7 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function() {
 				//check if user is not dragging menu
 				if (swiperStill()) {
-					that.togglePreviewItem(index);
+					togglePreviewItem(index);
 					$el.trigger({
 						type: 'mapZoomToRoute',
 						expeditionId: expeditions[index].id,
@@ -191,7 +128,7 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function(e) {
 				if (swiperStill()) {
 					e.preventDefault();
-					that.togglePreviewItem(index);
+					togglePreviewItem(index);
 					$el.trigger({
 						type: 'mapZoomToPoI',
 						vmIndex: index
@@ -206,15 +143,6 @@ var InterfaceController = function(ExpeditionController) {
 	// 
 
 	//TODO change name to reflect control in css/html
-	var buildSwiper = function() {
-		// swiper = new Swiper('.swiper-container', {
-		swiper = new Swiper('#previewSwiper', {
-			mode: 'horizontal',
-			scrollContainer: true,
-			preventClicks: true,
-			// onTransitionStart: function() { console.log('swiping') ;}
-		});
-	};
 
 	this.buildLandingView = function() {
 		mode = "landing";
@@ -249,8 +177,8 @@ var InterfaceController = function(ExpeditionController) {
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				currentExpedition = expeditions[index].id;
-				that.toggleDetailView();
-				setTimeout(function() { that.loadContent(); }, 500);
+				toggleDetailView();
+				setTimeout(function() { loadContent(); }, 500);
 			});
 
 			// $('.swiper-slide').width(width);
@@ -269,10 +197,9 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
 
 		buildSwiper();
-		// buildMapsList();
 	};
 
-	this.loadContent = function() {
+	var loadContent = function() {
 		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
 			//fetch introteskt from Excelsheet
@@ -298,7 +225,7 @@ var InterfaceController = function(ExpeditionController) {
 		
 		//prepare a new swier slide
 		$('<div class="swiper-slide"></div>').appendTo($('#previewSwiper .swiper-wrapper'));
-		that.toggleDetailView();
+		toggleDetailView();
 
 		$('.spacer-left-title').html("");
 		$('.spacer-left-summary').html("");
@@ -376,76 +303,69 @@ var InterfaceController = function(ExpeditionController) {
 			$readMore.click(function () {
 				currentPreviewItem = index;
 				currentPoi = value[0];
-				that.toggleDetailView();
+				toggleDetailView();
 				// that.togglePreviewItem(index);
 
-				setTimeout(function() { that.loadContent(); }, 300);
-				// that.loadContent();		
+				setTimeout(function() { loadContent(); }, 300);	
 			});
 
 			var afbeelding = value[1].Afbeelding,
 				type = value[1].type;
 			//TODO change to type check of POI
 			if (type === 'Beeld' || type === 'kaart') {
-				//VM expedition doesn't have images, hence this check
-					// var callback = function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); };
-					var callback = function(imageUrl) { 
-						// $expeditionItem.css('background-image', "url('" + imageUrl + "')");
-						// $expeditionPreviewTitle.find('img').prop('src', imageUrl);
+				var callback = function(imageUrl) { 
+					$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+					.insertAfter($expeditionPreviewSummary);
+				};
 
-						$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
-						.insertAfter($expeditionPreviewSummary);
-
-						console.log('menu image');
-					};
-					fetchWikiImage(afbeelding, 100, callback);
+				fetchWikiImage(afbeelding, 100, callback);
+				
+				$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
+				$readMore.click(function () {
+					currentPreviewItem = index;
+					currentPoi = value[0];
 					
-					$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
-					$readMore.click(function () {
-						currentPreviewItem = index;
-						currentPoi = value[0];
-						
-						//fetch wikiImageUrl
-						var imageName = afbeelding.split('File:')[1];
+					//fetch wikiImageUrl
+					var imageName = afbeelding.split('File:')[1];
 
-						var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
-						var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
-						var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
-						var caption = title + instelling + commons;
+					var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
+					var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
+					var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
+					var caption = title + instelling + commons;
 
-						var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
-						$.ajax({
-   							url: requestUrl,
- 			    			jsonp: "callback",
-			    			dataType: "jsonp", 
-			    			success: function(data) {
-						    	try {						    		
-						    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-									$.fancybox.open([{
-										href:bigViewUrl,
-										title: caption,
-										fitToView: true
-									}]);
-						    	}
-						    	catch (err) {
-						    		console.log('Warning, failed to load big image');
-						    		console.log(err);
-						    		console.log('Assuming local image');
+					var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
+					$.ajax({
+							url: requestUrl,
+			    			jsonp: "callback",
+		    			dataType: "jsonp", 
+		    			success: function(data) {
+					    	try {						    		
+					    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+								$.fancybox.open([{
+									href:bigViewUrl,
+									title: caption,
+									fitToView: true
+								}]);
+					    	}
+					    	catch (err) {
+					    		console.log('Warning, failed to load big image');
+					    		console.log(err);
+					    		console.log('Assuming local image');
 
-						    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
-						    		$.fancybox.open([{
-										href:bigViewUrl,
-										title: caption,
-										fitToView: true
-									}]);
-						    	}
-						    }
-						});
+					    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
+					    		$.fancybox.open([{
+									href:bigViewUrl,
+									title: caption,
+									fitToView: true
+								}]);
+					    	}
+					    }
 					});
+				});
 
-					//hacks, fix
-					$expeditionPreviewTitle.css('padding-bottom', '40px');
-					$expeditionPreviewSummary.empty();
+				//hacks, fix
+				$expeditionPreviewTitle.css('padding-bottom', '40px');
+				$expeditionPreviewSummary.empty();
 			}
 
 			//$expeditionItem.after($readMore);
@@ -458,15 +378,10 @@ var InterfaceController = function(ExpeditionController) {
 			previewItems.push($expeditionItem);
 			$swiperSlide.append($container);
 
-
 			//change interface language
 			//hack, fix
 			if (currentExpedition === 'vening meinesz') {
-				currentLanguage = 'EN';
 				changeInterfaceLanguage('EN');
-				// $.each($readMore, function(index, value) {
-				// 	value.firstChild.innerHTML = 'Read more';
-				// });
 			}
 			
 		});
@@ -494,36 +409,29 @@ var InterfaceController = function(ExpeditionController) {
 			if (maps === undefined) { maps = []; }
 		}
 
-		//try {
-			$.each(maps, function(index, value) {
-				$mapList.append('<div></div>');
+		$.each(maps, function(index, value) {
+			$mapList.append('<div></div>');
 
-				var $checkbox = $('<input type="checkbox">');
-				$checkbox.click(function() {
-					$checkbox.trigger('_toggleOverlayVisibility', [value.id]);
-				});
-				
-				var label = $('<label></label>')
-				.append($checkbox) 
-				.append($('<div>' + value.title + '</div>'));
-
-				if (mode === 'landing' && value.visibleIntro === true) {
-					$checkbox[0].checked = true;
-					label.appendTo($mapList.children().last());
-				} else if (mode === 'expedition') {
-					label.appendTo($mapList.children().last());
-
-					if (value.visibleExpedition === true) {
-						$checkbox[0].checked = true;
-					}
-				}				
+			var $checkbox = $('<input type="checkbox">');
+			$checkbox.click(function() {
+				$checkbox.trigger('_toggleOverlayVisibility', [value.id]);
 			});
-		//}
-		//catch (e) {
-		//	$('#btnMapDrawer').css('opacity', 0);
-		//	console.log("Warning, this expedition does not have any maps.");
-		//}
-		//$mapList.find('input')[0].checked = true;
+			
+			var label = $('<label></label>')
+			.append($checkbox) 
+			.append($('<div>' + value.title + '</div>'));
+
+			if (mode === 'landing' && value.visibleIntro === true) {
+				$checkbox[0].checked = true;
+				label.appendTo($mapList.children().last());
+			} else if (mode === 'expedition') {
+				label.appendTo($mapList.children().last());
+
+				if (value.visibleExpedition === true) {
+					$checkbox[0].checked = true;
+				}
+			}				
+		});
 	};
 
 	var fetchWikiImage = function(url, size, callback) {
@@ -718,14 +626,10 @@ var InterfaceController = function(ExpeditionController) {
 
 		if (mode === "landing") {
 			//reload content in correct language
-			that.loadContent();	
+			loadContent();	
 		}
 
 		//if introtext pane open, change language there too
-	};
-
-	var changeIntroLanguage = function() {
-
 	};
 
 	var loadIntroTexts = function() {
@@ -801,6 +705,75 @@ var InterfaceController = function(ExpeditionController) {
 		menuFolded = (menuFolded === false) ? true : false;
 	};
 
+	this.initializeEvents = function() {
+		$(document)
+			.on('click', '#btnToggleTopDrawer', function() { toggleTopDrawer(); })
+			.on('click', '#btnStartExpedition', function(e) {
+				//trigger startExpedition through trigger/bind
+				ExpeditionController.startExpedition(currentPreviewItem);
+				window.location.hash = expeditions[currentPreviewItem].id;
+				//empy content window to stop youtube movie if running;
+				contentSwiper.removeAllSlides();
+			})
+			.on('click', '#btnBack', function(e) { 
+				toggleDetailView();
+				//stop youtube movie
+				setTimeout(function() {
+					contentSwiper.removeAllSlides();				
+				}, 300);
+
+			})
+			.on('click', '#btnMapDrawer', function(e) { 
+				$('#lstMap').toggleClass('active');
+				console.log('opening map drawer'); 
+			});
+
+		$(window).on('hashchange', function() {
+			var hash = window.location.hash;
+			//emulate push of back button as it removes the hash
+			if (mode === 'expedition' && window.location.hash === '') {
+				window.location.href = window.location.href.substr(0, window.location.href.length - 1);
+			}
+		}); 
+
+		$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
+		$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
+
+		$('#btnMenuScrollRight').click(function() {
+			scrollMenu('right');
+		});
+
+		$('#btnMenuScrollLeft').click(function () {
+			scrollMenu('left');
+		});
+
+		$('#btnMenu').click(function() { 
+			$menuContainer.toggleClass('active');
+			// this.toggleClass('active');
+		});
+
+		$('.language').click(function() {
+			var lang = this.innerHTML;
+			currentLanguage = lang;
+
+			changeInterfaceLanguage(lang);
+
+		});
+
+		$('.menu-item').click(function() {
+			el = this.id + currentLanguage;
+
+			$('#'+el).fancybox({
+				maxWidth: 500
+			})
+			.trigger('click');
+		});
+
+		$('#btnMenuClose').click(function() {
+			$menuContentContainer.toggleClass('active');
+			$('#menuBlackout').removeClass('active');
+		});
+	};
 };
 
 
