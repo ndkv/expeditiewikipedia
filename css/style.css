@@ -163,14 +163,14 @@ body {
 }
 
 .columns {
-  -webkit-columns: 2 300px;
-  -moz-columns: 2 300px;
-  -o-columns: 2 300px;
-  columns: 2 300px;
-  -webkit-column-gap: 4em;
-  -moz-column-gap: 4em;
-  -o-column-gap: 4em;
-  column-gap: 4em;
+  -webkit-columns: 2 350px;
+  -moz-columns: 2 350px;
+  -o-columns: 2 350px;
+  columns: 2 350px;
+  -webkit-column-gap: 3em;
+  -moz-column-gap: 3em;
+  -o-column-gap: 3em;
+  column-gap: 3em;
   padding: 10px;
   padding-right: 100px;
   padding-left: 100px;
@@ -183,8 +183,8 @@ body {
 }
 
 .columns img {
-  max-width: 300px;
-  max-height: 200px;
+  /*max-width: 300px;
+  max-height: 200px;*/
   /*height: 100%;
   width: 100%;
   max-width: 400px;
@@ -207,6 +207,11 @@ body {
 
 .columns-none h2, h3 {
   font-size: 1em;
+}
+
+.columns iframe {
+  width: 300px;
+  height: 150px;
 }
 
 .img-content {

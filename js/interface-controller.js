@@ -477,15 +477,17 @@ var InterfaceController = function(ExpeditionController) {
 					// ratio = width/height,
 					ratio = height/width,
 					columnWidth = 300,
-					maxHeight = 200;
+					maxHeight = 400;
 				
 				// $image.prop('height', columnWidth * ratio);
 				// $image.prop('width', columnWidth);
 
-				if (ratio > 0) {
+				console.log(ratio);
+				if (ratio > 1) {
 					$image.prop('height', maxHeight);
 					$image.prop('width', maxHeight / ratio);
 				} else {
+					console.log(columnWidth * ratio);
 					$image.prop('height', columnWidth * ratio);
 					$image.prop('width', columnWidth);
 				}
@@ -507,7 +509,8 @@ var InterfaceController = function(ExpeditionController) {
 			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
 			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
 			$($data.find('p')[0]).remove();
-			columns.append($data.find('p'));
+
+			columns.append($data);
 
 			var slide = contentSwiper.createSlide(columns[0].outerHTML);
 			slide.append();
