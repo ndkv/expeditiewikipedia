@@ -84,7 +84,7 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 
 		if (menuFolded === true) { toggleTopDrawer(); }
-	}
+	};
 
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
@@ -474,11 +474,25 @@ var InterfaceController = function(ExpeditionController) {
 
 				var height = $image.prop('height'),
 					width = $image.prop('width'),
+					// ratio = width/height,
 					ratio = height/width,
-					columnWidth = 300;
+					columnWidth = 300,
+					maxHeight = 200;
 				
-				$image.prop('height', columnWidth * ratio);
-				$image.prop('width', columnWidth);
+				// $image.prop('height', columnWidth * ratio);
+				// $image.prop('width', columnWidth);
+
+				if (ratio > 0) {
+					$image.prop('height', maxHeight);
+					$image.prop('width', maxHeight / ratio);
+				} else {
+					$image.prop('height', columnWidth * ratio);
+					$image.prop('width', columnWidth);
+				}
+				
+
+				// $image.prop('width', 10);
+				// $image.prop('height', 10);
 
 				console.log(file);
 				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
@@ -490,7 +504,10 @@ var InterfaceController = function(ExpeditionController) {
 
 			});
 
-			columns.append($data);
+			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
+			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
+			$($data.find('p')[0]).remove();
+			columns.append($data.find('p'));
 
 			var slide = contentSwiper.createSlide(columns[0].outerHTML);
 			slide.append();
