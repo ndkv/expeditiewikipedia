@@ -74,7 +74,7 @@ var InterfaceController = function(ExpeditionController) {
     	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
     }
     
-	function togglePreviewItem(index) {
+	this.togglePreviewItem = function(index) {
 		console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
@@ -93,7 +93,7 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function() {
 				//check if user is not dragging menu
 				if (swiperStill()) {
-					togglePreviewItem(index);
+					that.togglePreviewItem(index);
 					$el.trigger({
 						type: 'mapZoomToRoute',
 						expeditionId: expeditions[index].id,
@@ -111,7 +111,7 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function(e) {
 				if (swiperStill()) {
 					e.preventDefault();
-					togglePreviewItem(index);
+					that.togglePreviewItem(index);
 					$el.trigger({
 						type: 'mapZoomToPoI',
 						vmIndex: index
