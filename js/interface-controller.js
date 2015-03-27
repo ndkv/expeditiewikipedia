@@ -57,7 +57,7 @@ var InterfaceController = function(ExpeditionController) {
 			preventClicks: true,
 			// onTransitionStart: function() { console.log('swiping') ;}
 		});
-	};
+	}
 	
     function toggleDetailView() {
     	$contentSwiper.toggleClass('active');
@@ -72,9 +72,9 @@ var InterfaceController = function(ExpeditionController) {
 
     	$('.expedition-title').toggleClass('active');
     	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
-    };
+    }
     
-	function togglePreviewItem() {
+	function togglePreviewItem(index) {
 		console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
@@ -84,24 +84,7 @@ var InterfaceController = function(ExpeditionController) {
 		previewItems[index].addClass("previewItemActive");
 
 		if (menuFolded === true) { toggleTopDrawer(); }
-	};
-
-	// this.togglePreviewItemLanding = function(id) {
-	// 	if (currentPreviewItem !== undefined) {
-	// 		previewItems[currentPreviewItem].removeClass("previewItemActive");
-	// 	}
-
-	// 	//hack, fix
-	// 	var index;
-	// 	$.each(expeditions, function(i, value) {
-	// 		if (value.id === id) { index = i; }
-	// 	});
-
-	// 	currentPreviewItem = index;
-	// 	previewItems[index].addClass("previewItemActive");
-
-	// 	if (menuFolded === true) { toggleTopDrawer(); }
-	// };
+	}
 
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
@@ -199,7 +182,7 @@ var InterfaceController = function(ExpeditionController) {
 		buildSwiper();
 	};
 
-	var loadContent = function() {
+	function loadContent() {
 		contentSwiper.removeAllSlides();
 		if (mode == 'landing') {
 			//fetch introteskt from Excelsheet
@@ -216,7 +199,7 @@ var InterfaceController = function(ExpeditionController) {
 				}
 			}
 		}
-	};
+	}
 
 	this.destroyLandingView = function() {
 		//console.log("destroy LandingView");
@@ -489,13 +472,13 @@ var InterfaceController = function(ExpeditionController) {
 				$image = $(value);
 				$image.prop('src', imageUrl);
 
-				// var height = $image.prop('height'),
-				// 	width = $image.prop('width'),
-				// 	ratio = height/width,
-				// 	columnWidth = 300;
+				var height = $image.prop('height'),
+					width = $image.prop('width'),
+					ratio = height/width,
+					columnWidth = 300;
 				
-				// $image.prop('height', columnWidth * ratio);
-				// $image.prop('width', columnWidth);
+				$image.prop('height', columnWidth * ratio);
+				$image.prop('width', columnWidth);
 
 				console.log(file);
 				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
@@ -608,6 +591,12 @@ var InterfaceController = function(ExpeditionController) {
 			$('#introNL').removeClass('active');
 			$('#introEN').addClass('active');
 
+			$('#menuAbout').html('About Expeditie Wikipedia');
+			$('#menuAboutApp').html('About this app');
+			$('#menuColofon').html('Colofon');
+			$('#menuSponsors').html('Sponsors');
+			$('#menuContact').html('Contact us');
+
 		} else {
 			currentLanguage = 'NL';
 
@@ -621,7 +610,13 @@ var InterfaceController = function(ExpeditionController) {
 			$('#introTitleNL').addClass('active');
 			$('#introTitleEN').removeClass('active');
 			$('#introEN').removeClass('active');
-			$('#introNL').addClass('active');			
+			$('#introNL').addClass('active');
+
+			$('#menuAbout').html('Over Expeditie Wikipedia');
+			$('#menuAboutApp').html('Over deze app');
+			$('#menuColofon').html('Colofon');
+			$('#menuSponsors').html('Sponsoren');
+			$('#menuContact').html('Contact'); 
 		}
 
 		if (mode === "landing") {
