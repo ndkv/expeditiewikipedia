@@ -234,7 +234,7 @@ var MapController = function() {
 		//to do: put in a data reading module
 		var sortable = [];
 		$.each(pois, function(index, poi) {
-			sortable.push([poi[0].order, poi[1]]);	
+			sortable.push([poi[0].order, poi[1], poi[0].zoomTo]);	
 		});
 		sortable.sort(function(a, b) { return a[0] - b[0]; });
 
@@ -243,6 +243,8 @@ var MapController = function() {
 			icon.options.shadowSize = [0,0];
 			var coords = pois[1];
 			var marker = L.marker([coords[1], coords[0]], {icon: icon});
+			marker.vmZoomTo = pois[2];
+							
 			marker.addTo(map);
 
 			poisList.push(marker);
@@ -296,7 +298,7 @@ var MapController = function() {
 		console.log('catchintg zoomToPoi trigger');
 		var index = e.vmIndex;
 		var poi = poisList[index];
-		map.panTo(poi.getLatLng());
+		map.setView(poi.getLatLng(), poi.vmZoomTo);
 
 		togglePoiSelection(poi);
 	};

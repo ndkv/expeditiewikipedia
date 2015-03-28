@@ -48,7 +48,7 @@
         "summary": "The goal of Vening Meinesz was to measure the gravity field of the Earth. What is gravity and why does it differ on various locations.",
         "prefix": "POI 3",
         "type": "Afbeelding",
-        "zoomTo": 8
+        "zoomTo": 6
       },
       "geometry": {
         "type": "Point",
