@@ -453,18 +453,18 @@ var InterfaceController = function(ExpeditionController) {
 
 	var loadVMExpedition = function() {
 		var poi = poisList[currentPoi - 1];
-		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title + '.htm';
+		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
 
-		$.get(path, function(data) {
+		$.get(path + '.htm', function(data) {
 			var columns = $('<div class="columns"></div>');
 			var $data = $(data);
 			var images = $data.find('img');
 
 			$.each(images, function(index, value) {
 				//resize images so they fit in column width
-				var urlPieces = $(value).prop('src').split('/'),
-					folder = urlPieces[urlPieces.length - 2],
-					file = urlPieces[urlPieces.length - 1];
+				var urlPieces = $(value).prop('src').split('/'),					
+					file = urlPieces[urlPieces.length - 1],
+					folder = urlPieces[urlPieces.length - 2];
 
 				var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
@@ -501,13 +501,19 @@ var InterfaceController = function(ExpeditionController) {
 				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
 				$fancybox.appendTo($image.parent());
 				$image.detach().appendTo($fancybox);
-
-
 			});
 
 			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
 			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
-			$($data.find('p')[0]).remove();
+			// $($data.find('p')[0]).remove();
+
+			var $embed = $data.find('iframe');
+			var embedSrc = $embed.prop('src') + '?autoplay=1';
+			var p = $embed.parent();
+			$embed.remove();
+
+			var embedUrl = path + '_files/embed.png';
+			p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));
 
 			columns.append($data);
 

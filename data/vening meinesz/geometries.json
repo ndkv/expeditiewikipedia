@@ -162,7 +162,7 @@
         "summary": "The Romanche Trench is more than seven km deep and located between Africa and South America. The trench is formed, where two plates move along each other, constructing a transform fault.",
         "prefix": "POI 9",
         "type": "Afbeelding",
-        "zoomTo": 8
+        "zoomTo": 10
       },
       "geometry": {
         "type": "Point",
