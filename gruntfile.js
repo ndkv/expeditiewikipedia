@@ -23,10 +23,10 @@ module.exports = function(grunt) {
 			// 	src: ['data/expeditions.json', 'data/expeditions-geometries.json'],
 			// 	dest: 'dist/'
 			// },
-			deploy: {
-				src: ['data/**/*'],
-				dest: 'dist/'
-			}
+			// deploy: {
+			// 	src: ['data/**/*'],
+			// 	dest: 'dist/'
+			// }
 			
 		},
 		uglify: {
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 
 	//grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
 	grunt.registerTask('default', ['browserify', 'concat', 'copy:css', 'copy:images', 'watch']);
-	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy:dev', 'cssmin']);
+	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy', 'cssmin']);
 	// grunt.registerTask('copy-data', ['copy:deploy']);
 
 };
