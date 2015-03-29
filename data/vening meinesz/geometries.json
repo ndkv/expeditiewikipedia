@@ -215,7 +215,7 @@
       "properties": {
         "id": "012",
         "order": 11,
-        "title": "K-XVIII submarine",
+        "title": "K-XVIII Submarine",
         "summary": "Thanks to an incredible design and engineering of the K-XVIII, this vessel was able to sail the Earth’s oceans and complete a trip of 23,000 miles.",
         "prefix": "POI 13",
         "type": "Afbeelding",
@@ -405,7 +405,7 @@
       "properties": {
         "id": "022",
         "order": 21,
-        "title": "Comité \"Onze Marine\"",
+        "title": "Comite \"Onze Marine\"",
         "summary": "The citizens of the Netherlands were excited by the long voyage of the K-XVIII. They started a comity to help the crew during the entire expedition.",
         "prefix": "POI 12",
         "type": "Afbeelding",
