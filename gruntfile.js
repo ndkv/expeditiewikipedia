@@ -19,14 +19,15 @@ module.exports = function(grunt) {
 				src: ['images/logos/*.jpg', 'images/icons/*.png', 'images/icons/*.jpg', 'images/lib/*.*'],
 				dest: 'dist/'
 			},
-			// expeditionsData: {
-			// 	src: ['data/**'],
+			// data: {
+			// 	src: ['data/expeditions.json', 'data/expeditions-geometries.json'],
 			// 	dest: 'dist/'
 			// },
-			data: {
-				src: ['expeditions.json', 'expeditions-geometries.json'],
-				dest: 'dist/data/'
+			deploy: {
+				src: ['data/**/*'],
+				dest: 'dist/'
 			}
+			
 		},
 		uglify: {
 			options: {
@@ -97,7 +98,8 @@ module.exports = function(grunt) {
 
 
 	//grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
-	grunt.registerTask('default', ['browserify', 'concat', 'copy', 'watch']);
-	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy', 'cssmin']);
+	grunt.registerTask('default', ['browserify', 'concat', 'copy:css', 'copy:images', 'watch']);
+	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy:dev', 'cssmin']);
+	// grunt.registerTask('copy-data', ['copy:deploy']);
 
 };

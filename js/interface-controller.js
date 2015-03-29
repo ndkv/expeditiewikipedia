@@ -86,6 +86,21 @@ var InterfaceController = function(ExpeditionController) {
 		if (menuFolded === true) { toggleTopDrawer(); }
 	};
 
+	this.togglePreviewItemLanding = function(id) {
+			if (currentPreviewItem !== undefined) {
+				previewItems[currentPreviewItem].removeClass("previewItemActive");
+			}
+
+			//hack, fix
+			var index;
+			$.each(expeditions, function(i, value) {
+				if (value.id === id) { index = i; }
+			});
+
+			currentPreviewItem = index;
+			previewItems[index].addClass("previewItemActive");	
+		};
+
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
 			var $el = item; //.children().first();
@@ -786,10 +801,12 @@ var InterfaceController = function(ExpeditionController) {
 		$('.menu-item').click(function() {
 			el = this.id + currentLanguage;
 
-			$('#'+el).fancybox({
-				maxWidth: 500
-			})
-			.trigger('click');
+			$.fancybox.open($('#'+el), {
+			// $('#'+el).fancybox({
+				maxWidth: 500,
+				type: 'inline'
+			});
+			// .trigger('click');
 		});
 
 		$('#btnMenuClose').click(function() {

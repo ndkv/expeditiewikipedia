@@ -8,7 +8,7 @@ var ExpeditionController = function() {
 		MapController,
 		MC = require('./map-controller.js');
 
-	$.when($.get('dist/data/expeditions.json'), $.get('dist/data/expeditions-geometries.json'))
+	$.when($.get('data/expeditions.json'), $.get('data/expeditions-geometries.json'))
 	.done(function(exp, geoms) {
 		if (typeof exp[0] === "string") {
 			that.expeditions = $.parseJSON(exp[0]);
