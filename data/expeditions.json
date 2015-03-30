@@ -126,17 +126,6 @@
 		]
 	},
 	{
-		"id": "reisboeken",
-		"title": "Reisboeken over nieuw ontdekte gebieden",
-		"subtitle": "",
-		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
-		"introNL": "te doen",
-		"introGB": "to do",
-		"image": "https://commons.wikimedia.org/wiki/File:Athanasius_Kircher_Portrait.jpg",
-		"blurp": "",
-		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4}
-	},
-	{
 		"id": "bestsellers",
 		"title": "Reis-bestsellers in de Gouden Eeuw",
 		"subtitle": "",
