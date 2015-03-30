@@ -378,6 +378,27 @@ p {
   opacity: 1;
 }
 
+.expedition-title.expedition {
+  margin-top: 0px;
+  font-size: 14px;
+  opacity: 1;
+}
+
+.expedition-subtitle {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  opacity: 0;
+  font-style: italic;
+  font-size: 0px;
+}
+
+.expedition-subtitle.active {
+  opacity: 1;
+  font-size: 18px;
+}
+
 .menu-stack {
   float: right;
 }

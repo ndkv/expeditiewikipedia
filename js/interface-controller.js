@@ -70,8 +70,15 @@ var InterfaceController = function(ExpeditionController) {
     	$('#btnToggleTopDrawer').toggleClass('hidden');
     	$('#btnBack').toggleClass('active');
 
-    	$('.expedition-title').toggleClass('active');
-    	$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
+    	if (mode === "landing") {
+    		$('.expedition-title').toggleClass('active');
+    		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);	
+    	}
+
+    	if (mode === "expedition") 	{
+    		$('.expedition-subtitle').toggleClass('active');
+    		$('.expedition-title').toggleClass('expedition');
+    	}
     }
     
 	this.togglePreviewItem = function(index) {
@@ -302,6 +309,8 @@ var InterfaceController = function(ExpeditionController) {
 				currentPoi = value[0];
 				toggleDetailView();
 				// that.togglePreviewItem(index);
+
+				$('.expedition-subtitle').html(value[1].title);
 
 				setTimeout(function() { loadContent(); }, 300);	
 			});
