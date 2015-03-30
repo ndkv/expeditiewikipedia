@@ -46,7 +46,17 @@ var InterfaceController = function(ExpeditionController) {
 	var contentSwiper = new Swiper('#contentSwiper', {
 			mode: 'horizontal',
 			//scrollContainer: true,
-			slidesPerView: 1
+			slidesPerView: 1,
+			onSlideChangeEnd: function() { 
+				console.log('slide swiped');
+				console.log(contentSwiper.activeIndex);
+				$(document).trigger({
+					type: 'mapZoomToPoI',
+					vmIndex: contentSwiper.activeIndex
+				});
+				
+				$('.expedition-subtitle').html(poisList[contentSwiper.activeIndex][1].title);
+			}
 	});
 
 	function buildSwiper() {
@@ -56,6 +66,7 @@ var InterfaceController = function(ExpeditionController) {
 			scrollContainer: true,
 			preventClicks: true,
 			// onTransitionStart: function() { console.log('swiping') ;}
+
 		});
 	}
 	
@@ -70,15 +81,8 @@ var InterfaceController = function(ExpeditionController) {
     	$('#btnToggleTopDrawer').toggleClass('hidden');
     	$('#btnBack').toggleClass('active');
 
-    	if (mode === "landing") {
-    		$('.expedition-title').toggleClass('active');
-    		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);	
-    	}
+    	toggleTitle();
 
-    	if (mode === "expedition") 	{
-    		$('.expedition-subtitle').toggleClass('active');
-    		$('.expedition-title').toggleClass('expedition');
-    	}
     }
     
 	this.togglePreviewItem = function(index) {
@@ -312,7 +316,10 @@ var InterfaceController = function(ExpeditionController) {
 
 				$('.expedition-subtitle').html(value[1].title);
 
-				setTimeout(function() { loadContent(); }, 300);	
+				setTimeout(function() { loadContent(); }, 300);
+
+				//scroll content swiper to correct slide
+				//remove loadContent, that is already done
 			});
 
 			var afbeelding = value[1].Afbeelding,
@@ -543,6 +550,8 @@ var InterfaceController = function(ExpeditionController) {
 
 			var slide = contentSwiper.createSlide(columns[0].outerHTML);
 			slide.append();
+
+			contentSwiper.createSlide(columns[0].outerHTML).append();
 		});
 	};
 
@@ -823,6 +832,18 @@ var InterfaceController = function(ExpeditionController) {
 			$('#menuBlackout').removeClass('active');
 		});
 	};
+
+	function toggleTitle() {
+		if (mode === "landing") {
+			$('.expedition-title').toggleClass('active');
+			$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);	
+		}
+
+		if (mode === "expedition") 	{
+			$('.expedition-subtitle').toggleClass('active');
+			$('.expedition-title').toggleClass('expedition');
+		}
+	}
 };
 
 
