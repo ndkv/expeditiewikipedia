@@ -298,7 +298,24 @@ var MapController = function() {
 		console.log('catchintg zoomToPoi trigger');
 		var index = e.vmIndex;
 		var poi = poisList[index];
-		map.setView(poi.getLatLng(), poi.vmZoomTo);
+
+		// map.setView(poi.getLatLng(), poi.vmZoomTo);
+		console.log(poi.getLatLng());
+
+		var projected = map.project(poi.getLatLng(), poi.vmZoomTo);
+		console.log(projected);
+		projected.y -= 200;
+		var newCoords = map.unproject(projected, poi.vmZoomTo);
+		console.log(newCoords);
+
+		map.setView(newCoords, poi.vmZoomTo);	
+
+		// setTimeout(function (){
+		// 	var screenCoords = map.layerPointToContainerPoint(map.latLngToLayerPoint(poi._latlng));
+		// 	screenCoords.y -= 100;
+		// 	var newCoords = map.containerPointToLatLng(screenCoords
+		// }, 30);
+		
 
 		togglePoiSelection(poi);
 	};
