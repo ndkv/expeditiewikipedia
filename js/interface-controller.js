@@ -551,7 +551,7 @@ var InterfaceController = function(ExpeditionController) {
 			var slide = contentSwiper.createSlide(columns[0].outerHTML);
 			slide.append();
 
-			contentSwiper.createSlide(columns[0].outerHTML).append();
+			// contentSwiper.createSlide(columns[0].outerHTML).append();
 		});
 	};
 
