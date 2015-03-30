@@ -1,0 +1,575 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "001",
+        "order": 1,
+        "title": "Departure Den Helder",
+        "summary": "The K-XVIII departed on 14 November 1934 from the Dutch Navy harbor in Den Helder to commence the longest solo mission for a submarine. On board the K-XVIII was professor Vening Meinesz.",
+        "prefix": "POI 1",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.7879791259765625,
+          52.96497693568997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "002",
+        "order": 30,
+        "title": "Founder of NWO",
+        "summary": "Vening Meinesz was one of the founders of NWO. Thanks to his international network and experiences, the professor saw the possibilities of governmental funding in the scientific world.",
+        "prefix": "POI 2",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3437838554382315,
+          52.080191732196624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "003",
+        "order": 2,
+        "title": "Gravity Explained",
+        "summary": "The goal of Vening Meinesz was to measure the gravity field of the Earth. What is gravity and why does it differ on various locations.",
+        "prefix": "POI 3",
+        "type": "Afbeelding",
+        "zoomTo": 6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.701171874999998,
+          46.619261036171515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "004",
+        "order": 3,
+        "title": "Aboard K-XVIII",
+        "summary": "The crewmembers on board the K-XVIII had to live in a cramped submarine for eight months. This meant they had to adjust to each other and the circumstances. ",
+        "prefix": "POI 15",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.69921875,
+          40.17887331434696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "005",
+        "order": 4,
+        "title": "Isostasy Explained",
+        "summary": "Vening Meinesz discovered, during his many expeditions that the strength of the crust is partially responsible for supporting mountains and continents.",
+        "prefix": "POI 5",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.918945312499996,
+          32.694865977875075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "006",
+        "order": 5,
+        "title": "Crossing of the Snip",
+        "summary": "One of the objectives of the K-XVIII was to be a navigational beacon for KLM’s first trans-continental postal flight.\tThanks to the K-XVIII it could safely cross the Atlantic Ocean.",
+        "prefix": "POI 6",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -33.53333,
+          11.33333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "007",
+        "order": 6,
+        "title": "Plate Tectonics",
+        "summary": "The theory of plate tectonics was not yet accepted by the academic society during Vening Meinesz time. He did not believe in it, but his observations tell a different story.",
+        "prefix": "POI 7",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -34.4,
+          6.95
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "008",
+        "order": 7,
+        "title": "Neptune's Ritual",
+        "summary": "Crossing the equator with a ship could attract the god of the ocean to come aboard. Neptune and his wife visited the K-XVIII, when they crossed the equator on the 11th of January 1935.",
+        "prefix": "POI 8",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17,
+          0.001
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "009",
+        "order": 8,
+        "title": "Romanche Trench",
+        "summary": "The Romanche Trench is more than seven km deep and located between Africa and South America. The trench is formed, where two plates move along each other, constructing a transform fault.",
+        "prefix": "POI 9",
+        "type": "Afbeelding",
+        "zoomTo": 10
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -19,
+          -0.21666
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "010",
+        "order": 9,
+        "title": "Waving the Flag",
+        "summary": "During this time the reputation of the Dutch Navy was very low among the Dutch citizens. The Navy used this expedition to improve this reputation in the Netherlands.",
+        "prefix": "POI 11",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -34.4091796875,
+          -9.535748998133615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "011",
+        "order": 10,
+        "title": "Biography Vening Meinesz",
+        "summary": "Professor Vening Meinesz has achieved a lot during his life. His dedication to science played a major role in his life and he has influenced many scientists throughout the world. ",
+        "prefix": "POI 10",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.166015625,
+          -25.40358497318669
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "012",
+        "order": 11,
+        "title": "K-XVIII Submarine",
+        "summary": "Thanks to an incredible design and engineering of the K-XVIII, this vessel was able to sail the Earth’s oceans and complete a trip of 23,000 miles.",
+        "prefix": "POI 13",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.384765625,
+          -36.38591277287651
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "013",
+        "order": 12,
+        "title": "Diving Procedure",
+        "summary": "The crewmembers aboard the K-XVIII performed diving procedures three times a day, on average. These procedures were performed by at least one third of the crew.\t",
+        "prefix": "POI 30",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -31.25,
+          -32.4333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "014",
+        "order": 13,
+        "title": "Spreading Ridge",
+        "summary": "The spreading ridge is an important aspect in plate tectonics. Vening Meinesz measured the gravity effect of several of these ridges during the voyage with the K-XVIII.",
+        "prefix": "POI 16",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -18.852539062499996,
+          -36.38591277287651
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "015",
+        "order": 14,
+        "title": "Tristan da Cunha",
+        "summary": "Tristan da Cunha is a volcanic island situated in the middle of the South Atlantic Ocean. On the island is a British settlement, which is one of the most remote places to live. ",
+        "prefix": "POI 18",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.28271484375,
+          -37.0551771066608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "016",
+        "order": 15,
+        "title": "Hotspot Volcanism",
+        "summary": "Hotspot volcanism is one of the three types of volcanism found on Earth. The source for these volcanoes is found in the deep layers of the mantle.",
+        "prefix": "POI 19",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.130859375,
+          -28.92163128242129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "017",
+        "order": 16,
+        "title": "Gravity Compared",
+        "summary": "The incredible work is best shown when we compare the gravity observations of Vening Meinesz with current satellite data. Thanks to the incredible accurate observations of Vening Meinesz, numerous secrets of the Earth were discovered.",
+        "prefix": "POI 27",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0078125,
+          -34.30714385628803
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "018",
+        "order": 17,
+        "title": "Stay at Cape Town",
+        "summary": "After a long and stormy stretch over the South Atlantic Ocean, the K-XVIII finally arrived in Cape Town. The crew and the professor were greatly welcomed. ",
+        "prefix": "POI 20",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.511962890625,
+          -33.97980872872456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "019",
+        "order": 18,
+        "title": "Pendulum Apparatus",
+        "summary": "Vening Meinesz had designed the pendulum apparatus in 1921 to remove vertical motions from the observations. This invention made it possible to observe the gravity field on the oceans.",
+        "prefix": "POI 23",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.509765625,
+          -36.949891786813275
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "020",
+        "order": 19,
+        "title": "Calibration and Time",
+        "summary": "The cause of his precise measurements of the gravity field is the numerous calibrations Vening Meinesz performed in the years before his expeditions. ",
+        "prefix": "POI 22",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.871582031249996,
+          -29.859701442126745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "021",
+        "order": 20,
+        "title": "Depth Measurements",
+        "summary": "The K-XVIII had sonar equipment on board for measuring the depth of the ocean floor, essential for Vening Meinesz’ studies. They revealed many secrets of the deep oceans. ",
+        "prefix": "POI 4",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.05468749999999,
+          -28.30438068296277
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "022",
+        "order": 21,
+        "title": "Comite Onze Marine",
+        "summary": "The citizens of the Netherlands were excited by the long voyage of the K-XVIII. They started a comity to help the crew during the entire expedition.",
+        "prefix": "POI 12",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          57.487335205078125,
+          -20.16038742754386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "023",
+        "order": 22,
+        "title": "Troubles Onboard",
+        "summary": "In contrast with the reports from the movie and media, the mood onboard the K-XVIII wasn’t always excellent. There were some arguments between the professor and the captain. ",
+        "prefix": "POI 24",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          67.45,
+          -29.8166
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "024",
+        "order": 23,
+        "title": "Location Finding",
+        "summary": "To determine the position of the K-XVIII, the navigation officer would use a sextant to measure different angles between celestial objects.  ",
+        "prefix": "POI 17",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.916015625,
+          -30.67571540416773
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "025",
+        "order": 24,
+        "title": "Geoid Explained",
+        "summary": "Geodesy is the study that is responsible for measuring the shape of the Earth. One of their biggest concerns is the definition of 0 meter height, or sea level. ",
+        "prefix": "POI 25",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          93.779296875,
+          -29
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "026",
+        "order": 25,
+        "title": "Stay at Fremantle",
+        "summary": "Many Australians came to see the K-XVIII when it arrived in Fremantle. The professor visited the University of West Australia, where he made an observation of the gravity field. ",
+        "prefix": "POI 21",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.72998046875,
+          -32.0510073612539
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "027",
+        "order": 26,
+        "title": "Holweck-Lejay",
+        "summary": "The Golden Calf was too big and heavy to quickly take on land, so Vening Meinesz had acquired a Holweck-Lejay gravimeter from the “Bataafsche Petrolium Maatschappij” to perform land measurements. ",
+        "prefix": "POI 26",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.76269531249999,
+          -25.244695951306028
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "028",
+        "order": 27,
+        "title": "Chronometers",
+        "summary": "Professor Vening Meinesz needed accurate timekeeping during his voyage for his precise gravity measurements, so he brought the best clocks available with him.",
+        "prefix": "POI 14",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.884765625,
+          -19.145168196205283
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "029",
+        "order": 28,
+        "title": "Subduction Zone",
+        "summary": "At the end of the journey of the K-XVIII they sailed over a subduction zone, which is, coincidentally, also the location of the end-of-life of an oceanic plate. ",
+        "prefix": "POI 28",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.6640625,
+          -10.962764256386809
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "030",
+        "order": 29,
+        "title": "Reception at Surabaya",
+        "summary": "After eight months of sailing the oceans of the Earth, the K-XVIII with professor Vening Meinesz arrived at the final port, Surabaya, where a large crowd awaited them. ",
+        "prefix": "POI 29",
+        "type": "Afbeelding",
+        "zoomTo": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.72933959960938,
+          -7.209219097634251
+        ]
+      }
+    }
+  ]
+}

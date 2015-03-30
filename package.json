@@ -4,9 +4,14 @@
   "description": "",
   "main": "js/app.js",
   "dependencies": {
+    "fancybox": "^2.1.8",
+    "fastclick": "^1.0.3",
     "highcharts-browserify": "~0.1.1-4.0.3",
     "jquery-browserify": "^1.8.1",
-    "leaflet": "^0.7.3"
+    "leaflet": "^0.7.3",
+    "leaflet-providers": "^1.0.13",
+    "papaparse": "^4.1.0",
+    "swiper": "^2.7.5"
   },
   "devDependencies": {
     "browserify": "^6.1.0",

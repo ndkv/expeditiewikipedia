@@ -16,9 +16,18 @@ module.exports = function(grunt) {
 				dest: 'dist/css/style.css'
 			},
 			images: {
-				src: ['images/icons/*.png', 'images/icons/*.jpg'],
+				src: ['images/logos/*.jpg', 'images/icons/*.png', 'images/icons/*.jpg', 'images/lib/*.*'],
 				dest: 'dist/'
-			}
+			},
+			// data: {
+			// 	src: ['data/expeditions.json', 'data/expeditions-geometries.json'],
+			// 	dest: 'dist/'
+			// },
+			// deploy: {
+			// 	src: ['data/**/*'],
+			// 	dest: 'dist/'
+			// }
+			
 		},
 		uglify: {
 			options: {
@@ -89,7 +98,8 @@ module.exports = function(grunt) {
 
 
 	//grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
-	grunt.registerTask('default', ['browserify', 'concat', 'copy', 'watch']);
+	grunt.registerTask('default', ['browserify', 'concat', 'copy:css', 'copy:images', 'watch']);
 	grunt.registerTask('minify', ['browserify', 'uglify', 'concat', 'copy', 'cssmin']);
+	// grunt.registerTask('copy-data', ['copy:deploy']);
 
 };
