@@ -213,7 +213,7 @@ var InterfaceController = function(ExpeditionController) {
 			//fetch introteskt from Excelsheet
 			loadIntroTexts();
 		} else {
-			if (currentExpedition === "vening meinesz") {
+			if (currentExpedition === "vening-meinesz") {
 				loadVMExpedition();
 			} else {
 				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
@@ -271,7 +271,7 @@ var InterfaceController = function(ExpeditionController) {
 		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
 		console.log(currentLanguage);
 
-		if (currentExpedition === 'vening meinesz') {
+		if (currentExpedition === 'vening-meinesz') {
 			$('#contentSwiper').addClass('scroll');
 		}
 	};
@@ -393,7 +393,7 @@ var InterfaceController = function(ExpeditionController) {
 
 			//change interface language
 			//hack, fix
-			if (currentExpedition === 'vening meinesz') {
+			if (currentExpedition === 'vening-meinesz') {
 				changeInterfaceLanguage('EN');
 			}
 			
