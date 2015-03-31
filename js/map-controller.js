@@ -13,11 +13,12 @@ var MapController = function() {
 
 	var map = new L.Map('map', {
 		zoomControl: false,
-		zoomAnimation: true,
+		//zoomAnimation: true,
 		touchZoom: true,
 		maxBounds: bounds,
 		minZoom: 2,
-		maxZoom: 10
+		maxZoom: 10,
+		attributionControl: true
 	});
 	map.setView([0.0, 55.0], 2);
 	map.on('click', function () {

@@ -486,7 +486,8 @@ var InterfaceController = function(ExpeditionController) {
 		var poi = poisList[currentPoi - 1];
 		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
 
-		$.get(path + '.htm', function(data) {
+		$.get(path + '.htm')
+		.done(function(data) {
 			var columns = $('<div class="columns"></div>');
 			var $data = $(data);
 			var images = $data.find('img');
@@ -539,19 +540,24 @@ var InterfaceController = function(ExpeditionController) {
 			// $($data.find('p')[0]).remove();
 
 			var $embed = $data.find('iframe');
-			var embedSrc = $embed.prop('src') + '?autoplay=1';
-			var p = $embed.parent();
-			$embed.remove();
 
-			var embedUrl = path + '_files/embed.png';
-			p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));
+			if ($embed.length > 0) {
+				var embedSrc = $embed.prop('src') + '?autoplay=1';
+				var p = $embed.parent();
+				$embed.remove();
+
+				var embedUrl = path + '_files/embed.png';
+				p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
+			}	
 
 			columns.append($data);
+
+			console.log(columns[0]);
 
 			var slide = contentSwiper.createSlide(columns[0].outerHTML);
 			slide.append();
 
-			contentSwiper.createSlide(columns[0].outerHTML).append();
+			// contentSwiper.createSlide(columns[0].outerHTML).append();
 		});
 	};
 

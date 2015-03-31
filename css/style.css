@@ -94,6 +94,7 @@
 
 .swiper-container {
   position: absolute;
+  opacity: inherit;
   /*opacity: 1;*/
   transform: translate3d(0px, 0px, 0px);
   transition: opacity .5s .35s linear, transform 0s .35s;
@@ -283,7 +284,8 @@ p {
   font-size: 0.9em;
   background: -webkit-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: -moz-linear-gradient(top, white, rgba(255, 255, 255, 0));
-  background: -0-linear-gradient(top, white, rgba(255, 255, 255, 0));
+  background: -o-linear-gradient(top, white, rgba(255, 255, 255, 0));
+  background: -ms-linear-gradient(top, white, rgba(255, 255, 255, 0));
   background: linear-gradient(top, white, rgba(255, 255, 255, 0));
   /*padding-bottom: 10px;*/
   /*padding-bottom: 120px;*/
@@ -474,11 +476,11 @@ p {
   display: inline;
   background-color: white;
   left: 0px;
-  /*padding-left: 50px;*/
   top: 0px;
   bottom: 0px;
   box-shadow: 10px 0px 10px 20px white;
   z-index: 2;
+  opacity: inherit;
 }
 
 
@@ -513,14 +515,12 @@ p {
 
 #swiperMenu {
   opacity: 1;
-  transition: opacity .5s .3s, translate 0s 0s;
+  transition: opacity 0.5s 0.3s linear;
 }
 
 #swiperMenu.hidden {
-  /*position: absolute;*/
   opacity: 0;
-  /*transform: translate3d(-1000px, 0px, 0px);*/
-  transition: opacity .5s, translate 0s 1s;
+  transition: opacity 0.5s 0s linear;
 }
 
 #lstMap label > div {
@@ -649,6 +649,7 @@ a.commons:visited {
 
 .spacer-right {
   position: absolute;
+  opacity: inherit;
   width: 120px;
   display: inline;
   background-color: white;
