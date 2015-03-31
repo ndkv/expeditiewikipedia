@@ -41,7 +41,8 @@ var MapController = function() {
 			});
 		});
 
-		var $swiper = $('.swiper-wrapper'),
+		//move to InterfaceController!!!
+		var $swiper = $('#previewSwiper > div.swiper-wrapper'),
 			swiperOffset = $swiper.offset().left,
 			spacerLeftWidth = $('.spacer-left').width(),
 			spacerRightShadow = 30,

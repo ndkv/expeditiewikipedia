@@ -77,12 +77,13 @@
 }
 
 #contentSwiper.scroll {
-  overflow-y: auto;
-  overflow-x: hidden;
+  /*overflow-y: auto;*/
+  /*overflow-x: hidden;*/
 }
 
 #contentSwiper .swiper-slide {
-  /*overflow-y: auto;*/
+  overflow-y: auto;
+  height: 440px;
 }
 
 #contentSwiper.active {
@@ -845,26 +846,51 @@ a.commons:visited {
   padding: 30px;
 }
 
-#btnBack {
+.content-controls {
   position: absolute;
+  bottom: 0px;
   right: 40px;
-  bottom: 20px;
-  width: 46px;
-  height: 46px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 23px;
-  cursor: pointer;
-  pointer-events: none;
+  height: 280px;
   opacity: 0;
   z-index: 2;
   transition: opacity 0.4s;
+  cursor: pointer;
+  pointer-events: none;
 }
 
-#btnBack.active {
+.content-controls.active {
   pointer-events: auto;
   opacity: 1;
   transition: opacity 0.4s 0.4s;
 }
+
+.content-control {
+  position: absolute;
+  right: 0px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#btnContentForward {
+  top: 55px;
+  height: 46px;
+  width: 46px;
+
+}
+
+#btnContentBack {
+  top: 0px;
+  height: 46px;
+  width: 46px;  
+}
+
+#btnBack {
+  bottom: 10px;
+  width: 46px;
+  height: 46px;
+
+  border-radius: 23px;
+}
+
 
 #btnStartExpedition {
   /*position: absolute;*/

@@ -20,7 +20,8 @@ var InterfaceController = function(ExpeditionController) {
 		$previewList = $('#previewList'),
 		$menuContentContainer = $('#menuContentContainer'),
 		$menuContainer = $('#menuContainer'),
-		$menuContent = $('#menuContent');
+		$menuContent = $('#menuContent'),
+		poiClicked = false;
 
 
 	//map expeditions integer ids to string ids
@@ -47,13 +48,19 @@ var InterfaceController = function(ExpeditionController) {
 			mode: 'horizontal',
 			//scrollContainer: true,
 			slidesPerView: 1,
-			onSlideChangeEnd: function() { 
-				console.log('slide swiped');
-				console.log(contentSwiper.activeIndex);
-				$(document).trigger({
-					type: 'mapZoomToPoI',
-					vmIndex: contentSwiper.activeIndex
-				});
+			preventLinksPropagation: true,
+			preventLinks: true,
+			calculateHeight: true,
+			onSlideChangeEnd: function() {
+				console.log(this);
+				if (!poiClicked) {
+					$(document).trigger({
+						type: 'mapZoomToPoI',
+						vmIndex: contentSwiper.activeIndex,		
+					});
+				}
+
+				poiClicked = false;
 				
 				$('.expedition-subtitle').html(poisList[contentSwiper.activeIndex][1].title);
 			}
@@ -79,7 +86,7 @@ var InterfaceController = function(ExpeditionController) {
     	$('#btnMenuScrollRight').toggleClass('hidden');
     	$('#btnMenuScrollLeft').toggleClass('hidden');
     	$('#btnToggleTopDrawer').toggleClass('hidden');
-    	$('#btnBack').toggleClass('active');
+    	$('.content-controls').toggleClass('active');
 
     	toggleTitle();
 
@@ -94,23 +101,27 @@ var InterfaceController = function(ExpeditionController) {
 		currentPreviewItem = index;
 		previewItems[index].addClass("previewItemActive");
 
+		console.log('swiping to... ' + index);
+		poiClicked = true;
+		contentSwiper.swipeTo(index);
+
 		if (menuFolded === true) { toggleTopDrawer(); }
 	};
 
 	this.togglePreviewItemLanding = function(id) {
-			if (currentPreviewItem !== undefined) {
-				previewItems[currentPreviewItem].removeClass("previewItemActive");
-			}
+		if (currentPreviewItem !== undefined) {
+			previewItems[currentPreviewItem].removeClass("previewItemActive");
+		}
 
-			//hack, fix
-			var index;
-			$.each(expeditions, function(i, value) {
-				if (value.id === id) { index = i; }
-			});
+		//hack, fix
+		var index;
+		$.each(expeditions, function(i, value) {
+			if (value.id === id) { index = i; }
+		});
 
-			currentPreviewItem = index;
-			previewItems[index].addClass("previewItemActive");	
-		};
+		currentPreviewItem = index;
+		previewItems[index].addClass("previewItemActive");	
+	};
 
 	this.registerMapEventsRoute = function() {
 		$.each(previewItems, function(index, item) {
@@ -213,15 +224,11 @@ var InterfaceController = function(ExpeditionController) {
 			//fetch introteskt from Excelsheet
 			loadIntroTexts();
 		} else {
-			if (currentExpedition === "vening-meinesz") {
-				loadVMExpedition();
-			} else {
-				var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
-				var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
-				if (wikiUrl.length > 0) {
-					fetchWikiExcerpt(wikiUrl, imageUrl, 600, true);
-					// $('.wiki-leesmeer a').prop('href', wikiUrl);
-				}
+			var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
+			var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
+			if (wikiUrl.length > 0) {
+				fetchWikiExcerpt(wikiUrl, imageUrl, 600, true);
+				// $('.wiki-leesmeer a').prop('href', wikiUrl);
 			}
 		}
 	}
@@ -255,6 +262,10 @@ var InterfaceController = function(ExpeditionController) {
 
 		buildPoIList(pois);
 		buildMapsList();
+
+		if (currentExpedition === "vening-meinesz") {
+			setTimeout(loadVMExpedition, 1000);
+		}
 
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
@@ -313,13 +324,13 @@ var InterfaceController = function(ExpeditionController) {
 				currentPoi = value[0];
 				toggleDetailView();
 				// that.togglePreviewItem(index);
+				contentSwiper.swipeTo(index);
 
 				$('.expedition-subtitle').html(value[1].title);
 
-				setTimeout(function() { loadContent(); }, 300);
-
-				//scroll content swiper to correct slide
-				//remove loadContent, that is already done
+				if (currentExpedition !== "vening-meinesz") {
+					setTimeout(function() { loadContent(); }, 300);					
+				}
 			});
 
 			var afbeelding = value[1].Afbeelding,
@@ -483,82 +494,82 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	var loadVMExpedition = function() {
-		var poi = poisList[currentPoi - 1];
-		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
+		$.each(poisList, function(index, poi) {
+			// var poi = poisList[currentPoi - 1];
+			var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
 
-		$.get(path + '.htm')
-		.done(function(data) {
-			var columns = $('<div class="columns"></div>');
-			var $data = $(data);
-			var images = $data.find('img');
+			$.get(path + '.htm')
+			.done(function(data) {
+				var columns = $('<div class="columns"></div>');
+				var $data = $(data);
+				var images = $data.find('img');
 
-			$.each(images, function(index, value) {
-				//resize images so they fit in column width
-				var urlPieces = $(value).prop('src').split('/'),					
-					file = urlPieces[urlPieces.length - 1],
-					folder = urlPieces[urlPieces.length - 2];
+				$.each(images, function(index, value) {
+					//resize images so they fit in column width
+					var urlPieces = $(value).prop('src').split('/'),					
+						file = urlPieces[urlPieces.length - 1],
+						folder = urlPieces[urlPieces.length - 2];
 
-				var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
+					var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
-				$image = $(value);
-				$image.prop('src', imageUrl);
+					$image = $(value);
+					$image.prop('src', imageUrl);
 
-				var height = $image.prop('height'),
-					width = $image.prop('width'),
-					// ratio = width/height,
-					ratio = height/width,
-					columnWidth = 300,
-					maxHeight = 400;
-				
-				// $image.prop('height', columnWidth * ratio);
-				// $image.prop('width', columnWidth);
+					var height = $image.prop('height'),
+						width = $image.prop('width'),
+						// ratio = width/height,
+						ratio = height/width,
+						columnWidth = 300,
+						maxHeight = 400;
+					
+					// $image.prop('height', columnWidth * ratio);
+					// $image.prop('width', columnWidth);
 
-				console.log(ratio);
-				if (ratio > 1) {
-					$image.prop('height', maxHeight);
-					$image.prop('width', maxHeight / ratio);
-				} else {
-					console.log(columnWidth * ratio);
-					$image.prop('height', columnWidth * ratio);
-					$image.prop('width', columnWidth);
-				}
-				
+					console.log(ratio);
+					if (ratio > 1) {
+						$image.prop('height', maxHeight);
+						$image.prop('width', maxHeight / ratio);
+					} else {
+						console.log(columnWidth * ratio);
+						$image.prop('height', columnWidth * ratio);
+						$image.prop('width', columnWidth);
+					}
+					
 
-				// $image.prop('width', 10);
-				// $image.prop('height', 10);
+					// $image.prop('width', 10);
+					// $image.prop('height', 10);
 
-				console.log(file);
-				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
-				var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
-				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
-				$fancybox.appendTo($image.parent());
-				$image.detach().appendTo($fancybox);
+					console.log(file);
+					var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
+					var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
+					var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
+					$fancybox.appendTo($image.parent());
+					$image.detach().appendTo($fancybox);
+				});
+
+				// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
+				//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
+				// $($data.find('p')[0]).remove();
+
+				var $embed = $data.find('iframe');
+
+				if ($embed.length > 0) {
+					var embedSrc = $embed.prop('src') + '?autoplay=1';
+					var p = $embed.parent();
+					$embed.remove();
+
+					var embedUrl = path + '_files/embed.png';
+					p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
+				}	
+
+				columns.append($data);
+
+				console.log(columns[0]);
+
+				var slide = contentSwiper.createSlide(columns[0].outerHTML);
+				slide.append();
 			});
-
-			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
-			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
-			// $($data.find('p')[0]).remove();
-
-			var $embed = $data.find('iframe');
-
-			if ($embed.length > 0) {
-				var embedSrc = $embed.prop('src') + '?autoplay=1';
-				var p = $embed.parent();
-				$embed.remove();
-
-				var embedUrl = path + '_files/embed.png';
-				p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
-			}	
-
-			columns.append($data);
-
-			console.log(columns[0]);
-
-			var slide = contentSwiper.createSlide(columns[0].outerHTML);
-			slide.append();
-
-			// contentSwiper.createSlide(columns[0].outerHTML).append();
-		});
+		});	
 	};
 
 	var fetchWikiExcerpt = function(url, imageUrl, numWords, columns) {
@@ -733,7 +744,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		var moveDirection = (direction === 'right') ? -300 : 300;
 
-		var $swiper = $('.swiper-wrapper');
+		// var $swiper = $('#previewSwiper > div.swiper-wrapper');
 		var spacerRightWidth = 50;
 		var spacerLeftWidth = 150;
 		var docWidth = $(document).width();
@@ -779,12 +790,9 @@ var InterfaceController = function(ExpeditionController) {
 			})
 			.on('click', '#btnBack', function(e) { 
 				toggleDetailView();
-				//stop youtube movie
-				setTimeout(function() {
-					contentSwiper.removeAllSlides();				
-				}, 300);
-
 			})
+			.on('click', '#btnContentForward', function() { contentSwiper.swipeNext(); })
+			.on('click', '#btnContentBack', function() { contentSwiper.swipePrev(); })
 			.on('click', '#btnMapDrawer', function(e) { 
 				$('#lstMap').toggleClass('active');
 				console.log('opening map drawer'); 

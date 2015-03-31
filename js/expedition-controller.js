@@ -70,12 +70,9 @@ var ExpeditionController = function() {
 
 			InterfaceController.buildExpeditionView(expedition, expeditionIndex, pois);
 
-			//wait a bot to prevent too much flickering			
-			setTimeout(function () { 
-				MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
-				InterfaceController.registerMapEventsPois();
-				MapController.registerInterfaceEvents(InterfaceController);
-			}, 1500);
+			MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
+			InterfaceController.registerMapEventsPois();
+			MapController.registerInterfaceEvents(InterfaceController);
 
 		});
 
