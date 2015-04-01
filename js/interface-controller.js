@@ -288,9 +288,10 @@ var InterfaceController = function(ExpeditionController) {
 		if (currentExpedition === 'vening-meinesz') {
 			// $('#contentSwiper .swiper-slide').css('height', 440);
 			// $('#contentSwiper .swiper-slide').css('overflow', 'auto');
+
+			$('.content-control').addClass('active');
 		}
 
-		$('.content-control').addClass('active');
 
 
 	};
@@ -884,10 +885,13 @@ var InterfaceController = function(ExpeditionController) {
 		}
 	}
 
-	this.centerMenus = function(index) {
-		poiClicked = true;
-		contentSwiper.swipeTo(index);
-
+	this.centerMenus = function(index) {		
+		if (contentSwiper.slides.length < 2) {
+			centerMainMenu(index);			
+		} else {
+			poiClicked = true;
+			contentSwiper.swipeTo(index);			
+		}
 	};
 
 	function centerMainMenu(index) {
