@@ -41,45 +41,11 @@ var MapController = function() {
 			});
 		});
 
-		//move to InterfaceController!!!
-		var $swiper = $('#previewSwiper > div.swiper-wrapper'),
-			swiperOffset = $swiper.offset().left,
-			spacerLeftWidth = $('.spacer-left').width(),
-			spacerRightShadow = 30,
-			spacerRightWidth = $('.spacer-right').width() + spacerRightShadow,
-			margin = 20,
-			offset;
-
 		//only available in expedition view
 		//fix
 		$.each(poisList, function (index, poi) {
 			var handler = function () { 
-				InterfaceController.togglePreviewItem(index);
-
-				//center menu, should be in won function
-				var docWidth = $(document).width(),
-					docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth - spacerLeftWidth;
-
-				var	$element = $('.expeditionItem').eq(index),
-					elemMid = $element.offset().left + $element.width()/2 + margin/2;
-					//elem = index + 1;
-
-				if (docSwiperDiff < 0) {
-					offset = $swiper.position().left - (elemMid - docWidth/2);
-
-					if (offset > 0) { offset  = 0 ;}
-					if (offset < docSwiperDiff) { offset = docSwiperDiff; }
-				}
-
-				var translate = 'translate3d(' + offset + 'px, 0px, 0px)';
-
-				$swiper.css('-webkit-transform', translate);
-				$swiper.css('-webkit-transition', 'transform .5s ease-out');
-				$swiper.css('-moz-transform', translate);
-				$swiper.css('-moz-transition', 'transform .5s ease-out');
-				$swiper.css('-transform', translate);
-				$swiper.css('-transition', 'transform .5s ease-out');
-
+				InterfaceController.centerMenus(index);
 				togglePoiSelection(poi);
 			};
 	
@@ -302,13 +268,13 @@ var MapController = function() {
 		var poi = poisList[index];
 
 		// map.setView(poi.getLatLng(), poi.vmZoomTo);
-		console.log(poi.getLatLng());
+		// console.log(poi.getLatLng());
 
 		var projected = map.project(poi.getLatLng(), poi.vmZoomTo);
-		console.log(projected);
+		// console.log(projected);
 		projected.y -= 200;
 		var newCoords = map.unproject(projected, poi.vmZoomTo);
-		console.log(newCoords);
+		// console.log(newCoords);
 
 		map.setView(newCoords, poi.vmZoomTo);	
 

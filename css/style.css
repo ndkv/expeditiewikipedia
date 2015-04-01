@@ -76,12 +76,7 @@
   padding- top: 20px;*/
 }
 
-#contentSwiper.scroll {
-  /*overflow-y: auto;*/
-  /*overflow-x: hidden;*/
-}
-
-#contentSwiper .swiper-slide {
+#contentSwiper .swiper-slide.scroll {
   overflow-y: auto;
   height: 440px;
 }
@@ -865,9 +860,18 @@ a.commons:visited {
 }
 
 .content-control {
+  /*display: none;*/
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   right: 0px;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.content-control.active {
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0s 0.5s;
 }
 
 #btnContentForward {
@@ -884,6 +888,9 @@ a.commons:visited {
 }
 
 #btnBack {
+  position: absolute;
+  right: 0px;
+  background-color: rgba(255, 255, 255, 0.7);
   bottom: 10px;
   width: 46px;
   height: 46px;

@@ -22,8 +22,7 @@ var InterfaceController = function(ExpeditionController) {
 		$menuContainer = $('#menuContainer'),
 		$menuContent = $('#menuContent'),
 		poiClicked = false;
-
-
+		
 	//map expeditions integer ids to string ids
 	$.each(expeditions, function(index, value) {
 		expeditionsHash[value.id] = index;
@@ -50,19 +49,20 @@ var InterfaceController = function(ExpeditionController) {
 			slidesPerView: 1,
 			preventLinksPropagation: true,
 			preventLinks: true,
-			calculateHeight: true,
+			// calculateHeight: true,
 			onSlideChangeEnd: function() {
-				console.log(this);
 				if (!poiClicked) {
 					$(document).trigger({
 						type: 'mapZoomToPoI',
 						vmIndex: contentSwiper.activeIndex,		
-					});
+					});				
 				}
 
 				poiClicked = false;
-				
+		
 				$('.expedition-subtitle').html(poisList[contentSwiper.activeIndex][1].title);
+
+				centerMainMenu(contentSwiper.activeIndex);
 			}
 	});
 
@@ -92,8 +92,8 @@ var InterfaceController = function(ExpeditionController) {
 
     }
     
-	this.togglePreviewItem = function(index) {
-		console.log(currentPreviewItem);
+	function togglePreviewItem(index) {
+		// console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
 		}
@@ -101,12 +101,12 @@ var InterfaceController = function(ExpeditionController) {
 		currentPreviewItem = index;
 		previewItems[index].addClass("previewItemActive");
 
-		console.log('swiping to... ' + index);
-		poiClicked = true;
-		contentSwiper.swipeTo(index);
+		// console.log('swiping to... ' + index);
+		// poiClicked = true;
+		// contentSwiper.swipeTo(index);
 
 		if (menuFolded === true) { toggleTopDrawer(); }
-	};
+	}
 
 	this.togglePreviewItemLanding = function(id) {
 		if (currentPreviewItem !== undefined) {
@@ -130,7 +130,8 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function() {
 				//check if user is not dragging menu
 				if (swiperStill()) {
-					that.togglePreviewItem(index);
+					//that.togglePreviewItem(index);
+					centerMainMenu(index);
 					$el.trigger({
 						type: 'mapZoomToRoute',
 						expeditionId: expeditions[index].id,
@@ -148,7 +149,8 @@ var InterfaceController = function(ExpeditionController) {
 			$el.click(function(e) {
 				if (swiperStill()) {
 					e.preventDefault();
-					that.togglePreviewItem(index);
+					// that.togglePreviewItem(index);
+					centerMainMenu(index);
 					$el.trigger({
 						type: 'mapZoomToPoI',
 						vmIndex: index
@@ -279,12 +281,18 @@ var InterfaceController = function(ExpeditionController) {
 		$('.expedition-title').addClass('active');
 
 		$('#overview').css('display', 'block');
+		
 		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
 		console.log(currentLanguage);
 
 		if (currentExpedition === 'vening-meinesz') {
-			$('#contentSwiper').addClass('scroll');
+			// $('#contentSwiper .swiper-slide').css('height', 440);
+			// $('#contentSwiper .swiper-slide').css('overflow', 'auto');
 		}
+
+		$('.content-control').addClass('active');
+
+
 	};
 
 	var buildPoIList = function (pois) {
@@ -320,17 +328,26 @@ var InterfaceController = function(ExpeditionController) {
 
 	        var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');			
 			$readMore.click(function () {
-				currentPreviewItem = index;
+				//currentPreviewItem = index;
 				currentPoi = value[0];
 				toggleDetailView();
-				// that.togglePreviewItem(index);
+				// togglePreviewItem(index);
+				console.log('swiping to... ' + index);
 				contentSwiper.swipeTo(index);
+				console.log('activeIndex...' + contentSwiper.activeIndex);
+
+				console.log(poisList[index][1].title);
+
+
 
 				$('.expedition-subtitle').html(value[1].title);
 
 				if (currentExpedition !== "vening-meinesz") {
 					setTimeout(function() { loadContent(); }, 300);					
 				}
+
+				$('#contentSwiper .swiper-slide').css('height', 440);
+				$('#contentSwiper .swiper-slide').addClass('scroll');
 			});
 
 			var afbeelding = value[1].Afbeelding,
@@ -417,6 +434,7 @@ var InterfaceController = function(ExpeditionController) {
 		$previewListContent.width(width);
 
 		buildSwiper();
+
 	};
 
 	var buildMapsList = function() {
@@ -493,83 +511,90 @@ var InterfaceController = function(ExpeditionController) {
 		return 'http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&' + title + height;
 	};
 
-	var loadVMExpedition = function() {
-		$.each(poisList, function(index, poi) {
-			// var poi = poisList[currentPoi - 1];
-			var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
+	var loadVMExpedition = function(index) {
+		// $.each(poisList, function(index, poi) {
 
-			$.get(path + '.htm')
-			.done(function(data) {
-				var columns = $('<div class="columns"></div>');
-				var $data = $(data);
-				var images = $data.find('img');
+		if (index === undefined) { index = 0; }
+		var poi = poisList[index];
 
-				$.each(images, function(index, value) {
-					//resize images so they fit in column width
-					var urlPieces = $(value).prop('src').split('/'),					
-						file = urlPieces[urlPieces.length - 1],
-						folder = urlPieces[urlPieces.length - 2];
+		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
 
-					var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
+		$.get(path + '.htm', {async: false})
+		.done(function(data) {
+			console.log(path);
+			var columns = $('<div class="columns"></div>');
+			var $data = $(data);
+			var images = $data.find('img');
 
-					$image = $(value);
-					$image.prop('src', imageUrl);
+			$.each(images, function(index, value) {
+				//resize images so they fit in column width
+				var urlPieces = $(value).prop('src').split('/'),					
+					file = urlPieces[urlPieces.length - 1],
+					folder = urlPieces[urlPieces.length - 2];
 
-					var height = $image.prop('height'),
-						width = $image.prop('width'),
-						// ratio = width/height,
-						ratio = height/width,
-						columnWidth = 300,
-						maxHeight = 400;
-					
-					// $image.prop('height', columnWidth * ratio);
-					// $image.prop('width', columnWidth);
+				var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
 
-					console.log(ratio);
-					if (ratio > 1) {
-						$image.prop('height', maxHeight);
-						$image.prop('width', maxHeight / ratio);
-					} else {
-						console.log(columnWidth * ratio);
-						$image.prop('height', columnWidth * ratio);
-						$image.prop('width', columnWidth);
-					}
-					
+				$image = $(value);
+				$image.prop('src', imageUrl);
 
-					// $image.prop('width', 10);
-					// $image.prop('height', 10);
+				var height = $image.prop('height'),
+					width = $image.prop('width'),
+					// ratio = width/height,
+					ratio = height/width,
+					columnWidth = 300,
+					maxHeight = 400;
+				
+				// $image.prop('height', columnWidth * ratio);
+				// $image.prop('width', columnWidth);
 
-					console.log(file);
-					var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
-					var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
-					var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
-					$fancybox.appendTo($image.parent());
-					$image.detach().appendTo($fancybox);
-				});
+				// console.log(ratio);
+				if (ratio > 1) {
+					$image.prop('height', maxHeight);
+					$image.prop('width', maxHeight / ratio);
+				} else {
+					// console.log(columnWidth * ratio);
+					$image.prop('height', columnWidth * ratio);
+					$image.prop('width', columnWidth);
+				}
+				
 
-				// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
-				//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
-				// $($data.find('p')[0]).remove();
+				// $image.prop('width', 10);
+				// $image.prop('height', 10);
 
-				var $embed = $data.find('iframe');
-
-				if ($embed.length > 0) {
-					var embedSrc = $embed.prop('src') + '?autoplay=1';
-					var p = $embed.parent();
-					$embed.remove();
-
-					var embedUrl = path + '_files/embed.png';
-					p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
-				}	
-
-				columns.append($data);
-
-				console.log(columns[0]);
-
-				var slide = contentSwiper.createSlide(columns[0].outerHTML);
-				slide.append();
+				// console.log(file);
+				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
+				var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
+				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
+				$fancybox.appendTo($image.parent());
+				$image.detach().appendTo($fancybox);
 			});
-		});	
+
+			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
+			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
+			// $($data.find('p')[0]).remove();
+
+			var $embed = $data.find('iframe');
+
+			if ($embed.length > 0) {
+				var embedSrc = $embed.prop('src') + '?autoplay=1';
+				var p = $embed.parent();
+				$embed.remove();
+
+				var embedUrl = path + '_files/embed.png';
+				p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
+			}	
+
+			columns.append($data);
+
+			// console.log(columns[0]);
+
+			var slide = contentSwiper.createSlide(columns[0].outerHTML);
+			slide.append();
+
+			if (index < poisList.length - 1) {
+				loadVMExpedition(index + 1);
+			}
+		});
 	};
 
 	var fetchWikiExcerpt = function(url, imageUrl, numWords, columns) {
@@ -744,7 +769,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		var moveDirection = (direction === 'right') ? -300 : 300;
 
-		// var $swiper = $('#previewSwiper > div.swiper-wrapper');
+		var $swiper = $('#previewSwiper > div.swiper-wrapper');
 		var spacerRightWidth = 50;
 		var spacerLeftWidth = 150;
 		var docWidth = $(document).width();
@@ -857,6 +882,48 @@ var InterfaceController = function(ExpeditionController) {
 			$('.expedition-subtitle').toggleClass('active');
 			$('.expedition-title').toggleClass('expedition');
 		}
+	}
+
+	this.centerMenus = function(index) {
+		poiClicked = true;
+		contentSwiper.swipeTo(index);
+
+	};
+
+	function centerMainMenu(index) {
+		console.log('centering Menu');
+		togglePreviewItem(index);
+
+		var $swiper = $('#previewSwiper div.swiper-wrapper'),
+			swiperOffset = $swiper.offset().left,
+			spacerLeftWidth = $('.spacer-left').width(),
+			spacerRightShadow = 30,
+			spacerRightWidth = $('.spacer-right').width() + spacerRightShadow,
+			margin = 20,
+			offset;
+
+		var docWidth = $(document).width(),
+			docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth - spacerLeftWidth;
+
+		var	$element = $('.expeditionItem').eq(index),
+			elemMid = $element.offset().left + $element.width()/2 + margin/2;
+			//elem = index + 1;
+
+		if (docSwiperDiff < 0) {
+			offset = $swiper.position().left - (elemMid - docWidth/2);
+
+			if (offset > 0) { offset  = 0 ;}
+			if (offset < docSwiperDiff) { offset = docSwiperDiff; }
+		}
+
+		var translate = 'translate3d(' + offset + 'px, 0px, 0px)';
+
+		$swiper.css('-webkit-transform', translate);
+		$swiper.css('-webkit-transition', 'transform .5s ease-out');
+		$swiper.css('-moz-transform', translate);
+		$swiper.css('-moz-transition', 'transform .5s ease-out');
+		$swiper.css('-transform', translate);
+		$swiper.css('-transition', 'transform .5s ease-out');
 	}
 };
 
