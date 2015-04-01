@@ -522,6 +522,7 @@ p {
 #swiperMenu.hidden {
   opacity: 0;
   transition: opacity 0.4s 0s linear;
+  pointer-events: none;
 }
 
 #lstMap label > div {
@@ -696,8 +697,10 @@ a.commons:visited {
 }
 
 .menu-close-button {
-  opacity: 0.9;
-  margin-top: 35px;
+  position: absolute;
+  right: 25px;
+  bottom: 7px;
+  z-index: 2;
   transition: opacity .2s 1s;
 }
 
