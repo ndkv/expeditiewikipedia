@@ -295,6 +295,8 @@ var MapController = function() {
 		} else {
 			map.addLayer(layer);
 		}
+
+		overlays['route'].bringToFront();
 	};
 
 	var togglePoiSelection = function(poi) {
