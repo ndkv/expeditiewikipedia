@@ -351,8 +351,8 @@ p {
 
 #overview {
   float: left;
-  margin-top: 26px;
-  display: none;
+  /*margin-top: 26px;*/
+  /*display: none;*/
 }
 
 #overview > a {
@@ -360,6 +360,7 @@ p {
   font-size: 0.8em;
   margin-left: 10px;
   text-decoration: none;
+  display: none;
 }
 
 .expedition-title {
@@ -950,4 +951,12 @@ ul {
 .sponsor-logos.km {
   background-image: url('../images/logos/KM.jpg');
   background-size: 80% 50%;  
+}
+
+.beta {
+  margin-left: 10px;
+  font-variant: small-caps;
+  color: red;
+  text-shadow: 0px 0px 15px red;
+  font-size: 21px;
 }

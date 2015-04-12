@@ -280,7 +280,7 @@ var InterfaceController = function(ExpeditionController) {
 		$('.expedition-title').html(expeditions[expeditionsHash[currentExpedition]].title);
 		$('.expedition-title').addClass('active');
 
-		$('#overview').css('display', 'block');
+		$('#overview > a').css('display', 'block');
 		
 		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
 		console.log(currentLanguage);
@@ -930,7 +930,5 @@ var InterfaceController = function(ExpeditionController) {
 		$swiper.css('-transition', 'transform .5s ease-out');
 	}
 };
-
-
 
 module.exports = InterfaceController;
