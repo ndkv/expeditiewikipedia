@@ -311,6 +311,12 @@ var MapController = function() {
 	};
 
 	var getMarkerImageUrl = function() {
+
+		//fix for IE < 11
+		if (!window.location.origin) {
+		  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+		}
+
 		var baseUrl = window.location.origin;
 		if (window.location.pathname !== undefined) { baseUrl += window.location.pathname; }
 		baseUrl += 'dist/images/icons/';
