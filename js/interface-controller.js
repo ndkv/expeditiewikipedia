@@ -265,10 +265,6 @@ var InterfaceController = function(ExpeditionController) {
 		buildPoIList(pois);
 		buildMapsList();
 
-		if (currentExpedition === "vening-meinesz") {
-			setTimeout(loadVMExpedition, 1000);
-		}
-
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
 		$('#btnLanguage').css('transform', 'translate3d(0px, -500px, 0px)');
@@ -290,10 +286,9 @@ var InterfaceController = function(ExpeditionController) {
 			// $('#contentSwiper .swiper-slide').css('overflow', 'auto');
 
 			$('.content-control').addClass('active');
+			setTimeout(loadVMExpedition, 1000);
+			$('#menuColofon').after($('<li class="menu-item" id="menuAcknowledgments">Acknowledgments</li>'));
 		}
-
-
-
 	};
 
 	var buildPoIList = function (pois) {
@@ -822,6 +817,14 @@ var InterfaceController = function(ExpeditionController) {
 			.on('click', '#btnMapDrawer', function(e) { 
 				$('#lstMap').toggleClass('active');
 				console.log('opening map drawer'); 
+			})
+			.on('click', '.menu-item', function() {
+				el = this.id + currentLanguage;
+
+				$.fancybox.open($('#'+el), {
+					maxWidth: 600,
+					type: 'inline'
+				});
 			});
 
 		$(window).on('hashchange', function() {
@@ -854,17 +857,6 @@ var InterfaceController = function(ExpeditionController) {
 
 			changeInterfaceLanguage(lang);
 
-		});
-
-		$('.menu-item').click(function() {
-			el = this.id + currentLanguage;
-
-			$.fancybox.open($('#'+el), {
-			// $('#'+el).fancybox({
-				maxWidth: 500,
-				type: 'inline'
-			});
-			// .trigger('click');
 		});
 
 		$('#btnMenuClose').click(function() {

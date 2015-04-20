@@ -21,11 +21,10 @@ var MapController = function() {
 		attributionControl: true
 	});
 	map.setView([0.0, 55.0], 2);
-	map.on('click', function () {
-		console.log(map.getCenter());
-		console.log(map.getZoom());
-		console.log(map.latLngToContainerPoint(map.getCenter()));
-	});
+	// map.on('click', function () {
+	// 	console.log(map.getZoom());
+	// 	console.log(map.latLngToContainerPoint(map.getCenter()));
+	// });
 
 	this.registerInterfaceEvents = function(InterfaceController) {
 		$.each(features, function(id, feature) {
