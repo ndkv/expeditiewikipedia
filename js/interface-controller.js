@@ -287,7 +287,7 @@ var InterfaceController = function(ExpeditionController) {
 
 			$('.content-control').addClass('active');
 			setTimeout(loadVMExpedition, 1000);
-			$('#menuColofon').after($('<li class="menu-item" id="menuAcknowledgments">Acknowledgments</li>'));
+			// $('#menuColofon').after($('<li class="menu-item" id="menuAcknowledgments">Acknowledgments</li>'));
 		}
 	};
 
@@ -695,6 +695,8 @@ var InterfaceController = function(ExpeditionController) {
 			$('#menuColofon').html('Colofon');
 			$('#menuSponsors').html('Sponsors');
 			$('#menuContact').html('Contact us');
+			$('#menuAcknowledgments').html('Acknowledgments');
+
 
 		} else {
 			currentLanguage = 'NL';
@@ -716,6 +718,7 @@ var InterfaceController = function(ExpeditionController) {
 			$('#menuColofon').html('Colofon');
 			$('#menuSponsors').html('Sponsoren');
 			$('#menuContact').html('Contact'); 
+			$('#menuAcknowledgments').html('Met dank aan');
 		}
 
 		if (mode === "landing") {
