@@ -22,6 +22,9 @@ var InterfaceController = function(ExpeditionController) {
 		$menuContainer = $('#menuContainer'),
 		$menuContent = $('#menuContent'),
 		poiClicked = false;
+
+	//load modules
+	var wikiUtils = require('./wiki-utils.js');
 		
 	//map expeditions integer ids to string ids
 	$.each(expeditions, function(index, value) {
@@ -210,12 +213,9 @@ var InterfaceController = function(ExpeditionController) {
 			$container.appendTo($('#previewSwiper .swiper-slide'));
 
 			if (value.image !== "") {
-				var imageUrl = fetchWikiImage(value.image, 100, function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); });
+				var imageUrl = wikiUtils.fetchWikiImage(value.image, 100, function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); }, currentExpedition);
 			}
 		});
-
-		//change language
-
 
 		buildSwiper();
 	};
@@ -229,8 +229,7 @@ var InterfaceController = function(ExpeditionController) {
 			var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 			var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
 			if (wikiUrl.length > 0) {
-				fetchWikiExcerpt(wikiUrl, imageUrl, 600, true);
-				// $('.wiki-leesmeer a').prop('href', wikiUrl);
+				wikiUtils.fetchWikiExcerpt(wikiUrl, imageUrl, 600, true, contentSwiper);
 			}
 		}
 	}
@@ -355,7 +354,7 @@ var InterfaceController = function(ExpeditionController) {
 					.insertAfter($expeditionPreviewSummary);
 				};
 
-				fetchWikiImage(afbeelding, 100, callback);
+				wikiUtils.fetchWikiImage(afbeelding, 100, callback, currentExpedition);
 				
 				$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
 				$readMore.click(function () {
@@ -368,9 +367,9 @@ var InterfaceController = function(ExpeditionController) {
 					var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
 					var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
 					var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
-					var caption = title + instelling + commons;
+					var caption = title + instelling;
 
-					var requestUrl = constructWikiImageUrl(imageName, 1000) + '&format=json';
+					var requestUrl = wikiUtils.constructWikiImageUrl(imageName, 1000) + '&format=json';
 					$.ajax({
 							url: requestUrl,
 			    			jsonp: "callback",
@@ -378,9 +377,9 @@ var InterfaceController = function(ExpeditionController) {
 		    			success: function(data) {
 					    	try {						    		
 					    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-								$.fancybox.open([{
+									$.fancybox.open([{
 									href:bigViewUrl,
-									title: caption,
+									title: caption + commons,
 									fitToView: true
 								}]);
 					    	}
@@ -472,41 +471,6 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	var fetchWikiImage = function(url, size, callback) {
-		var imageName = url.split("File:")[1];
-		var requestUrl = constructWikiImageUrl(imageName, size) + '&format=json';
-		var imageUrl;
-
-		$.ajax({
-   				url: requestUrl,
- 			    jsonp: "callback",
-			    dataType: "jsonp",
-			    beforeSend: function() {
-			    	// put spinner on slide page
-			    },
-			    success: function(data) {
-			    	try {
-						imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-			    	}
-			    	catch (err) {
-			    		console.log("Warning, failed to fetch Wikipedia Image");
-			    		console.log("Assuming local image...");
-
-			    		imageUrl = 'data/' + currentExpedition + '/images/' + url;
-
-			    	}
-			    	callback(imageUrl);
-			    }
-		});
-	};
-
-	var constructWikiImageUrl = function(imageName, h) {
-		var title = 'titles=File:' + imageName + '&',
-			height = 'iiurlheight=' + h;
-
-		return 'http://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&' + title + height;
-	};
-
 	var loadVMExpedition = function(index) {
 		// $.each(poisList, function(index, poi) {
 
@@ -593,75 +557,7 @@ var InterfaceController = function(ExpeditionController) {
 		});
 	};
 
-	var fetchWikiExcerpt = function(url, imageUrl, numWords, columns) {
-		var $contentImage = $('<div class="expedition-text-image"></div>');
-			// $contentImage.css('background-image', "url('" + imageUrl + "')");
-			// $('.expedition-text-image').css('background-image', "url('" + imageUrl + "')");
-			// console.log(imageUrl);
-
-			// $image.load(function() { console.log('image loaded correctly'); })
-			// .error(function() { console.log('image failed to load'); })
-			// .prop('src', imageUrl);
-			// console.log(imageUrl);
-
-			// document.getElementById('tessst').setAttribute('src', imageUrl);
-		 // });
-		
-		try {
-			wikiUrl = url.split('/');
-			title = wikiUrl[wikiUrl.length - 1];
-			var wikiApiUrl = 'http://nl.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&',
-		    numOfChars = 'exchars=' + numWords + '&',
-		    articleTitle ='titles=' + title,
-		    requestUrl = wikiApiUrl + numOfChars + articleTitle;
-
-		    var $content = $('<div class="expedition-text-content"></div>'), 
-		    	$contentElem = $('<div></div>'),
-		    	$wikiText = $('<div class="wiki-attribution">Uit Wikipedia, de vrije encyclopedie</div>');
-		    	$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank"><img src="images/icons/wikipedia leesmeer.png" alt=""></a></div>'));
-		    	$contentElem.append($content);
-		    	$contentElem.append($contentImage);
-		    	
-
-
-		    $.ajax({
-   				url: requestUrl,
- 			    jsonp: "callback",
-			    dataType: "jsonp"
-			})
-			.done(function(data) {
-					var pages = data.query.pages;
-					for (var page in pages) { break; }
-									
-					$wikiText.append($(pages[page].extract).filter('p'));
-					$content.append($wikiText);
-					
-					console.log(imageUrl);
-					if (imageUrl !== '') {
-						fetchWikiImage(imageUrl, 1000, function(url) {
-							$('<img>')
-							.attr('src', url)
-		    				.appendTo($contentImage);
-							
-							var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
-							slide.append();	
-						});
-					} else {
-						var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
-						slide.append();
-					}
-			});			
-		}
-		catch (err) {
-			var message = "<div>Deze expeditie heeft nog geen Wikipedia lemma. \n Help mee en schrijf er &eacute&eacuten!</div>";
-			contentElem.addClass('columns-none');
-			contentElem.css('font-size', '1.5em');
-			contentElem.append(message);
-			var slide = contentSwiper.createSlide(contentElem[0].outerHTML);
-			slide.append();
-		}
-
-	};
+	
 
 	var appendImageToPoI = function(imageUrl) {
 		// $('.expedition-text-image').append('<img src="' +  imageUrl +'"">');
@@ -692,7 +588,7 @@ var InterfaceController = function(ExpeditionController) {
 
 			$('#menuAbout').html('About Expeditie Wikipedia');
 			$('#menuAboutApp').html('About this app');
-			$('#menuColofon').html('Colofon');
+			$('#menuColofon').html('Colophon');
 			$('#menuSponsors').html('Sponsors');
 			$('#menuContact').html('Contact us');
 			$('#menuAcknowledgments').html('Acknowledgments');

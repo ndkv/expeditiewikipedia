@@ -25,7 +25,6 @@ var ExpeditionController = function() {
 		//check hash on entry and start individual expedition if necessary
 		var hash = location.hash;
 		if (hash === '') {
-			mode = 'landing';
 			buildLandingView();
 		} else {
 			$.each(that.expeditions, function(index, value) {
@@ -34,16 +33,16 @@ var ExpeditionController = function() {
 		}
 	});
 
-	var buildLandingView = function() {
+	function buildLandingView() {
 		mode = "landing";
 		InterfaceController.buildLandingView();
 		MapController.buildLandingView(features, that.expeditions);
 
 		InterfaceController.registerMapEventsRoute();
 		MapController.registerInterfaceEvents(InterfaceController);
-	};
+	}
 
-	//uncouple from InterfaceController and use trigger/bind
+	// TODO: uncouple from InterfaceController and use trigger/bind
 	this.startExpedition = function(index) {
 		var expedition = that.expeditions[index].id,
 			expeditionIndex = index;
