@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "vening meinesz"
+        "id": "vening-meinesz"
       },
       "geometry": {
         "type": "LineString",

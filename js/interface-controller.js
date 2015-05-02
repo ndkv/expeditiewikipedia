@@ -482,7 +482,7 @@ var InterfaceController = function(ExpeditionController) {
 		$.get(path + '.htm', {async: false})
 		.done(function(data) {
 			console.log(path);
-			var columns = $('<div class="columns"></div>');
+			var columns = $('<div class="columns"><p class="VM-attribution">Text: TU Delft / Bart Root en Rozemarijn Vlijm</p></div>');
 			var $data = $(data);
 			var images = $data.find('img');
 
@@ -661,19 +661,45 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	var scrollMenu = function(direction) {
-
 		var moveDirection = (direction === 'right') ? -300 : 300;
 
 		var $swiper = $('#previewSwiper > div.swiper-wrapper');
-		var spacerRightWidth = 50;
+		var spacerRightWidth = 100;
 		var spacerLeftWidth = 150;
 		var docWidth = $(document).width();
 		var docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth;
 
-		var move = $swiper.position().left + moveDirection;
+
+		var swiperPosition = $swiper.position().left;
+
+		console.log(docSwiperDiff);
+		console.log(swiperPosition);
+		console.log(moveDirection);
+
+		var move = swiperPosition + moveDirection;
 		// if (Math.abs($swiper.position().left) >= $swiper.width()) { move = -$swiper.width(); }
-		if ($swiper.position().left + moveDirection > 0) { move = 0; }
-		console.log('test move');
+		
+		// if (direction === 'right') {
+		// 	if (docSwiperDiff < 0) {
+		// 		if (swiperPosition - moveDirection < docSwiperDiff) { move = docSwiperDiff; }
+		// 	} else {	
+		// 		move = 0;
+		// 	}
+		// }
+
+		if (docSwiperDiff < 0) {
+			var rightEdge = swiperPosition + $swiper.width();
+
+			if (rightEdge + moveDirection < docWidth - spacerRightWidth) {
+				move = swiperPosition + (docWidth - rightEdge) - spacerRightWidth - spacerLeftWidth;
+			}			
+		} else {
+			move = 0;
+		}
+
+		// limit left overscoll, swiper has a negative position when moving
+		// to the left
+		if (swiperPosition + moveDirection > 0) { move = 0; }
 
 		var translate = 'translate3d(' + move + 'px, 0px, 0px';
 		
@@ -685,6 +711,11 @@ var InterfaceController = function(ExpeditionController) {
 		$swiper.css('-moz-transform', translate);
 		$swiper.css('-o-transition', '-o-transform .5s');
 		$swiper.css('-o-transform', translate);
+
+		console.log('after move');
+		console.log(docSwiperDiff);
+		console.log($swiper.position().left);
+		console.log(moveDirection);
 	};
 
 	var toggleTopDrawer = function() {

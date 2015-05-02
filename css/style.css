@@ -175,6 +175,10 @@ body {
   /*padding-right: 150px;*/
 }
 
+.VM-attribution {
+  margin-left: 0px;
+}
+
 .columns h2, h3 {
   font-size: 1em;
 }
@@ -627,20 +631,21 @@ a.commons:visited {
   position: absolute;
   bottom: 20px;
   right: 10px;
+  padding-right: 13px;
+  background-image: url('http://bits.wikimedia.org/static/1.26wmf3/skins/Vector/images/external-link-ltr-icon.png?2015-04-22T18:40:00Z');
+  background-position: center right;
+  background-repeat: no-repeat;
 }
 
-.wiki-leesmeer.active {
+.wiki-leesmeer a {
+  /*color: #00adef;*/
+  color: blue;
+}
+
+/*.wiki-leesmeer.active {
   transform: translate3d(-210px, 0px, 0px);
   transition: transform .2s .3s;
-}
-
-.wiki-leesmeer img {
-  /*width: 75px;*/
-  height: 40px;
-  /*float: left;*/
-  margin-left: 10px;
-  margin-top: 5px;
-}
+}*/
 
 .spacer-right.active {
   transform: translate3d(-70px, 0px, 0px);
