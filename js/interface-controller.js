@@ -48,11 +48,9 @@ var InterfaceController = function(ExpeditionController) {
 	
 	var contentSwiper = new Swiper('#contentSwiper', {
 			mode: 'horizontal',
-			//scrollContainer: true,
 			slidesPerView: 1,
 			preventLinksPropagation: true,
 			preventLinks: true,
-			// calculateHeight: true,
 			onSlideChangeEnd: function() {
 				if (!poiClicked) {
 					$(document).trigger({
@@ -70,13 +68,10 @@ var InterfaceController = function(ExpeditionController) {
 	});
 
 	function buildSwiper() {
-		// swiper = new Swiper('.swiper-container', {
 		swiper = new Swiper('#previewSwiper', {
 			mode: 'horizontal',
 			scrollContainer: true,
-			preventClicks: true,
-			// onTransitionStart: function() { console.log('swiping') ;}
-
+			preventClicks: true
 		});
 	}
 	
@@ -96,17 +91,12 @@ var InterfaceController = function(ExpeditionController) {
     }
     
 	function togglePreviewItem(index) {
-		// console.log(currentPreviewItem);
 		if (currentPreviewItem !== undefined) {
 			previewItems[currentPreviewItem].removeClass("previewItemActive");
 		}
 
 		currentPreviewItem = index;
 		previewItems[index].addClass("previewItemActive");
-
-		// console.log('swiping to... ' + index);
-		// poiClicked = true;
-		// contentSwiper.swipeTo(index);
 
 		if (menuFolded === true) { toggleTopDrawer(); }
 	}
@@ -127,13 +117,14 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	this.registerMapEventsRoute = function() {
+	// binds menu items in landing view to map events
+
 		$.each(previewItems, function(index, item) {
 			var $el = item; //.children().first();
 
 			$el.click(function() {
 				//check if user is not dragging menu
 				if (swiperStill()) {
-					//that.togglePreviewItem(index);
 					centerMainMenu(index);
 					$el.trigger({
 						type: 'mapZoomToRoute',
@@ -146,6 +137,7 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	this.registerMapEventsPois = function() {
+	// binds menu items in expedition view to map events
 		$.each(previewItems, function(index, item) {
 			var $el = item; //.children().first();
 
@@ -261,8 +253,15 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('#btnMapDrawer').toggleClass('active');
 
-		buildPoIList(pois);
-		buildMapsList();
+		poisList = buildPoiList(pois, previewItems, currentExpedition);
+		buildSwiper();
+		buildMapsList(mode, expeditions[currentExpeditionIndex].maps);
+
+		//change interface language
+		//hack, fix
+		if (currentExpedition === 'vening-meinesz') {
+			
+		}
 
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
@@ -276,354 +275,38 @@ var InterfaceController = function(ExpeditionController) {
 		$('.expedition-title').addClass('active');
 
 		$('#overview > a').css('display', 'block');
-		
-		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
-		console.log(currentLanguage);
 
 		if (currentExpedition === 'vening-meinesz') {
 			// $('#contentSwiper .swiper-slide').css('height', 440);
 			// $('#contentSwiper .swiper-slide').css('overflow', 'auto');
 
 			$('.content-control').addClass('active');
-			setTimeout(loadVMExpedition, 1000);
+			var loadVMExpedition = require('./load-vm-expedition');
+			// setTimeout(loadVMExpedition(0, post), 1000);
+			loadVMExpedition(0, poisList, contentSwiper);
 			// $('#menuColofon').after($('<li class="menu-item" id="menuAcknowledgments">Acknowledgments</li>'));
-		}
-	};
 
-	var buildPoIList = function (pois) {
-		var $previewListContent = $('<div id="previewListContent"></div>');
-		var $swiperSlide = $('#previewSwiper .swiper-slide');
-
-		var sortable = [];
-		$.each(pois, function(index, poi) {
-			sortable.push([
-				poi[0].order,
-				poi[0]
-				// poi[0].title,
-				// poi[0].summary,
-				// poi[0].Afbeelding,
-				// poi[0]['Wikipedia link'],
-				// poi[0].type
-			]);
-		});
-
-		sortable.sort(function(a, b) { return a[0] - b[0]; });
-		poisList = sortable;
-
-		$.each(sortable, function(index, value) {
-			var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].summary),
-				$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
-
-			var $expeditionContent = $('<div></div>')
-			.append($expeditionPreviewTitle)
-			.append($expeditionPreviewSummary);
-
-			var $expeditionItem = $('<div class="expeditionItem"></div>')
-			.append($expeditionContent);
-
-	        var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');			
-			$readMore.click(function () {
-				//currentPreviewItem = index;
-				currentPoi = value[0];
-				toggleDetailView();
-				// togglePreviewItem(index);
-				console.log('swiping to... ' + index);
-				contentSwiper.swipeTo(index);
-				console.log('activeIndex...' + contentSwiper.activeIndex);
-
-				console.log(poisList[index][1].title);
-
-
-
-				$('.expedition-subtitle').html(value[1].title);
-
-				if (currentExpedition !== "vening-meinesz") {
-					setTimeout(function() { loadContent(); }, 300);					
-				}
-
-				$('#contentSwiper .swiper-slide').css('height', 440);
-				$('#contentSwiper .swiper-slide').addClass('scroll');
-			});
-
-			var afbeelding = value[1].Afbeelding,
-				type = value[1].type;
-			//TODO change to type check of POI
-			if (type === 'Beeld' || type === 'kaart') {
-				var callback = function(imageUrl) { 
-					$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
-					.insertAfter($expeditionPreviewSummary);
-				};
-
-				wikiUtils.fetchWikiImage(afbeelding, 100, callback, currentExpedition);
-				
-				$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
-				$readMore.click(function () {
-					currentPreviewItem = index;
-					currentPoi = value[0];
-					
-					//fetch wikiImageUrl
-					var imageName = afbeelding.split('File:')[1];
-
-					var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
-					var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
-					var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
-					var caption = title + instelling;
-
-					var requestUrl = wikiUtils.constructWikiImageUrl(imageName, 1000) + '&format=json';
-					$.ajax({
-							url: requestUrl,
-			    			jsonp: "callback",
-		    			dataType: "jsonp", 
-		    			success: function(data) {
-					    	try {						    		
-					    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-									$.fancybox.open([{
-									href:bigViewUrl,
-									title: caption + commons,
-									fitToView: true
-								}]);
-					    	}
-					    	catch (err) {
-					    		console.log('Warning, failed to load big image');
-					    		console.log(err);
-					    		console.log('Assuming local image');
-
-					    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
-					    		$.fancybox.open([{
-									href:bigViewUrl,
-									title: caption,
-									fitToView: true
-								}]);
-					    	}
-					    }
-					});
-				});
-
-				//hacks, fix
-				$expeditionPreviewTitle.css('padding-bottom', '40px');
-				$expeditionPreviewSummary.empty();
-			}
-
-			//$expeditionItem.after($readMore);
-			// $expeditionItem.append($readMore);
-
-			var $container = $('<div class="expeditionItemContainer"></div>');
-			$container.append($expeditionItem);
-			$container.append($readMore);
-
-			previewItems.push($expeditionItem);
-			$swiperSlide.append($container);
-
-			//change interface language
-			//hack, fix
-			if (currentExpedition === 'vening-meinesz') {
-				changeInterfaceLanguage('EN');
-			}
-			
-		});
-
-		var margin = 20;
-
-		var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2 - 150;
-		$swiperSlide.width(width);
-		$previewListContent.width(width);
-
-		buildSwiper();
-
-	};
-
-	var buildMapsList = function() {
-		var $mapList = $('#lstMap');
-
-		var maps = [];
-		if (mode === 'landing') {
-			$.each(expeditions, function(index, expedition) {
-				maps.push.apply(maps, expedition.maps);
-			});
-		} else {
-			maps = expeditions[currentExpeditionIndex].maps;
-
-			if (maps === undefined) { maps = []; }
+			currentLanguage = changeInterfaceLanguage('EN');
 		}
 
-		$.each(maps, function(index, value) {
-			$mapList.append('<div></div>');
-
-			var $checkbox = $('<input type="checkbox">');
-			$checkbox.click(function() {
-				$checkbox.trigger('_toggleOverlayVisibility', [value.id]);
-			});
-			
-			var label = $('<label></label>')
-			.append($checkbox) 
-			.append($('<div>' + value.title + '</div>'));
-
-			if (mode === 'landing' && value.visibleIntro === true) {
-				$checkbox[0].checked = true;
-				label.appendTo($mapList.children().last());
-			} else if (mode === 'expedition') {
-				label.appendTo($mapList.children().last());
-
-				if (value.visibleExpedition === true) {
-					$checkbox[0].checked = true;
-				}
-			}				
-		});
+		if (currentLanguage === 'EN') { $('#overview a').html('&#8592; Expeditions'); }
 	};
 
-	var loadVMExpedition = function(index) {
-		// $.each(poisList, function(index, poi) {
+	var buildPoiList = require('./build-poi-list');
 
-		if (index === undefined) { index = 0; }
-		var poi = poisList[index];
-
-		var path = 'data/' + currentExpedition + '/pois/' + poi[1].prefix + ' ' + poi[1].title;
-
-		$.get(path + '.htm', {async: false})
-		.done(function(data) {
-			console.log(path);
-			var columns = $('<div class="columns"><p class="VM-attribution">Text: TU Delft / Bart Root en Rozemarijn Vlijm</p></div>');
-			var $data = $(data);
-			var images = $data.find('img');
-
-			$.each(images, function(index, value) {
-				//resize images so they fit in column width
-				var urlPieces = $(value).prop('src').split('/'),					
-					file = urlPieces[urlPieces.length - 1],
-					folder = urlPieces[urlPieces.length - 2];
-
-				var imageUrl = 'data/' + currentExpedition + '/pois/' + folder + '/' + file;
-
-				$image = $(value);
-				$image.prop('src', imageUrl);
-
-				var height = $image.prop('height'),
-					width = $image.prop('width'),
-					// ratio = width/height,
-					ratio = height/width,
-					columnWidth = 300,
-					maxHeight = 400;
-				
-				// $image.prop('height', columnWidth * ratio);
-				// $image.prop('width', columnWidth);
-
-				// console.log(ratio);
-				if (ratio > 1) {
-					$image.prop('height', maxHeight);
-					$image.prop('width', maxHeight / ratio);
-				} else {
-					// console.log(columnWidth * ratio);
-					$image.prop('height', columnWidth * ratio);
-					$image.prop('width', columnWidth);
-				}
-				
-
-				// $image.prop('width', 10);
-				// $image.prop('height', 10);
-
-				// console.log(file);
-				var largeFile = 'image00' + (parseInt(file.split('0')[2].split('.')[0]) - 1) + '.jpg';
-				var imageUrlLarge = 'data/' + currentExpedition + '/pois/' + folder + '/' + largeFile;
-				var $fancybox = $('<a class="fancybox" href="' + imageUrlLarge + '"></a>');
-				$fancybox.appendTo($image.parent());
-				$image.detach().appendTo($fancybox);
-			});
-
-			// $data.find('span').each(function(i, v) { if (v.textContent === "") { $(v).remove(); } });
-			//$data.find('span').each(function(i,v) { if ($(v).children.length > 0) { $(v).remove(); } });
-			// $($data.find('p')[0]).remove();
-
-			var $embed = $data.find('iframe');
-
-			if ($embed.length > 0) {
-				var embedSrc = $embed.prop('src') + '?autoplay=1';
-				var p = $embed.parent();
-				$embed.remove();
-
-				var embedUrl = path + '_files/embed.png';
-				p.append($('<a class="fancybox" data-fancybox-type="iframe" href="' + embedSrc + '"><img src="' + embedUrl + '"></a>'));	
-			}	
-
-			columns.append($data);
-
-			// console.log(columns[0]);
-
-			var slide = contentSwiper.createSlide(columns[0].outerHTML);
-			slide.append();
-
-			if (index < poisList.length - 1) {
-				loadVMExpedition(index + 1);
-			}
-		});
-	};
-
+	var buildMapsList = require('./build-maps-list');
 	
 
-	var appendImageToPoI = function(imageUrl) {
-		// $('.expedition-text-image').append('<img src="' +  imageUrl +'"">');
-	};
+	// var appendImageToPoI = function(imageUrl) {
+	// 	// $('.expedition-text-image').append('<img src="' +  imageUrl +'"">');
+	// };
 
 	var swiperStill = function() {
 		var touches = swiper.touches;
 		return touches.start === touches.current;
 	};
 
-
-	var changeInterfaceLanguage = function (lang) {
-		var $readMore = $('.readMore');
-
-		if (lang === 'EN') {
-			currentLanguage = 'EN';
-			$.each($readMore, function(index, value) {
-				value.firstChild.innerHTML = 'Read more';
-			});
-
-			$('.spacer-left-title').html('choose an expedition');
-			$('.spacer-left-summary').html('Enter and discover more of the scientific expeditions and research travels. Read the stories and study the scientific results.');
-
-			$('#introTitleNL').removeClass('active');
-			$('#introTitleEN').addClass('active');
-			$('#introNL').removeClass('active');
-			$('#introEN').addClass('active');
-
-			$('#menuAbout').html('About Expeditie Wikipedia');
-			$('#menuAboutApp').html('About this app');
-			$('#menuColofon').html('Colophon');
-			$('#menuSponsors').html('Sponsors');
-			$('#menuContact').html('Contact us');
-			$('#menuAcknowledgments').html('Acknowledgments');
-
-
-		} else {
-			currentLanguage = 'NL';
-
-			$.each($readMore, function(index, value) {
-				value.firstChild.innerHTML = 'Lees meer';
-			});
-
-			$('.spacer-left-title').html('kies een reis');
-			$('.spacer-left-summary').html('stap in en doe mee met de interessante expedities en ontdek alles over geschiedenis en techniek en leer wat wetenschap zo rijk maakt!');
-
-			$('#introTitleNL').addClass('active');
-			$('#introTitleEN').removeClass('active');
-			$('#introEN').removeClass('active');
-			$('#introNL').addClass('active');
-
-			$('#menuAbout').html('Over Expeditie Wikipedia');
-			$('#menuAboutApp').html('Over deze app');
-			$('#menuColofon').html('Colofon');
-			$('#menuSponsors').html('Sponsoren');
-			$('#menuContact').html('Contact'); 
-			$('#menuAcknowledgments').html('Met dank aan');
-		}
-
-		if (mode === "landing") {
-			//reload content in correct language
-			loadContent();	
-		}
-
-		//if introtext pane open, change language there too
-	};
+	var changeInterfaceLanguage = require('./change-interface-language');
 
 	var loadIntroTexts = function() {
 		// contentSwiper.removeAllSlides();
@@ -661,31 +344,14 @@ var InterfaceController = function(ExpeditionController) {
 	};
 
 	var scrollMenu = function(direction) {
-		var moveDirection = (direction === 'right') ? -300 : 300;
-
-		var $swiper = $('#previewSwiper > div.swiper-wrapper');
-		var spacerRightWidth = 100;
-		var spacerLeftWidth = 150;
-		var docWidth = $(document).width();
-		var docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth;
-
-
-		var swiperPosition = $swiper.position().left;
-
-		console.log(docSwiperDiff);
-		console.log(swiperPosition);
-		console.log(moveDirection);
-
-		var move = swiperPosition + moveDirection;
-		// if (Math.abs($swiper.position().left) >= $swiper.width()) { move = -$swiper.width(); }
-		
-		// if (direction === 'right') {
-		// 	if (docSwiperDiff < 0) {
-		// 		if (swiperPosition - moveDirection < docSwiperDiff) { move = docSwiperDiff; }
-		// 	} else {	
-		// 		move = 0;
-		// 	}
-		// }
+		var moveDirection = (direction === 'right') ? -300 : 300,
+			$swiper = $('#previewSwiper > div.swiper-wrapper'),
+			spacerRightWidth = 100,
+			spacerLeftWidth = 150,
+			docWidth = $(document).width(),
+			docSwiperDiff = docWidth - $swiper.width() - spacerRightWidth,
+			swiperPosition = $swiper.position().left,
+			move = swiperPosition + moveDirection;
 
 		if (docSwiperDiff < 0) {
 			var rightEdge = swiperPosition + $swiper.width();
@@ -697,8 +363,6 @@ var InterfaceController = function(ExpeditionController) {
 			move = 0;
 		}
 
-		// limit left overscoll, swiper has a negative position when moving
-		// to the left
 		if (swiperPosition + moveDirection > 0) { move = 0; }
 
 		var translate = 'translate3d(' + move + 'px, 0px, 0px';
@@ -711,11 +375,6 @@ var InterfaceController = function(ExpeditionController) {
 		$swiper.css('-moz-transform', translate);
 		$swiper.css('-o-transition', '-o-transform .5s');
 		$swiper.css('-o-transform', translate);
-
-		console.log('after move');
-		console.log(docSwiperDiff);
-		console.log($swiper.position().left);
-		console.log(moveDirection);
 	};
 
 	var toggleTopDrawer = function() {
@@ -783,9 +442,9 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('.language').click(function() {
 			var lang = this.innerHTML;
-			currentLanguage = lang;
 
-			changeInterfaceLanguage(lang);
+			currentLanguage = changeInterfaceLanguage(lang);
+			loadContent();
 
 		});
 
