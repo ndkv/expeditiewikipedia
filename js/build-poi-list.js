@@ -1,4 +1,19 @@
-function buildPoiList (pois, previewItems, currentExpedition) {
+var wikiUtils = require('./wiki-utils');
+
+function loadContent(contentSwiper, poisList) {
+	contentSwiper.removeAllSlides();
+	// if (mode == 'landing') {
+	// 	//fetch introteskt from Excelsheet
+	// 	loadIntroTexts();
+	// } else {
+	var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
+	var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
+	if (wikiUrl.length > 0) {
+		wikiUtils.fetchWikiExcerpt(wikiUrl, imageUrl, 600, true, contentSwiper);
+	}
+}
+
+function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, contentSwiper) {
 	var $previewListContent = $('<div id="previewListContent"></div>');
 	var $swiperSlide = $('#previewSwiper .swiper-slide');
 
@@ -31,8 +46,8 @@ function buildPoiList (pois, previewItems, currentExpedition) {
 
         var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');			
 		$readMore.click(function () {
-			//currentPreviewItem = index;
 			currentPoi = value[0];
+			//TODO: use a trigger
 			toggleDetailView();
 			// togglePreviewItem(index);
 			console.log('swiping to... ' + index);
@@ -46,7 +61,7 @@ function buildPoiList (pois, previewItems, currentExpedition) {
 			$('.expedition-subtitle').html(value[1].title);
 
 			if (currentExpedition !== "vening-meinesz") {
-				setTimeout(function() { loadContent(); }, 300);					
+				setTimeout(function() { loadContent(contentSwiper, poisList); }, 300);					
 			}
 
 			$('#contentSwiper .swiper-slide').css('height', 440);

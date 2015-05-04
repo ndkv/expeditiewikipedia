@@ -195,7 +195,7 @@ var InterfaceController = function(ExpeditionController) {
 				currentPreviewItem = index;
 				currentExpedition = expeditions[index].id;
 				toggleDetailView();
-				setTimeout(function() { loadContent(); }, 500);
+				setTimeout(function() { loadIntroTexts(); }, 500);
 			});
 
 			// $('.swiper-slide').width(width);
@@ -211,20 +211,6 @@ var InterfaceController = function(ExpeditionController) {
 
 		buildSwiper();
 	};
-
-	function loadContent() {
-		contentSwiper.removeAllSlides();
-		if (mode == 'landing') {
-			//fetch introteskt from Excelsheet
-			loadIntroTexts();
-		} else {
-			var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
-			var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
-			if (wikiUrl.length > 0) {
-				wikiUtils.fetchWikiExcerpt(wikiUrl, imageUrl, 600, true, contentSwiper);
-			}
-		}
-	}
 
 	this.destroyLandingView = function() {
 		//console.log("destroy LandingView");
@@ -253,7 +239,7 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('#btnMapDrawer').toggleClass('active');
 
-		poisList = buildPoiList(pois, previewItems, currentExpedition);
+		poisList = buildPoiList(pois, previewItems, currentExpedition, toggleDetailView, contentSwiper);
 		buildSwiper();
 		buildMapsList(mode, expeditions[currentExpeditionIndex].maps);
 
@@ -309,7 +295,7 @@ var InterfaceController = function(ExpeditionController) {
 	var changeInterfaceLanguage = require('./change-interface-language');
 
 	var loadIntroTexts = function() {
-		// contentSwiper.removeAllSlides();
+		contentSwiper.removeAllSlides();
 		var $content = $('<div class="intro-text-content"></div>'), 
 			$contentElem = $('<div></div>'),
 			$contentImage = $('<div class="intro-text-image"></div>'), 
@@ -444,7 +430,7 @@ var InterfaceController = function(ExpeditionController) {
 			var lang = this.innerHTML;
 
 			currentLanguage = changeInterfaceLanguage(lang);
-			loadContent();
+			loadIntroTexts();
 
 		});
 
