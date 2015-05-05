@@ -102,7 +102,7 @@
         "id": "006",
         "order": 5,
         "title": "Crossing of the Snip",
-        "summary": "One of the objectives of the K-XVIII was to be a navigational beacon for KLM’s first trans-continental postal flight.\tThanks to the K-XVIII it could safely cross the Atlantic Ocean.",
+        "summary": "One of the objectives of the K-XVIII was to be a navigational beacon for KLM's first trans-continental postal flight. Thanks to the K-XVIII it could safely cross the Atlantic Ocean.",
         "prefix": "POI 6",
         "type": "Afbeelding",
         "zoomTo": 8
@@ -216,7 +216,7 @@
         "id": "012",
         "order": 11,
         "title": "K-XVIII Submarine",
-        "summary": "Thanks to an incredible design and engineering of the K-XVIII, this vessel was able to sail the Earth’s oceans and complete a trip of 23,000 miles.",
+        "summary": "Thanks to an incredible design and engineering of the K-XVIII, this vessel was able to sail the Earth's oceans and complete a trip of 23,000 miles.",
         "prefix": "POI 13",
         "type": "Afbeelding",
         "zoomTo": 8
@@ -235,7 +235,7 @@
         "id": "013",
         "order": 12,
         "title": "Diving Procedure",
-        "summary": "The crewmembers aboard the K-XVIII performed diving procedures three times a day, on average. These procedures were performed by at least one third of the crew.\t",
+        "summary": "The crewmembers aboard the K-XVIII performed diving procedures three times a day, on average. These procedures were performed by at least one third of the crew.",
         "prefix": "POI 30",
         "type": "Afbeelding",
         "zoomTo": 8
@@ -387,7 +387,7 @@
         "id": "021",
         "order": 20,
         "title": "Depth Measurements",
-        "summary": "The K-XVIII had sonar equipment on board for measuring the depth of the ocean floor, essential for Vening Meinesz’ studies. They revealed many secrets of the deep oceans. ",
+        "summary": "The K-XVIII had sonar equipment on board for measuring the depth of the ocean floor, essential for Vening Meinesz studies. They revealed many secrets of the deep oceans. ",
         "prefix": "POI 4",
         "type": "Afbeelding",
         "zoomTo": 8
@@ -425,7 +425,7 @@
         "id": "023",
         "order": 22,
         "title": "Troubles Onboard",
-        "summary": "In contrast with the reports from the movie and media, the mood onboard the K-XVIII wasn’t always excellent. There were some arguments between the professor and the captain. ",
+        "summary": "In contrast with the reports from the movie and media, the mood onboard the K-XVIII wasn't always excellent. There were some arguments between the professor and the captain. ",
         "prefix": "POI 24",
         "type": "Afbeelding",
         "zoomTo": 8
@@ -501,7 +501,7 @@
         "id": "027",
         "order": 26,
         "title": "Holweck-Lejay",
-        "summary": "The Golden Calf was too big and heavy to quickly take on land, so Vening Meinesz had acquired a Holweck-Lejay gravimeter from the “Bataafsche Petrolium Maatschappij” to perform land measurements. ",
+        "summary": "The Golden Calf was too big and heavy to quickly take on land, so Vening Meinesz had acquired a Holweck-Lejay gravimeter from the \"Bataafsche Petrolium Maatschappij\" to perform land measurements. ",
         "prefix": "POI 26",
         "type": "Afbeelding",
         "zoomTo": 8

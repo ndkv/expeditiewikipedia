@@ -8,6 +8,9 @@ var ExpeditionController = function() {
 		MapController,
 		MC = require('./map-controller.js');
 
+
+
+
 	$.when($.get('data/expeditions.json'), $.get('data/expeditions-geometries.json'))
 	.done(function(exp, geoms) {
 		if (typeof exp[0] === "string") {
@@ -53,17 +56,33 @@ var ExpeditionController = function() {
 			MapController.destroyLandingView();
 		}
 
-		$.getJSON("data/" + expedition + "/geometries.json", function(geometries) {
-			var features = geometries.features,
+		$.get('data/' + expedition + '/geometries.tsv')
+		.done(function(data) {
+			var results = Papa.parse(data, { header: true });
+
+			var features = results.data,
 				route,
 				pois = [];
-				// geoms = $.parseJSON(expedition);
 
 			$.each(features, function(index, value) {
-				if (value.properties.type === "route") {
+				if (value.type === "route") {
 					route = value;
 				} else {
-					pois.push([value.properties, value.geometry.coordinates]);
+					var lat = parseFloat(value.latitude),
+						lng = parseFloat(value.longitude);
+
+					if (isNaN(lat) || isNaN(lng)) {
+						lat = 0.0;
+						lng = 0.0;
+					}
+
+					console.log(value.id);
+
+					if (value.summary !== undefined) {
+						pois.push([value, [lng, lat]]);						
+					}
+
+
 				}
 			});
 
@@ -72,9 +91,8 @@ var ExpeditionController = function() {
 			MapController.buildExpeditionView(expedition, that.expeditions[expeditionIndex].maps, route, pois, that.expeditions[expeditionIndex].zoomto);
 			InterfaceController.registerMapEventsPois();
 			MapController.registerInterfaceEvents(InterfaceController);
-
 		});
-
+		
 		mode = "expedition";
 	};
 };

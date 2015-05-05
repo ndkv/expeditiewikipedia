@@ -5,11 +5,13 @@ L.Icon.Default.imagePath = 'images/icons/';
 jQuery = require('jquery-browserify');
 $ = jQuery;
 Swiper = require('swiper');
-//Papa =  require('papaparse');
+// Papa = require('./lib/papaparse');
 require('fancybox')($);
 
 window.onload = function() {
 
+	// show pop-up screen when site loaded
+	// for the first time
 	if (document.cookie === "") {
 		$('#introduction')
 	    .css('display', 'block')
@@ -26,6 +28,5 @@ window.onload = function() {
 	}
 
 	var EC = require('./expedition-controller.js');
-
 	var ExpeditionController = new EC();
 };

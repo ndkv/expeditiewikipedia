@@ -1,15 +1,11 @@
 var wikiUtils = require('./wiki-utils');
 
-function loadContent(contentSwiper, poisList) {
+function loadContent(contentSwiper, poisList, currentExpedition) {
 	contentSwiper.removeAllSlides();
-	// if (mode == 'landing') {
-	// 	//fetch introteskt from Excelsheet
-	// 	loadIntroTexts();
-	// } else {
 	var wikiUrl = poisList[currentPoi - 1][1]['Wikipedia link'];
 	var imageUrl = poisList[currentPoi - 1][1].Afbeelding;
 	if (wikiUrl.length > 0) {
-		wikiUtils.fetchWikiExcerpt(wikiUrl, imageUrl, 600, true, contentSwiper);
+		wikiUtils.fetchWikiExcerpt(wikiUrl, imageUrl, 600, true, contentSwiper, currentExpedition);
 	}
 }
 
@@ -61,7 +57,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			$('.expedition-subtitle').html(value[1].title);
 
 			if (currentExpedition !== "vening-meinesz") {
-				setTimeout(function() { loadContent(contentSwiper, poisList); }, 300);					
+				setTimeout(function() { loadContent(contentSwiper, poisList, currentExpedition); }, 300);					
 			}
 
 			$('#contentSwiper .swiper-slide').css('height', 440);

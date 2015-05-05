@@ -1,4 +1,4 @@
-var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper) {
+var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper, currentExpedition) {
 		var $contentImage = $('<div class="expedition-text-image"></div>');
 			// $contentImage.css('background-image', "url('" + imageUrl + "')");
 			// $('.expedition-text-image').css('background-image', "url('" + imageUrl + "')");
@@ -50,7 +50,7 @@ var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper)
 							
 							var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 							slide.append();	
-						});
+						}, currentExpedition);
 					} else {
 						var slide = contentSwiper.createSlide($contentElem[0].outerHTML);
 						slide.append();
