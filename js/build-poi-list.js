@@ -45,27 +45,21 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			currentPoi = value[0];
 			//TODO: use a trigger
 			toggleDetailView();
-			// togglePreviewItem(index);
-			console.log('swiping to... ' + index);
+
 			contentSwiper.swipeTo(index);
-			console.log('activeIndex...' + contentSwiper.activeIndex);
-
-			console.log(poisList[index][1].title);
-
-
-
-			$('.expedition-subtitle').html(value[1].title);
 
 			if (currentExpedition !== "vening-meinesz") {
 				setTimeout(function() { loadContent(contentSwiper, poisList, currentExpedition); }, 300);					
 			}
 
+			$('.expedition-subtitle').html(value[1].title);
 			$('#contentSwiper .swiper-slide').css('height', 440);
 			$('#contentSwiper .swiper-slide').addClass('scroll');
 		});
 
 		var afbeelding = value[1].Afbeelding,
 			type = value[1].type;
+		
 		//TODO change to type check of POI
 		if (type === 'Beeld' || type === 'kaart') {
 			var callback = function(imageUrl) { 
@@ -83,37 +77,37 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 				//fetch wikiImageUrl
 				var imageName = afbeelding.split('File:')[1];
 
-				var commons = 'bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
+				var commons = ', bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
 				var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
-				var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling + ', ' : '';
+				var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling : '';
 				var caption = title + instelling;
 
 				var requestUrl = wikiUtils.constructWikiImageUrl(imageName, 1000) + '&format=json';
 				$.ajax({
-						url: requestUrl,
-		    			jsonp: "callback",
+					url: requestUrl,
+		    		jsonp: "callback",
 	    			dataType: "jsonp", 
 	    			success: function(data) {
+	    				var bigViewUrl,
+	    					fancyboxTitle;
+
 				    	try {						    		
-				    			bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-								$.fancybox.open([{
-								href:bigViewUrl,
-								title: caption + commons,
-								fitToView: true
-							}]);
+				    		bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+				    		fancyboxTitle = caption + commons;
 				    	}
 				    	catch (err) {
 				    		console.log('Warning, failed to load big image');
-				    		console.log(err);
 				    		console.log('Assuming local image');
 
 				    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
-				    		$.fancybox.open([{
-								href:bigViewUrl,
-								title: caption,
-								fitToView: true
-							}]);
+				    		fancyboxTitle = caption;
 				    	}
+
+				    	$.fancybox.open([{
+				    		href:bigViewUrl,
+				    		title: fancyboxTitle,
+				    		fitToView: true
+				    	}]);
 				    }
 				});
 			});
