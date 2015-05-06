@@ -23,7 +23,6 @@ var InterfaceController = function(ExpeditionController) {
 		$menuContent = $('#menuContent'),
 		poiClicked = false;
 
-	//load modules
 	var wikiUtils = require('./wiki-utils.js');
 		
 	//map expeditions integer ids to string ids
@@ -47,24 +46,22 @@ var InterfaceController = function(ExpeditionController) {
 	attachFastClick(document.body);
 	
 	var contentSwiper = new Swiper('#contentSwiper', {
-			mode: 'horizontal',
-			slidesPerView: 1,
-			preventLinksPropagation: true,
-			preventLinks: true,
-			onSlideChangeEnd: function() {
-				if (!poiClicked) {
-					$(document).trigger({
-						type: 'mapZoomToPoI',
-						vmIndex: contentSwiper.activeIndex,		
-					});				
-				}
-
-				poiClicked = false;
-		
-				$('.expedition-subtitle').html(poisList[contentSwiper.activeIndex][1].title);
-
-				centerMainMenu(contentSwiper.activeIndex);
+		mode: 'horizontal',
+		slidesPerView: 1,
+		preventLinksPropagation: true,
+		preventLinks: true,
+		onSlideChangeEnd: function() {
+			if (!poiClicked) {
+				$(document).trigger({
+					type: 'mapZoomToPoI',
+					vmIndex: contentSwiper.activeIndex,		
+				});				
 			}
+
+			poiClicked = false;
+			$('.expedition-subtitle').html(poisList[contentSwiper.activeIndex][1].title);
+			centerMainMenu(contentSwiper.activeIndex);
+		}
 	});
 
 	function buildSwiper() {
@@ -162,55 +159,10 @@ var InterfaceController = function(ExpeditionController) {
 	//TODO change name to reflect control in css/html
 
 	this.buildLandingView = function() {
-		mode = "landing";
-		var $previewListContent = $('<div id="previewListContent"></div>');
-
-		var width = (expeditions.length * 195) + 4*20;
-		$previewListContent.width(width);
-		//previewListContent.appendTo(previewList);
-
-		$.each(expeditions, function(index, value) {
-			var $expeditionItem = $('<div class="expeditionItem"></div>');
-			previewItems.push($expeditionItem);
-
-			var $expeditionContent = $('<div></div>');
-			$expeditionContent.appendTo($expeditionItem);
-
-			var $expeditionTitle = $('<div class="expeditionPreviewTitle"></div>');
-			$expeditionTitle.html(value.title);
-			$expeditionTitle.appendTo($expeditionContent);
-
-			//hack, fix
-			$expeditionTitle.css('padding-bottom', '40px');
-
-			//tweetaligheid
-			var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');
-			// $readMore.appendTo($expeditionItem);
-
-			var $container = $('<div class="expeditionItemContainer"></div>');
-			$container.append($expeditionItem);
-			$container.append($readMore);
-			
-			$readMore.click(function () {
-				currentPreviewItem = index;
-				currentExpedition = expeditions[index].id;
-				toggleDetailView();
-				setTimeout(function() { loadIntroTexts(); }, 500);
-			});
-
-			// $('.swiper-slide').width(width);
-			// $expeditionItem.appendTo($('.swiper-slide'));
-			$('#previewSwiper .swiper-slide').width(width);
-			// $expeditionItem.appendTo($('#previewSwiper .swiper-slide'));
-			$container.appendTo($('#previewSwiper .swiper-slide'));
-
-			if (value.image !== "") {
-				var imageUrl = wikiUtils.fetchWikiImage(value.image, 100, function(imageUrl) { $expeditionItem.css('background-image', "url('" + imageUrl + "')"); }, currentExpedition);
-			}
-		});
-
+		previewItems = require('./build-landing-view')(expeditions, currentExpedition);
 		buildSwiper();
 	};
+
 
 	this.destroyLandingView = function() {
 		//console.log("destroy LandingView");
@@ -225,7 +177,6 @@ var InterfaceController = function(ExpeditionController) {
 		$('.spacer-left-summary').html("");
 
 		// $('#lstMap').empty();
-
 		previewItems = [];
 	};
 
@@ -384,19 +335,13 @@ var InterfaceController = function(ExpeditionController) {
 				//empy content window to stop youtube movie if running;
 				contentSwiper.removeAllSlides();
 			})
-			.on('click', '#btnBack', function(e) { 
-				toggleDetailView();
-			})
+			.on('click', '#btnBack', function(e) { 	toggleDetailView();	})
 			.on('click', '#btnContentForward', function() { contentSwiper.swipeNext(); })
 			.on('click', '#btnContentBack', function() { contentSwiper.swipePrev(); })
-			.on('click', '#btnMapDrawer', function(e) { 
-				$('#lstMap').toggleClass('active');
-				console.log('opening map drawer'); 
-			})
+			.on('click', '#btnMapDrawer', function(e) { $('#lstMap').toggleClass('active'); })
 			.on('click', '.menu-item', function() {
 				el = this.id + currentLanguage;
-
-				$.fancybox.open($('#'+el), {
+				$.fancybox.open($('#' + el), {
 					maxWidth: 600,
 					type: 'inline'
 				});
@@ -412,26 +357,14 @@ var InterfaceController = function(ExpeditionController) {
 
 		$('#btnZoomIn').click(function() { $(document).trigger('_mapZoomIn'); });
 		$('#btnZoomOut').click(function() { $(document).trigger('_mapZoomOut'); });
-
-		$('#btnMenuScrollRight').click(function() {
-			scrollMenu('right');
-		});
-
-		$('#btnMenuScrollLeft').click(function () {
-			scrollMenu('left');
-		});
-
-		$('#btnMenu').click(function() { 
-			$menuContainer.toggleClass('active');
-			// this.toggleClass('active');
-		});
+		$('#btnMenuScrollRight').click(function() { scrollMenu('right'); });
+		$('#btnMenuScrollLeft').click(function () { scrollMenu('left'); });
+		$('#btnMenu').click(function() { $menuContainer.toggleClass('active'); });
 
 		$('.language').click(function() {
 			var lang = this.innerHTML;
-
 			currentLanguage = changeInterfaceLanguage(lang);
 			loadIntroTexts();
-
 		});
 
 		$('#btnMenuClose').click(function() {
