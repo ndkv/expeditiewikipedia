@@ -159,7 +159,14 @@ var InterfaceController = function(ExpeditionController) {
 	//TODO change name to reflect control in css/html
 
 	this.buildLandingView = function() {
-		previewItems = require('./build-landing-view')(expeditions, currentExpedition);
+		var menuClickHandler = function(index) {
+			currentPreviewItem = index;
+			currentExpedition = expeditions[index].id;
+			toggleDetailView();
+			setTimeout(function() { loadIntroTexts(); }, 500);
+		};
+
+		previewItems = require('./build-landing-view')(expeditions, currentExpedition, menuClickHandler);
 		buildSwiper();
 	};
 
@@ -275,7 +282,7 @@ var InterfaceController = function(ExpeditionController) {
 		slide.append();
 
 		setTimeout(function() {
-			$img.prop('src', 'images/intro/' + currentExpedition + '.jpg');
+			$img.prop('src', 'dist/images/intro/' + currentExpedition + '.jpg');
 			$('.intro-text-image').append($img);
 		}, 200);
 	};

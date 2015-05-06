@@ -3,7 +3,7 @@
 	v4.1.0
 	https://github.com/mholt/PapaParse
 */
-var Papa = function(global)
+module.exports = function(global)
 {
 	"use strict";
 
@@ -1334,6 +1334,3 @@ var Papa = function(global)
 		return typeof func === 'function';
 	}
 };
-
-
-module.exports = Papa;
