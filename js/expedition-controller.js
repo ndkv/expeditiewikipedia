@@ -48,7 +48,7 @@ var ExpeditionController = function() {
 	// TODO: uncouple from InterfaceController and use trigger/bind
 	this.startExpedition = function(index) {
 		var expedition = that.expeditions[index].id,
-			expeditionIndex = index
+			expeditionIndex = index;
 
 		//load expedition information
 		if (mode === "landing") {

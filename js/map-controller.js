@@ -153,18 +153,19 @@ var MapController = function() {
 	};
 
 	this.buildExpeditionView = function(expedition, maps, route, pois, zoomTo) {
+		map.setView([zoomTo.lat, zoomTo.lon], zoomTo.zoom);
 		currentExpedition = expedition;
 		var basemap = L.tileLayer.provider('Esri.OceanBasemap', {opacity: 0});
 		buildExpeditionGeometries(route, pois);
 		
 		var handler = function() {
-			$('.leaflet-tile-pane').css('transition', 'opacity .45s');
-			$('.leaflet-layer').css('transition', 'opacity .45s');
-			$('.leaflet-tile-container').css('transition', 'opacity .45s');
+			$('.leaflet-tile-pane').css('transition', 'opacity 5s');
+			$('.leaflet-layer').css('transition', 'opacity 5s');
+			$('.leaflet-tile-container').css('transition', 'opacity 5s');
 			basemap.setOpacity(1);
+			// hide landing view map
 			if (basemaps.length > 0) { basemaps[0].setOpacity(0); }
 
- 	
 			setTimeout(function() {
 				$('.leaflet-tile-pane').css('transition', '');
 				$('.leaflet-layer').css('transition', '');
@@ -173,13 +174,12 @@ var MapController = function() {
 				basemap.off('load', handler);
 
 				loadMaps(expedition, maps, 'expedition');
-			}, 350);
+				
+			}, 5000);
 		};
 
 		basemap.on('load', handler);
-
 		basemap.addTo(map);
-		map.setView([zoomTo.lat, zoomTo.lon], zoomTo.zoom);
 	};
 
 	var buildExpeditionGeometries = function(route, pois) {
