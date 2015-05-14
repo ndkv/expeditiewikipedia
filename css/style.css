@@ -339,8 +339,8 @@ p {
 }
 
 #overview > a {
-  color: #999;
-  font-size: 0.8em;
+  color: #00adef;
+  /*font-size: 0.8em;*/
   margin-left: 10px;
   text-decoration: none;
   display: none;
