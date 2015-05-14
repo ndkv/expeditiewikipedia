@@ -166,14 +166,14 @@ var MapController = function() {
 			// hide landing view map
 			if (basemaps.length > 0) { basemaps[0].setOpacity(0); }
 
+			loadMaps(expedition, maps, 'expedition');
+
 			setTimeout(function() {
 				$('.leaflet-tile-pane').css('transition', '');
 				$('.leaflet-layer').css('transition', '');
 				$('.leaflet-tile-container').css('transition', '');
 				if (basemaps.length > 0) { map.removeLayer(basemaps[0]); }
 				basemap.off('load', handler);
-
-				loadMaps(expedition, maps, 'expedition');
 				
 			}, 5000);
 		};
