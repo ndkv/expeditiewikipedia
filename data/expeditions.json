@@ -2,7 +2,7 @@
 	{
 		"id": "vening-meinesz",
 		"title": "Vening Meinesz",
-		"subtitle": "In een duikboot de wereld rond",
+		"language": "EN",
 		"summary": "Felix Andries Vening Meinesz (30 juli 1887 – 10 augustus 1966) was een Nederlands geofysicus en geodeet die baanbrekend werk voor de geofysica en geodesie verricht heeft",
 		"introNL": "<a class=\"fancybox fancybox.iframe\" href=\"https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1\"><img src=\"dist/images/intro/vm-youtube.png\" height=\"299\"></a>",
 		"introGB": "<a class=\"fancybox fancybox.iframe\" href=\"https://www.youtube.com/embed/C_91XgjvqxA?autoplay=1\"><img src=\"dist/images/intro/vm-youtube.png\" height=\"299\"></a>",
@@ -55,7 +55,7 @@
 	{
 		"id": "siboga",
 		"title": "De Siboga Expeditie",
-		"subtitle": "",
+		"language": "NL",
 		"summary": "De Siboga-expeditie was een Nederlandse zoölogische, botanische, geologische en hydrografische expeditie naar Nederlands-Indië",
 		"introNL": "De Siboga-expeditie was een Nederlandse zoölogische, botanische, geologische en hydrografische expeditie naar Nederlands-Indië (het huidige Indonesië) van maart 1899 tot februari 1900. Hij is genoemd naar het marinevaartuig waarmee de expeditie is uitgevoerd, de kanonneerboot Hr. Ms. Siboga.",
 		"introGB": "The Siboga Expedition was a Dutch zoological and hydrographic expedition to Indonesia from March 1899 to February 1900. The leader of the expedition was Max Carl Wilhelm Weber. Other members of the crew were his wife and algologist Anna Weber-van Bosse, the zoologist and first assistant Jan Versluys, the zoologist and second assistant Hugo Nierstrasz, the physician A. Schmidt, and the artist J. W. Huysmans. Captain Gustaaf Tydeman was responsible for making hydrographic measurements.",
@@ -68,7 +68,7 @@
 	{
 		"id": "ceram",
 		"title": "Nederlanders in Ceram",
-		"subtitle": "",
+		"language": "NL",
 		"summary": "De Ceram-expeditie van 1917-1919 was een expeditie naar Ceram, met als doel de geologie en delfstoffen van het eiland in kaart te brengen.",
 		"introNL": "De Ceram-expeditie van 1917-1919 was een expeditie naar Ceram, met als doel de geologie en delfstoffen van het eiland in kaart te brengen.",
 		"introGB": "The Ceram Expedition (1917-1919) was a Dutch expedition to Ceram. Its goal was to map the geology of the Seram island and search for minerals.",
@@ -93,7 +93,7 @@
 	{
 		"id": "nieuw-guinea",
 		"title": "Noord Nieuw-Guinea",
-		"subtitle": "",
+		"language": "NL",
 		"summary": "De Noord Nieuw-Guinea Expeditie (1903) was een Nederlandse expeditie die de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea wetenschappelijk verkende.",
 		"introNL": "De Noord Nieuw-Guinea Expeditie (1903), onder leiding van Arhur Wichman verkende de deels nog onbekende noordkust van Nederlands-Nieuw-Guinea en was op zoek was naar exploiteerbare lagen steenkool.",
 		"introGB": "The North New Guinea Expedition (1903) was a Dutch expedition to the still largely unknown north coast of Dutch New Guinea for the purposes of scientific exploration and to seek exploitable coal resources.",
@@ -128,7 +128,7 @@
 	{
 		"id": "bestsellers",
 		"title": "Reis-bestsellers in de Gouden Eeuw",
-		"subtitle": "",
+		"language": "NL",
 		"summary": "text, text, text, text, text, text, texdt, text, text, text, text, text, text, text, text, text, text, text",
 		"introNL": "Een selectie van 17de eeuwse reisboeken uit de collecties van de Universiteit Maastricht en Radboud Universiteit Nijmegen.",
 		"introGB": "to do ",

@@ -5,7 +5,7 @@ L.Icon.Default.imagePath = 'images/icons/';
 jQuery = require('jquery-browserify');
 $ = jQuery;
 Swiper = require('swiper');
-require('./lib/papaparse')(window);
+require('./lib/papaparse')(window);	
 require('fancybox')($);
 
 window.onload = function() {
