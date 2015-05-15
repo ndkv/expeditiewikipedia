@@ -9,7 +9,8 @@ var MapController = function() {
 		southWest = L.latLng(-70, -175),
 		northEast = L.latLng(90, 180),
 		bounds = L.latLngBounds(southWest, northEast), 
-		selectedPoi;
+		selectedPoi,
+		selectedRoute;
 
 	var map = new L.Map('map', {
 		zoomControl: false,
@@ -30,14 +31,18 @@ var MapController = function() {
 		$.each(features, function(id, feature) {
 			var handler = function () {
 				InterfaceController.togglePreviewItemLanding(id);
+				toggleRouteSelection(id);
 			};
 
 			listeners.push(handler);
 			feature.on('click', handler);
 
-			$.each(featureMarkers[id], function(index, value) {
-				value.on('click', handler);
-			});
+			// $.each(featureMarkers[id], function(index, value) {
+			try {
+				featureMarkers[id].on('click', handler);
+			} catch (err) {
+				//continue;
+			}
 		});
 
 		//only available in expedition view
@@ -61,7 +66,6 @@ var MapController = function() {
 	//VIEWING MODE 
 
 	this.buildLandingView = function(feats, expeditions) {
-		//display one historical map per expedition
 		var icon = new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg', iconSize: [25, 25]});
 
 		$.each(feats, function(index, value) {
@@ -71,18 +75,22 @@ var MapController = function() {
 				feature,
 				marker;
 
-			featureMarkers[value.properties.id] = [];
-
+			// featureMarkers[value.properties.id] = [];
 			//reverse geojson.io's lat/lng order
-			
+			var markers = [];
 
 			if (type === 'LineString') {
+				// add markers on linestring edges
 				$.each(geometry, function(i, v) {
 					coordinates.push([v[1], v[0]]);
 					marker = L.marker([v[1], v[0]], {icon: icon});
-					marker.addTo(map);
-					featureMarkers[value.properties.id].push(marker);
+					// marker.addTo(map);
+					markers.push(marker);
 				});
+
+				var markerGroup = L.featureGroup(markers);
+				markerGroup.addTo(map);
+				featureMarkers[value.properties.id] = markerGroup;
 
 				feature = L.polyline(coordinates, {
 					weight: 2,
@@ -259,6 +267,45 @@ var MapController = function() {
 		var index = e.expeditionId;
 		console.log('catching zoom to route trigger');
 		map.setView([e.zoomTo.lat, e.zoomTo.lon], e.zoomTo.zoom);
+
+		toggleRouteSelection(index);
+
+		features[index].setStyle({
+			color: 'white'
+		});
+
+		featureMarkers[index].eachLayer(function(marker) {
+			marker.setIcon(new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon-selected-white.svg', iconSize: [26, 26]}));
+		});
+	};
+
+	var toggleRouteSelection = function(route) {
+		if (selectedRoute !== undefined) {
+			features[selectedRoute].setStyle({ color: 'black' });
+			try {
+				featureMarkers[selectedRoute].eachLayer(function(marker) {
+					marker.setIcon(new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon.svg', iconSize: [26, 26]}));
+				});
+			} catch (err) {}
+
+			try {
+				featureMarkers[route].eachLayer(function(marker) {
+					marker.setIcon(new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon-selected-white.svg', iconSize: [26, 26]}));
+				});
+			} catch (err) {}
+
+			features[route].setStyle({ color: '#ccc' });
+			selectedRoute = route;
+		} else {
+			features[route].setStyle({ color: '#cfcfcf' });
+			selectedRoute = route;
+
+			try {
+				featureMarkers[route].eachLayer(function(marker) {
+					marker.setIcon(new L.Icon({iconUrl: getMarkerImageUrl() + 'marker-icon-selected-white.svg', iconSize: [26, 26]}));
+				});
+			} catch (err) {}
+		}
 	};
 
 	var zoomToPoi = function(e) {

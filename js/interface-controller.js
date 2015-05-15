@@ -110,7 +110,8 @@ var InterfaceController = function(ExpeditionController) {
 		});
 
 		currentPreviewItem = index;
-		previewItems[index].addClass("previewItemActive");	
+		previewItems[index].addClass("previewItemActive");
+		centerMainMenu(index);
 	};
 
 	this.registerMapEventsRoute = function() {

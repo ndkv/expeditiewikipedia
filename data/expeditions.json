@@ -74,7 +74,7 @@
 		"introGB": "The Ceram Expedition (1917-1919) was a Dutch expedition to Ceram. Its goal was to map the geology of the Seram island and search for minerals.",
 		"image": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Alfuren_uit_de_bergen_van_Ceram_TMnr_10005708.jpg",
 		"blurp": "",
-		"zoomto": {"lat": 0.14, "lon": 127.43, "zoom": 6},
+		"zoomto": {"lat": 0.14, "lon": 127.43, "zoom": 5},
 		"link": "https://nl.wikipedia.org/wiki/Ceram-expeditie",
 		"words": 20000,
 		"maps": [
