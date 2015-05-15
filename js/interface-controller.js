@@ -201,12 +201,6 @@ var InterfaceController = function(ExpeditionController) {
 		buildSwiper();
 		buildMapsList(mode, expeditions[currentExpeditionIndex].maps);
 
-		//change interface language
-		//hack, fix
-		if (currentExpedition === 'vening-meinesz') {
-			
-		}
-
 		//hide and show interface elements
 		//TODO toggle visibility through class and translate
 		$('#btnLanguage').css('transform', 'translate3d(0px, -500px, 0px)');

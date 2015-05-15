@@ -67,6 +67,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			$readMore.click(function () {
 				currentPoi = value[0];
 				toggleDetailView();
+				contentSwiper.swipeTo(index);
 
 				if (currentExpedition !== "vening-meinesz") {
 					setTimeout(function() { loadContent(contentSwiper, poisList, currentExpedition); }, 300);					
@@ -88,7 +89,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 		$swiperSlide.append($container);
 	});
 
-	var margin = 0;
+	var margin = 10;
 
 	var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2 - 150;
 	$swiperSlide.width(width);

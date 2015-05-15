@@ -43,7 +43,7 @@
 			{
 				"id": "snip",
 				"visibleIntro": false,
-				"visibleExpedition": false,
+				"visibleExpedition": true,
 				"title": "The voyage of De Snip",
 				"bounds": {
 					"southWest": [2.01, -70.79],
