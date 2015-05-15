@@ -31,7 +31,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 
 	$.each(sortable, function(index, value) {
 		var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>'), //.html(value[1].summary),
-			$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
+			$expeditionPreviewTitle = $('<div></div>').html(value[1].title);
 
 		var $expeditionContent = $('<div></div>')
 		.append($expeditionPreviewTitle);
@@ -52,8 +52,8 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			$readMore.click(function () { buildFancyboxImage(index, value, currentExpedition, afbeelding); });
 
 			//hacks, fix
+			$expeditionPreviewTitle.addClass('expeditionPreviewTitle');
 			$expeditionPreviewTitle.css('padding-bottom', '40px');
-			//$expeditionPreviewSummary.empty();
 
 		} else if (type === 'Artikel'|| currentExpedition === 'vening-meinesz') {
 			$expeditionContent.append($expeditionPreviewSummary);
@@ -76,6 +76,8 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 				$('#contentSwiper .swiper-slide').css('height', 440);
 				$('#contentSwiper .swiper-slide').addClass('scroll');
 			});
+
+			$expeditionPreviewTitle.addClass('expedition-preview-title-article');
 		}
 
 		var $container = $('<div class="expeditionItemContainer"></div>');
@@ -86,7 +88,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 		$swiperSlide.append($container);
 	});
 
-	var margin = 20;
+	var margin = 0;
 
 	var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2 - 150;
 	$swiperSlide.width(width);

@@ -274,12 +274,18 @@ p {
   /*padding-bottom: 120px;*/
 }
 
+.expedition-preview-title-article {
+  color: black;
+  width: 190px;
+  font-size: 0.9em;
+}
+
 .expeditionPreviewSummary {
   /*font-family: "Blokk";*/
   font-size: 0.7em;
   cursor: pointer;
   padding: 10px;
-  padding-top: 40px;
+  /*padding-top: 40px;*/
 }
 
 .expedition-preview-image {
