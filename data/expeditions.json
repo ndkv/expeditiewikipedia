@@ -81,7 +81,7 @@
 			{
 				"id": "geo-schetskaart",
 				"visibleIntro": false,
-				"visibleExpedition": true,
+				"visibleExpedition": false,
 				"title": "Geologische schetskaart van Nederlandsch Oost-Indië",
 				"bounds": {
 					"southWest": [-12.97, 92.04],

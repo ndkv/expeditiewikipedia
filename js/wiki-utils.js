@@ -9,8 +9,10 @@ var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper,
     var $contentImage = $('<div class="expedition-text-image"></div>'),
     	$content = $('<div class="expedition-text-content"></div>'), 
     	$contentElem = $('<div></div>'),
-    	$wikiText = $('<div class="wiki-attribution"><p>Text: Wikipedia, de vrije encyclopedie</p></div>');
-    	$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank">Lees meer op Wikipedia...</a></div>'));
+    	$wikiText = $('<div class="wiki-attribution"><p>Text: Wikipedia, de vrije encyclopedie</p></div>'),
+    	$wikiLeesMeer = $('<span class="wiki-leesmeer"> <a href="'+ url + '" target="_blank">lees meer op Wikipedia</a></span>');
+    	//$content.append($('<div class="wiki-leesmeer"><a href="'+ url + '" target="_blank">Lees meer op Wikipedia...</a></div>'))
+
     	$contentElem.append($content);
     	$contentElem.append($contentImage);
 
@@ -26,9 +28,10 @@ var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper,
 		$wikiText.append($(pages[page].extract).filter('p'));
 		var last = $wikiText.children().last();
 		last.text(last.text() + ' ...');
+		last.append($wikiLeesMeer);
 		$content.append($wikiText);
 		
-		console.log(imageUrl);
+		// console.log(imageUrl);
 		if (imageUrl !== '') {
 			fetchWikiImage(imageUrl, 1000, function(url) {
 				$('<img>')
