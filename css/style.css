@@ -279,7 +279,7 @@ p {
   font-size: 0.7em;
   cursor: pointer;
   padding: 10px;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .expedition-preview-image {
@@ -289,6 +289,7 @@ p {
   margin-top: -2px;
   height: 100px;
   max-width: 185px;
+  padding-top: 40px;
 }
 
 .readMore {

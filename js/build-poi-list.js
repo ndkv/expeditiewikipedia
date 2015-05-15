@@ -34,8 +34,8 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
 
 		var $expeditionContent = $('<div></div>')
-		.append($expeditionPreviewTitle)
-		.append($expeditionPreviewSummary);
+		.append($expeditionPreviewTitle);
+		//.append($expeditionPreviewSummary);
 
 		var $expeditionItem = $('<div class="expeditionItem"></div>')
 		.append($expeditionContent);
@@ -46,15 +46,17 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 		var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');
 
 		if (type === 'Beeld' || type === 'kaart') {
-			wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewSummary);
+			wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewTitle);
 			
 			$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
 			$readMore.click(function () { buildFancyboxImage(index, value, currentExpedition, afbeelding); });
 
 			//hacks, fix
 			$expeditionPreviewTitle.css('padding-bottom', '40px');
-			$expeditionPreviewSummary.empty();
+			//$expeditionPreviewSummary.empty();
+
 		} else if (type === 'Artikel'|| currentExpedition === 'vening-meinesz') {
+			$expeditionContent.append($expeditionPreviewSummary);
 
 			if (value[1].summary === '') {
 				wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewSummary);
