@@ -30,7 +30,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 	var poisList = sortable;
 
 	$.each(sortable, function(index, value) {
-		var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>').html(value[1].summary),
+		var $expeditionPreviewSummary = $('<div class="expeditionPreviewSummary"></div>'), //.html(value[1].summary),
 			$expeditionPreviewTitle = $('<div class="expeditionPreviewTitle"></div>').html(value[1].title);
 
 		var $expeditionContent = $('<div></div>')
@@ -40,85 +40,41 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 		var $expeditionItem = $('<div class="expeditionItem"></div>')
 		.append($expeditionContent);
 
-        var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');			
-		$readMore.click(function () {
-			currentPoi = value[0];
-			//TODO: use a trigger
-			toggleDetailView();
-
-			contentSwiper.swipeTo(index);
-
-			if (currentExpedition !== "vening-meinesz") {
-				setTimeout(function() { loadContent(contentSwiper, poisList, currentExpedition); }, 300);					
-			}
-
-			$('.expedition-subtitle').html(value[1].title);
-			$('#contentSwiper .swiper-slide').css('height', 440);
-			$('#contentSwiper .swiper-slide').addClass('scroll');
-		});
-
 		var afbeelding = value[1].Afbeelding,
 			type = value[1].type;
 		
-		//TODO change to type check of POI
-		if (type === 'Beeld' || type === 'kaart') {
-			var callback = function(imageUrl) { 
-				$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
-				.insertAfter($expeditionPreviewSummary);
-			};
+		var $readMore = $('<div class="readMore"><span>Lees meer</span></div>');
 
-			wikiUtils.fetchWikiImage(afbeelding, 100, callback, currentExpedition);
+		if (type === 'Beeld' || type === 'kaart') {
+			wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewSummary);
 			
 			$readMore = $('<div class="readMore"><span>Bekijk afbeelding</span></div>');			
-			$readMore.click(function () {
-				currentPreviewItem = index;
-				currentPoi = value[0];
-				
-				//fetch wikiImageUrl
-				var imageName = afbeelding.split('File:')[1];
-
-				var commons = ', bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.';
-				var title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '';
-				var instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling : '';
-				var caption = title + instelling;
-
-				var requestUrl = wikiUtils.constructWikiImageUrl(imageName, 1000) + '&format=json';
-				$.ajax({
-					url: requestUrl,
-		    		jsonp: "callback",
-	    			dataType: "jsonp", 
-	    			success: function(data) {
-	    				var bigViewUrl,
-	    					fancyboxTitle;
-
-				    	try {						    		
-				    		bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
-				    		fancyboxTitle = caption + commons;
-				    	}
-				    	catch (err) {
-				    		console.log('Warning, failed to load big image');
-				    		console.log('Assuming local image');
-
-				    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
-				    		fancyboxTitle = caption;
-				    	}
-
-				    	$.fancybox.open([{
-				    		href:bigViewUrl,
-				    		title: fancyboxTitle,
-				    		fitToView: true
-				    	}]);
-				    }
-				});
-			});
+			$readMore.click(function () { buildFancyboxImage(index, value, currentExpedition, afbeelding); });
 
 			//hacks, fix
 			$expeditionPreviewTitle.css('padding-bottom', '40px');
 			$expeditionPreviewSummary.empty();
-		}
+		} else if (type === 'Artikel'|| currentExpedition === 'vening-meinesz') {
 
-		//$expeditionItem.after($readMore);
-		// $expeditionItem.append($readMore);
+			if (value[1].summary === '') {
+				wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewSummary);
+			} else {
+				$expeditionPreviewSummary.html(value[1].summary);
+			}
+
+			$readMore.click(function () {
+				currentPoi = value[0];
+				toggleDetailView();
+
+				if (currentExpedition !== "vening-meinesz") {
+					setTimeout(function() { loadContent(contentSwiper, poisList, currentExpedition); }, 300);					
+				}
+
+				$('.expedition-subtitle').html(value[1].title);
+				$('#contentSwiper .swiper-slide').css('height', 440);
+				$('#contentSwiper .swiper-slide').addClass('scroll');
+			});
+		}
 
 		var $container = $('<div class="expeditionItemContainer"></div>');
 		$container.append($expeditionItem);
@@ -135,6 +91,50 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 	$previewListContent.width(width);
 
 	return poisList;
+}
+
+function buildFancyboxImage(index, value, currentExpedition, afbeelding) {
+	var currentPreviewItem = index,
+		currentPoi = value[0],
+		imageName = afbeelding.split('File:')[1],
+		commons = ', bron: <a class="commons" href="' + afbeelding + '" target="_blank">Wikimedia Commons</a>.',
+		title = (value[1].summary !== '') ? value[1].summary + ' ' + value[1].Datum + '<br />' : '',
+		instelling = (value[1].Instelling !== '') ? 'Instelling: ' + value[1].Instelling : '',
+		caption = title + instelling,
+		requestUrl = wikiUtils.constructWikiImageUrl(imageName, 1000) + '&format=json';
+
+	$.ajax({
+		url: requestUrl,
+		jsonp: "callback",
+		dataType: "jsonp", 
+		success: function(data) {
+			var bigViewUrl,
+				fancyboxTitle;
+
+	    	try {						    		
+	    		bigViewUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+	    		fancyboxTitle = caption + commons;
+	    	}
+	    	catch (err) {
+	    		console.log('Warning, failed to load big image');
+	    		console.log('Assuming local image');
+
+	    		bigViewUrl = 'data/' + currentExpedition + '/images/' + afbeelding;
+	    		fancyboxTitle = caption;
+	    	}
+
+	    	$.fancybox.open([{
+	    		href:bigViewUrl,
+	    		title: fancyboxTitle,
+	    		fitToView: true
+	    	}]);
+	    }
+	});
+}
+
+function addImageToMenu(imageUrl, $expeditionPreviewSummary) {
+	$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+	.insertAfter($expeditionPreviewSummary);
 }
 
 module.exports = buildPoiList;

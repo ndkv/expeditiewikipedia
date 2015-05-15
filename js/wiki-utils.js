@@ -45,7 +45,7 @@ var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper,
 	});
 };
 
-var fetchWikiImage = function(url, size, callback, currentExpedition) {
+var fetchWikiImage = function(url, size, addImageToMenu, currentExpedition, expeditionPreviewSummary) {
 	var imageName = url.split("File:")[1],
 		requestUrl = constructWikiImageUrl(imageName, size) + '&format=json',
 		imageUrl;
@@ -66,7 +66,7 @@ var fetchWikiImage = function(url, size, callback, currentExpedition) {
 	    		console.log("Assuming local image...");
 	    		imageUrl = 'data/' + currentExpedition + '/images/' + url;
 	    	}
-	    	callback(imageUrl);
+	    	addImageToMenu(imageUrl, expeditionPreviewSummary);
 	    }
 	});
 };
