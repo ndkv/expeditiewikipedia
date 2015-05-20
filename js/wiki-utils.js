@@ -27,7 +27,7 @@ var fetchWikiExcerpt = function(url, imageUrl, numWords, columns, contentSwiper,
 						
 		$wikiText.append($(pages[page].extract).filter('p'));
 		var last = $wikiText.children().last();
-		last.text(last.text() + ' ...');
+		last.text(last.text() + ' [...]');
 		last.append($wikiLeesMeer);
 		$content.append($wikiText);
 		
@@ -62,7 +62,13 @@ var fetchWikiImage = function(url, size, addImageToMenu, currentExpedition, expe
 	    },
 	    success: function(data) {
 	    	try {
-				imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+				// imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+				// imageUrl = data.query.pages['-1'].imageinfo[0].thumburl;
+
+				$.each(data.query.pages, function(index, value) {
+					imageUrl = value.imageinfo[0].thumburl;
+				});
+
 	    	}
 	    	catch (err) {
 	    		console.log("Warning, failed to fetch Wikipedia Image");
