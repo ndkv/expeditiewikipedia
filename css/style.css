@@ -275,6 +275,7 @@ p {
 }
 
 .expedition-preview-title-article {
+  position: absolute;
   color: black;
   width: 190px;
   font-size: 0.9em;
@@ -285,7 +286,7 @@ p {
   font-size: 0.7em;
   cursor: pointer;
   padding: 10px;
-  /*padding-top: 40px;*/
+  padding-top: 40px;
 }
 
 .expedition-preview-image {

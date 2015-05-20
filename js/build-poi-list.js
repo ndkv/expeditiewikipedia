@@ -56,11 +56,10 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 			$expeditionPreviewTitle.css('padding-bottom', '40px');
 
 		} else if (type === 'Artikel'|| currentExpedition === 'vening-meinesz') {
-			$expeditionContent.append($expeditionPreviewSummary);
-
 			if (value[1].summary === '') {
-				wikiUtils.fetchWikiImage(afbeelding, 100, addImageToMenu, currentExpedition, $expeditionPreviewSummary);
+				wikiUtils.fetchWikiImage(afbeelding, 100, addArticleImageToMenu, currentExpedition, $expeditionPreviewTitle);
 			} else {
+				$expeditionContent.append($expeditionPreviewSummary);
 				$expeditionPreviewSummary.html(value[1].summary);
 			}
 
@@ -78,7 +77,8 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 				$('#contentSwiper .swiper-slide').addClass('scroll');
 			});
 
-			$expeditionPreviewTitle.addClass('expedition-preview-title-article');
+			// $expeditionPreviewTitle.addClass('expedition-preview-title-article');
+			$expeditionPreviewTitle.addClass('expeditionPreviewTitle');
 		}
 
 		var $container = $('<div class="expeditionItemContainer"></div>');
@@ -89,7 +89,7 @@ function buildPoiList (pois, previewItems, currentExpedition, toggleDetailView, 
 		$swiperSlide.append($container);
 	});
 
-	var margin = 10;
+	var margin = 20;
 
 	var width = (pois.length * $('.expeditionItem').width()) + pois.length * margin * 2 - 150;
 	$swiperSlide.width(width);
@@ -139,6 +139,13 @@ function buildFancyboxImage(index, value, currentExpedition, afbeelding) {
 
 function addImageToMenu(imageUrl, $expeditionPreviewSummary) {
 	$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+	// .css('padding-top', '0')
+	.insertAfter($expeditionPreviewSummary);
+}
+
+function addArticleImageToMenu(imageUrl, $expeditionPreviewSummary) {
+	$img = $('<img class="expedition-preview-image" src="' + imageUrl +'">')
+	// .css('padding-top', '0')
 	.insertAfter($expeditionPreviewSummary);
 }
 
