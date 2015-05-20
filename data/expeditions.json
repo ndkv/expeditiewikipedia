@@ -135,5 +135,19 @@
 		"image": "https://commons.wikimedia.org/wiki/File:China_Monumentis,_qua_sacris_qua_profanis_by_Athanasius_Kircher.jpg",
 		"blurp": "",
 		"zoomto": {"lat": 1.0, "lon": 1.0, "zoom": 4}
+	},
+	{
+		"id": "delta-missie",
+		"title": "Delta Missie",
+		"language": "NL",
+		"summary": "Tijdens de Delta Missie naar het ISS in 2004, voerde Andre Kuipers onderzoek uit voor de TU Eindhoven.",
+		"introNL": "Tijdens de Delta Missie naar het International Space Station in 2004, voerde André Kuipers onderzoek uit voor de Technische Universiteit Eindhoven.",
+		"introGB": "During the Delta Mission the International Space Station in 2004 André Kuipers conducted scienrific experiments for the Technical University Eindhoven.  ",
+		"image": "https://commons.wikimedia.org/wiki/File:Andre_Kuipers_ISS.jpg",
+		"blurp": "",
+		"zoomto": {"lat": -3.19, "lon": 141.49, "zoom": 3},
+		"link": "https://nl.wikipedia.org/wiki/Noord_Nieuw-Guinea_Expeditie", 
+		"words": 20000,
+		"maps": []
 	}
 ]
