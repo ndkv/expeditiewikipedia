@@ -293,10 +293,10 @@ p {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  margin-top: -2px;
+  /*margin-top: -2px;*/
   height: 100px;
   max-width: 185px;
-  padding-top: 40px;
+  padding-top: 38px;
 }
 
 .readMore {

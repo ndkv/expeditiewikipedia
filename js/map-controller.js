@@ -58,10 +58,10 @@ var MapController = function() {
 		});
 	};
 
-	var destroyFeatures = function() {
-		//deregister events? or handle by empty() the linked element?
+	// var destroyFeatures = function() {
+	// 	//deregister events? or handle by empty() the linked element?
 
-	};
+	// };
 
 	//VIEWING MODE 
 
@@ -150,10 +150,10 @@ var MapController = function() {
 		});
 		overlays = [];
 
-		$.each(featureMarkers, function(index, markers) {
-			$.each(markers, function(index, marker) {
-				map.removeLayer(marker);				
-			});
+		$.each(featureMarkers, function(index, markerGroup) {
+			// $.each(markers, function(index, marker) {
+				map.removeLayer(markerGroup);				
+			// });
 		});
 		featureMarkers = {};
 
